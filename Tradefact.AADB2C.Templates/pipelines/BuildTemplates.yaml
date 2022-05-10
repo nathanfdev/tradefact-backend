@@ -1,0 +1,43 @@
+﻿# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+  branches:
+    include:
+      - develop
+      - master
+      - feature/SqlDB
+  paths:
+    include:
+      - Tradefact.AADB2C.Templates/*
+
+variables:
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: '59b87343-23a4-460f-b6f6-6d4eb93ca0f1'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+  # Working Directory
+  workingDirectory: '$(System.DefaultWorkingDirectory)/Tradefact.AADB2C.Templates/src'
+
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(workingDirectory)'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      replaceExistingArchive: true
+  
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
+

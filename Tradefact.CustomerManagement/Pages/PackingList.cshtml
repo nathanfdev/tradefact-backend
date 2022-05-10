@@ -1,0 +1,179 @@
+﻿@page
+@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Tradefact.Portal.Pages.PackingListModel
+@{
+}
+
+<style>
+    .route-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+    }
+
+    .route-leg {
+        flex-grow: 1;
+        flex-basis: 0;
+        background-color: #edede4;
+        margin-left: 5px;
+        padding: 5px;
+    }
+
+    .route-element {
+        font-size: .75em;
+        display: block;
+    }
+
+    .route-label {
+        display: block;
+        border-bottom: 2px solid;
+        border-bottom-color: #92a8d1;
+    }
+
+    .route-text {
+        display: block;
+        font-weight: bold
+    }
+</style>
+
+<div class="min-h-screen bg-white border-t-8 border-gray-700 h-2" " style="min-height: 600px">
+
+    <div class="container flex py-1 px-4">
+        <div class="flex flex-row justify-between mb-8 w-full">
+            <div class="w-3/6">
+                <div class="mb-2 md:mb-1 md:flex items-center">
+                    <label class="w-36 text-gray-800 block font-bold text-sm uppercase tracking-wide">Shipment #</label>
+                    <span class="mr-4 inline-block hidden md:block">:</span>
+                    <div class="flex-1">
+                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded md:w-60 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" value="@Model.Shipment.Shipment.Reference">
+                    </div>
+                </div>
+
+                <div class="mb-2 md:mb-1 md:flex items-center">
+                    <label class="w-36 text-gray-800 block font-bold text-sm uppercase tracking-wide">Order Date</label>
+                    <span class="mr-4 inline-block hidden md:block">:</span>
+                    <div class="flex-1">
+                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded md:w-48 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" value="@Model.Shipment.Shipment.CollectionDate.GetValueOrDefault().ToString("dd MMMM yyyy")" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="mb-2 md:mb-1 md:flex items-center">
+                    <label class="w-36 text-gray-800 block font-bold text-sm uppercase tracking-wide">Goods Ready</label>
+                    <span class="mr-4 inline-block hidden md:block">:</span>
+                    <div class="flex-1">
+                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded md:w-48 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" value="@Model.Shipment.Shipment.EstimatedDeparturePOL.GetValueOrDefault().ToString("dd MMMM yyyy")" readonly="">
+                    </div>
+                </div>
+            </div>
+            <div class="w-3/6">
+                <div class="w-full mx-2">
+                    <label for="pallet-notes" class="block text-sm font-medium text-gray-700">
+                        From
+                    </label>
+                    <div class="my-2 p-1 bg-white w-full h-full flex border border-gray-200 rounded">
+                        <textarea id="about" name="about" rows="3" class="shadow-sm w-full h-full mt-1 block sm:text-sm border border-none rounded-md" placeholder="Shipment from"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="container flex py-1 px-4">
+        <div class="w-2/6">
+            <div class="flex flex-wrap justify-between">
+                <div class="w-full">
+                    <div class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500">
+                        <label class="text-gray-800 block mb-1 font-bold text-sm uppercase tracking-wide">Customer:</label>
+                        <div>@Model.Shipment.Shipment.Client</div>
+                        <div>&nbsp;</div>
+                        <div>&nbsp;</div>
+                        <div>&nbsp;</div>
+                        <div>&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-4/6 pl-4">
+            <div class="route-group">
+                @foreach (var leg in Model.Shipment.Legs)
+                {
+                    <div class="route-leg">
+                        <div class="route-icon">
+                        </div>
+                        <div class="route-element h-full">
+                            <span class="route-label">@leg.Description</span>
+                            <span class="route-text">@leg.Name</span>
+                            @foreach (var line in leg.NoBlankAddress())
+                            {
+                                <div class="route-text">@line.ToUpper()</div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    @*<form asp-page-handler="AssignItemQuantities" method="post">
+
+            <div class="container flex justify-between py-4 px-4">
+                <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden border-none my-5">
+                    <thead>
+                        <tr class="flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0 text-gray-800 tracking-wide text-xs font-bold">
+                            <th class="p-1 text-left w-2/12 align-baseline">SKU</th>
+                            <th class="p-1 text-left w-4/12 align-baseline">Description</th>
+                            <th class="p-1 text-right w-1/12 align-baseline">Expected<br />Qty</th>
+                            <th class="p-1 text-right w-1/12 align-baseline">Pallet#</th>
+                            <th class="p-1 text-right w-1/12 align-baseline">Carton<br />Qty</th>
+                            <th class="p-1 text-right w-1/12 align-baseline">Carton<br />LxWxHx</th>
+                            <th class="p-1 text-right w-1/12 align-baseline">Carton<br />Weight</th>
+                            <th class="p-1 text-right w-1/12">Packed Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody class="flex-1 xs:flex-none text-xs md:text-sm">
+                        @{ var i = 0;}
+                        @foreach (var item in Model.Shipment.Products.Take(3))
+                        {
+                            <tr class="flex flex-col flex-no wrap sm:table-row mb-6 sm:mb-4 ">
+                                <td class="p-1 truncate" style="min-height:35px;">
+                                    @item.Product_SKU.ToUpper()
+                                    <input type="hidden" value="@item.PurchaseOrderItemId" name="AssignedSKUQuantities[@i].SKU" />
+                                </td>
+                                <td class="p-1 truncate" style="min-height:35px;">@item.Product_Description.ToUpper()</td>
+                                <td class="md:text-right p-1 truncate" style="min-height:35px;">@item.QtyCommitted</td>
+                                <td class="md:text-right p-1 truncate" style="min-height:35px;">
+                                    <input class="appearance-none block w-full text-gray-700 border border-gray-300 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="assignedsky_[@i].PalletNo" type="number" name="AssignedSKUQuantities[@i].PalletNo" />
+                                </td>
+                                <td class="md:text-right p-1 truncate" style="min-height:35px;">
+                                    <input class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="assignedsky_[@i].CartonQty" type="number" name="AssignedSKUQuantities[@i].CartonQty" />
+                                </td>
+                                <td class="md:text-right p-1 truncate" style="min-height:35px;">
+                                    <input class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="assignedsky_[@i].CartonLxWxHx" type="number" name="AssignedSKUQuantities[@i].CartonLxWxHx" />
+                                </td>
+                                <td class="md:text-right p-1 truncate" style="min-height:35px;">
+                                    <input class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="assignedsky_[@i].Weight" type="number" name="AssignedSKUQuantities[@i].Weight" />
+                                </td>
+                                <td class="md:text-right p-1 truncate" style="min-height:35px;">
+                                    <input class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="assignedsky_[@i].Quantity" type="number" value="@item.QtyCommitted" name="AssignedSKUQuantities[@i].Quantity" />
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </form>*@
+
+    <div class="container">
+        <packing-list shipmentid="@Model.Shipment.Shipment.Id"></packing-list>
+    </div>
+</div>
+
+    @section Scripts {
+        <script src="js/packing-list/runtime.js" defer></script>
+        <script src="js/packing-list/polyfills.js" defer></script>
+        <script src="js/packing-list/main.js" defer></script>
+    }

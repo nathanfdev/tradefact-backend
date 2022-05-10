@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model SendNewInviteModel
+
+<div class="">
+    <h1 class="display-4">Send new invite</h1>
+    <p>Fill out this form to send an invite email to a new company or a new user.</p>
+
+    <h3>@Model.ResultMessage</h3>
+    <h4>@Model.Link</h4>
+
+    <form method="POST">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="inputEmail">Email address</label>
+                <input type="email" class="form-control" name="email" id="inputEmail" placeholder="Enter email">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="inputCompanyName">Company Name</label>
+                <input type="text" class="form-control" name="companyName" id="inputCompanyName" placeholder="Company Name">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="inputFirstName">First Name of Invitee</label>
+                <input type="text" class="form-control" name="firstName" id="inputFirstName" placeholder="First Name">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="inputSentBy">Who has this person been invited by? Leave blank for "Tradefact"</label>
+                <input type="text" class="form-control" name="sentBy" id="inputSentBy" placeholder="Sent by">
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="inputCompanyType">Select Company Type</label>
+                <select name="inviteType" class="form-control" id="inputCompanyType">
+                    <option value="1">Forwarder</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="inputSendEmail">Send email or just show link?</label>
+                <select name="sendEmail" class="form-control" id="inputSendEmail">
+                    <option value="1">Send Email automatically</option>
+                    <option value="2">Display link for manual email</option>
+                </select>
+            </div>
+        </div>
+        <div class="row form-group col-md-2">
+            <button type="submit" class="btn btn-primary">Send Invite</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,447 @@
+COUNTRY
+CODE	COUNTRY	STATE	STATE CODE	AVAILABLE
+CURRENCIES
+AX	Aland Islands			EUR, GBP, USD
+AL	Albania			EUR, GBP, USD
+DZ	Algeria			EUR, GBP, USD
+AS	American Samoa			EUR, GBP, USD
+AD	Andorra			EUR, GBP, USD
+AO	Angola			EUR, GBP, USD
+AI	Anguilla			EUR, GBP, USD
+AQ	Antarctica			EUR, GBP, USD
+AG	Antigua and Barbuda			EUR, GBP, USD
+AR	Argentina			EUR, GBP, USD
+AM	Armenia			EUR, GBP, USD
+AW	Aruba			EUR, GBP, USD
+AU	Australia			AUD, CAD, EUR,
+GBP, NZD, SEK,
+SGD, USD
+AT	Austria			EUR, GBP, USD
+AZ	Azerbaijan			EUR, GBP, USD
+BS	Bahamas			EUR, GBP, USD
+BH	Bahrain			BHD, EUR, GBP,
+USD
+BD	Bangladesh			EUR, GBP, USD
+BB	Barbados			EUR, GBP, USD
+BE	Belgium			EUR, GBP, USD
+BZ	Belize			EUR, GBP, USD
+BJ	Benin			EUR, GBP, USD
+BM	Bermuda			EUR, GBP, USD
+BT	Bhutan			EUR, GBP, USD
+BO	Bolivia			EUR, GBP, USD
+BQ	Bonaire,
+Saint Eustatius
+and Saba			EUR, GBP, USD
+BW	Botswana			BWP, EUR, GBP,
+USD
+BV	Bouvet Island			EUR, GBP, USD
+BR	Brazil			EUR, GBP, USD
+IO	British Indian
+Ocean Territory			EUR, GBP, USD
+BN	Brunei Darussalam			EUR, GBP, USD
+BG	Bulgaria			BGN, EUR, GBP,
+USD
+BF	Burkina Faso			EUR, GBP, USD
+CV	Cabo Verde			EUR, GBP, USD
+KH	Cambodia			EUR, GBP, USD
+CM	Cameroon			EUR, GBP, USD
+CA	Canada	Alberta
+British Columbia
+Manitoba
+New Brunswick
+Newfoundland and Labrador
+Northwest Territories
+Nova Scotia
+Nunavut
+Ontario
+Prince Edward Island
+Quebec
+Saskatchewan
+Yukon Territory	CA-AB
+CA-BC
+CA-MB
+CA-NB
+CA-NL
+
+CA-NT
+CA-NS
+CA-NU
+CA-ON
+CA-PE
+CA-QC
+CA-SK
+CA-YT	AUD, CAD, EUR,
+GBP, NZD, USD
+KY	Cayman Islands			EUR, GBP, USD
+TD	Chad			EUR, GBP, USD
+CL	Chile			EUR, GBP, USD
+CN	China			AUD, EUR, GBP,
+HKD, USD
+CX	Christmas Island			AUD, EUR, GBP,
+USD
+CC	Cocos (Keeling)
+Islands			AUD, EUR, GBP,
+USD
+CO	Colombia			EUR, GBP, USD
+KM	Comoros			EUR, GBP, USD
+CG	Congo			EUR, GBP, USD
+CK	Cook Islands			EUR, GBP, NZD,
+USD
+CR	Costa Rica			EUR, GBP, USD
+CI	Cote D'Ivoire			EUR, GBP, USD
+HR	Croatia			EUR, GBP, HRK,
+USD
+CW	Curacao			EUR, GBP, USD
+CY	Cyprus			EUR. GBP, USD
+CZ	Czechia			CZK, EUR, GBP,
+PLN, USD
+DK	Denmark			AUD, DKK, EUR,
+GBP, NZD, USD
+DJ	Djibouti			EUR. GBP, USD
+DM	Dominica			EUR, GBP, USD
+DO	Dominican Republic			EUR, GBP, USD
+EC	Ecuador			EUR, GBP, USD
+SV	El Salvador			EUR, GBP, USD
+EE	Estonia			EUR, GBP, USD
+ET	Ethiopia			EUR, GBP, USD
+FK	Falkland Islands
+(Malvinas)			EUR, GBP, USD
+FO	Faroe Islands			EUR, GBP, USD
+FJ	Fiji			EUR, GBP, USD
+FI	Finland			EUR, GBP, USD
+FR	France			CAD, EUR, GBP,
+USD
+GF	French Guiana			EUR, GBP, USD
+PF	French Polynesia			EUR, GBP, USD
+TF	French Southern
+Territories			EUR, GBP, USD
+GA	Gabon			EUR, GBP, USD
+GM	Gambia			EUR, GBP, USD
+GE	Georgia			EUR, GBP, USD
+DE	Germany			AUD, CAD, CHF,
+DKK, EUR, GBP,
+HRK, JPY, NOK,
+NZD, PLN, SEK,
+USD
+GH	Ghana			EUR, GBP, USD
+GI	Gibraltar			EUR, GBP, USD
+GR	Greece			CHF, EUR, GBP,
+USD
+GL	Greenland			EUR, GBP, USD
+GD	Grenada			EUR, GBP, USD
+GP	Guadeloupe			EUR, GBP, USD
+GU	Guam			EUR, GBP, USD
+GT	Guatemala			EUR, GBP, USD
+GG	Guernsey			EUR, GBP, USD
+GQ	Guinea, Equatorial			EUR, GBP, USD
+GY	Guyana			EUR, GBP, USD
+HM	Heard and
+Mc Donald Islands			EUR, GBP, USD
+HN	Honduras			EUR, GBP, USD
+HK	Hong Kong			AUD, EUR, GBP,
+HKD, USD
+HU	Hungary			EUR, GBP, HUF,
+USD
+IS	Iceland			EUR, GBP, USD
+IN	India			AUD, EUR, GBP,
+INR, USD
+ID	Indonesia			EUR, GBP, USD
+IE	Ireland			AUD, CAD, CHF,
+EUR, GBP, HKD,
+JPY, NZD, SEK,
+SGD, THB, USD,
+ZAR
+IM	Isle of Man			EUR, GBP, USD
+IL	Israel			CHF, EUR, GBP,
+ILS, USD
+IT	Italy			EUR, GBP, USD
+JM	Jamaica			EUR, GBP, USD
+JP	Japan			CAD, EUR, GBP,
+JPY, USD
+JE	Jersey			EUR, GBP, USD
+JO	Jordan			EUR, GBP, USD
+KZ	Kazakhstan			EUR, GBP, USD
+KE	Kenya			EUR, GBP, KES,
+USD
+KI	Kiribati			AUD, EUR, GBP,
+USD
+KR	Korea,
+Republic of (South)			EUR, GBP, USD
+XK	Kosovo			EUR, GBP, USD
+KW	Kuwait			EUR, GBP, KWD,
+USD
+KG	Kyrgyzstan			EUR, GBP, USD
+LA	Lao People's
+Democratic
+Republic (Laos)			EUR, GBP, USD
+LV	Latvia			EUR, GBP, USD
+LS	Lesotho			EUR, GBP, USD
+LR	Liberia			EUR, GBP, USD
+LI	Liechtenstein			CAD, CHF, EUR,
+GBP, USD
+LT	Lithuania			EUR, GBP, USD
+LU	Luxembourg			EUR, GBP, USD
+MO	Macao			EUR, GBP, HKD,
+USD
+MK	Macedonia			EUR, GBP, USD
+MG	Madagascar			EUR, GBP, USD
+MW	Malawi			EUR, GBP, USD
+MY	Malaysia			AUD, EUR, GBP,
+USD
+MV	Maldives			EUR, GBP, USD
+ML	Mali			EUR, GBP, USD
+MT	Malta			EUR, GBP, USD
+MH	Marshall Islands			EUR, GBP, USD
+MQ	Martinique			EUR, GBP, USD
+MR	Mauritania			EUR, GBP, USD
+MU	Mauritius			EUR, GBP, USD
+YT	Mayotte			EUR, GBP, USD
+MX	Mexico			EUR, GBP, MXN,
+USD
+FM	Micronesia,
+Federated States of			EUR, GBP, USD
+MC	Monaco			EUR, GBP, USD
+MN	Mongolia			EUR, GBP, USD
+ME	Montenegro			EUR, GBP, USD
+MS	Montserrat			EUR, GBP, USD
+MA	Morocco			EUR, GBP, USD
+MZ	Mozambique			EUR, GBP, USD
+NA	Namibia			EUR, GBP, USD,
+ZAR
+NR	Nauru			AUD, EUR, GBP,
+USD
+NP	Nepal			EUR, GBP, USD
+AN	Netherlands
+Antilles			EUR, GBP, USD
+NL	Netherlands
+(Holland)			EUR, GBP, JPY,USD
+NC	New Caledonia			EUR, GBP, USD
+NZ	New Zealand			AUD, CAD, EUR,
+GBP, JPY, NZD,
+USD
+NI	Nicaragua			EUR, GBP, USD
+NE	Niger			EUR, GBP, USD
+NG	Nigeria			EUR, GBP, USD
+NU	Niue			EUR, GBP, NZD,
+USD
+NF	Norfolk Island			AUD, EUR, GBP,
+USD
+MP	Northern
+Mariana Islands			EUR, GBP, USD
+NO	Norway			EUR, GBP, NOK,
+USD
+OM	Oman			EUR, GBP, OMR,
+USD
+PK	Pakistan			EUR, GBP, USD
+PW	Palau			EUR, GBP, USD
+PS	Palestine,
+State of			EUR, GBP, USD
+PA	Panama			EUR, GBP, USD
+PG	Papua New Guinea			EUR, GBP, USD
+PY	Paraguay			EUR, GBP, USD
+PE	Peru			EUR, GBP, USD
+PH	Philippines			AUD, EUR, GBP,
+PHP, SGD, USD
+PN	Pitcairn Island			EUR, GBP, NZD,
+USD
+PL	Poland			AUD, EUR, GBP,
+PLN, USD
+PT	Portugal			EUR, GBP, USD
+PR	Puerto Rico			EUR, GBP, USD
+QA	Qatar			EUR, GBP, QAR,
+USD
+RE	Reunion			EUR, GBP, USD
+RO	Romania			EUR, GBP, RON,
+USD
+RW	Rwanda			EUR, GBP, USD
+BL	Saint Barthelemy			EUR, GBP, USD
+SH	Saint Helena,
+Ascension and
+Tristan da Cunha			EUR, GBP, USD
+KN	Saint Kitts
+and Nevis			EUR, GBP, USD
+LC	Saint Lucia			EUR, GBP, USD
+MF	Saint Martin
+(French part)			EUR, GBP, USD
+PM	Saint Pierre
+and Miquelon			EUR, GBP, USD
+VC	Saint Vincent and
+the Grenadines			EUR, GBP, USD
+WS	Samoa			EUR, GBP, USD
+SM	San Marino			EUR, GBP, USD
+ST	Sao Tome
+and Principe			EUR, GBP, USD
+SA	Saudi Arabia			EUR, GBP, SAR,
+USD
+SN	Senegal			EUR, GBP, USD
+RS	Serbia			EUR, GBP, USD
+SC	Seychelles			EUR, GBP, USD
+SL	Sierra Leone			EUR, GBP, USD
+SG	Singapore			AUD, EUR, GBP,
+SGD, USD
+SX	Sint Maarten
+(Dutch part)			EUR, GBP, USD
+SK	Slovakia			EUR, GBP, USD
+SI	Slovenia			EUR, GBP, USD
+SB	Solomon Islands			EUR, GBP, USD
+ZA	South Africa			AUD, EUR, GBP,
+USD, ZAR
+GS	South Georgia
+and the South
+Sandwich Islands			EUR, GBP, USD
+ES	Spain			EUR, GBP, NZD,
+PLN, USD
+LK	Sri Lanka			EUR, GBP, USD
+SR	Suriname			EUR, GBP, USD
+SJ	Svalbard and
+Jan Mayen Islands			EUR, GBP, USD
+SZ	Swaziland			EUR, GBP, USD,
+ZAR
+SE	Sweden			EUR, GBP, NOK,
+NZD, SEK, USD
+CH	Switzerland			CAD, CHF, DKK,
+EUR, GBP, NZD,
+USD
+TW	Taiwan			EUR, GBP, USD
+TJ	Tajikistan			EUR, GBP, USD
+TZ	Tanzania,
+United Republic of			EUR, GBP, USD
+TH	Thailand			EUR, GBP, THB,
+USD
+TL	Timor-Leste			EUR, GBP, USD
+TG	Togo			EUR, GBP
+TK	Tokelau			EUR, GBP, NZD,
+USD
+TO	Tonga			EUR, GBP, USD
+TT	Trinidad
+and Tobago			EUR, GBP, USD
+TR	Turkey			CAD, EUR, GBP,
+TRY, USD
+TM	Turkmenistan			EUR, GBP, USD
+TC	Turks
+and Caicos Islands			EUR, GBP, USD
+TV	Tuvalu			AUD, EUR, GBP, USD
+UG	Uganda			EUR, GBP, USD
+AE	United Arab Emirates			AED, EUR, GBP, USD
+GB	United Kingdom			AUD, CAD, CHF,
+DKK, EUR, GBP,
+HKD, JPY, NZD,
+PLN, SEK, USD
+UY	Uruguay			EUR, GBP, USD
+US	USA	Alabama
+Alaska
+Arizona
+Arkansas
+California
+Colorado
+Connecticut
+Delaware
+District of Columbia
+Florida
+Georgia
+Hawaii
+Idaho
+Illinois
+Indiana
+Iowa
+Kansas
+Kentucky
+Louisiana
+Maine
+Maryland
+Massachusetts
+Michigan
+Minnesota
+Mississippi
+Missouri
+Montana
+Nebraska
+Nevada
+New Hampshire
+New Jersey
+New Mexico
+New York
+North Carolina
+North Dakota
+Ohio
+Oklahoma
+Oregon
+Pennsylvania
+Rhode Island
+South Carolina
+South Dakota
+Tennessee
+Texas
+Utah
+Vermont
+Virginia
+Washington
+West Virginia
+Wisconsin
+Wyoming	US-AL
+US-AK
+US-AZ
+US-AR
+US-CA
+US-CO
+US-CT
+US-DE
+US-DC
+US-FL
+US-GA
+US-HI
+US-ID
+US-IL
+US-IN
+US-IA
+US-KS
+US-KY
+US-LA
+US-ME
+US-MD
+US-MA
+US-MI
+US-MN
+US-MS
+US-MO
+US-MT
+US-NE
+US-NV
+US-NH
+US-NJ
+US-NM
+US-NY
+US-NC
+US-ND
+US-OH
+US-OK
+US-OR
+US-PA
+US-RI
+US-SC
+US-SD
+US-TN
+US-TX
+US-UT
+US-VT
+US-VA
+US-WA
+US-WV
+US-WI
+US-WY	AUD, CAD, EUR,
+GBP, NZD, USD
+UM	US Minor
+Outlying Islands			EUR, GBP, USD
+UZ	Uzbekistan			EUR, GBP, USD
+VU	Vanuatu			EUR, GBP, USD
+VA	Vatican City State
+(Holy See)			EUR, GBP, USD
+VN	Vietnam			EUR, GBP, USD
+VG	Virgin Islands,
+British			EUR, GBP, USD
+VI	Virgin Islands,
+US			EUR, GBP, USD
+WF	Wallis and
+Futuna Islands			EUR, GBP, USD
+EH	Western Sahara			EUR, GBP, USD
+ZM	Zambia			EUR, GBP, USD

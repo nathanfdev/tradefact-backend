@@ -1,0 +1,539 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Core.Common;
+using Core.Enums;
+using Core.Models;
+using Mapster;
+using MediatR;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using NSwag.Annotations;
+using Tradefact.Api.Model;
+using Tradefact.Application.Models;
+using Tradefact.Application.Network;
+using Tradefact.Data;
+using Tradfact.Api.Requests;
+using Tradfact.Api.Responses;
+using X.PagedList;
+
+namespace Tradefact.Api.Controllers
+{
+
+    public abstract class DirectoryController : BaseApiController
+    {
+        public virtual OrganisationTypeEnum OrganisationType => OrganisationTypeEnum.SHIPPER;
+
+        private readonly IMediator _mediator;
+
+        public DirectoryController(TradefactDbContext context) : base(context)
+        {
+        }
+
+        public DirectoryController(TradefactDbContext context, IMediator mediator) : base(context)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpGet()]
+        [SwaggerResponse("200", typeof(ListResource<DirectoryResource>), Description = "OK Result")]
+        [Route("")]
+<<<<<<< HEAD
+        public async Task<IActionResult> List([FromQuery] PagedResultParameters @params, string search = null, bool includeStats = true)
+=======
+        public async Task<IActionResult> List([FromQuery] PagedResultParameters @params, string search = null, bool includeOrders = false)
+>>>>>>> 39cc0481588c24dee40fcbada8fba94829211599
+        {
+            //TODO: Buyer and Supplier to be removed once it is fully replaced by Network
+            if (this.OrganisationType == OrganisationTypeEnum.BUYER)
+            {
+                IQueryable<BuyerInfo> query = _context.Buyers.Where(q => q.ParentId == this.OrganisationId).OrderByDescending(x => x.CreationDateInternal);
+                if (search != null && search.Length > 0)
+                {
+                    query = query.Where(q => EF.Functions.Like(q.Name, $"%{search}%"));
+                    IQueryable<SortedDirectoryResource> buyers = query.Adapt<List<SortedDirectoryResource>>().AsQueryable();
+
+                    return this.HandleSuccessResponse(new ListResource<DirectoryResource>(buyers.OrderBy(x => x.Position(search)).ToPagedList(@params.PageNumber, @params.PageSize)));
+                }
+                IPagedList<DirectoryResource> directory = await query.Adapt<List<DirectoryResource>>().ToPagedListAsync(@params.PageNumber, @params.PageSize);
+                return this.HandleSuccessResponse(new ListResource<DirectoryResource>(directory));
+            } else if (this.OrganisationType == OrganisationTypeEnum.SUPPLIER)
+            {
+                IQueryable<SupplierInfo> query = _context.Suppliers.Where(q => q.ParentId == this.OrganisationId).OrderByDescending(x => x.CreationDateInternal);
+                if (search != null && search.Length > 0)
+                {
+                    query = query.Where(q => EF.Functions.Like(q.Name, $"%{search}%"));
+                    IQueryable<SortedDirectoryResource> suppliers = query.Adapt<List<SortedDirectoryResource>>().AsQueryable();
+
+                    return this.HandleSuccessResponse(new ListResource<DirectoryResource>(suppliers.OrderBy(x => x.Position(search)).ToPagedList(@params.PageNumber, @params.PageSize)));
+                }
+                IPagedList<DirectoryResource> directory = await query.Adapt<List<DirectoryResource>>().ToPagedListAsync(@params.PageNumber, @params.PageSize);
+                return this.HandleSuccessResponse(new ListResource<DirectoryResource>(directory));
+            } else
+            {
+                IPagedList<DirectoryResource> network = await _mediator.Send(new GetNetworkListQuery
+                {
+                    OrganisationId = this.OrganisationId,
+                    Search = search,
+                    Paging = @params,
+                    IncludeOrders = includeOrders
+                });
+                return this.HandleSuccessResponse(new ListResource<DirectoryResource>(network));
+            }
+        }
+
+        [HttpGet("{id}")]
+        [SwaggerResponse("200", typeof(DirectoryResource), Description = "OK Result")]
+        public async Task<IActionResult> GetById(string id)
+        {
+            Organisation org = await GetOrganisation(id);
+            if (org == null)
+            {
+                return new NotFoundResult();
+            }
+            return new OkObjectResult(org.Adapt<DirectoryResource>());
+        }
+
+        [HttpPost]
+        [SwaggerResponse("200", typeof(DirectoryResource), Description = "Created result")]
+        public virtual async Task<IActionResult> Create([FromBody]CreateOrganisationRequest request)
+        {
+            var org = new Organisation { Id = Guid.NewGuid(), ParentId = this.OrganisationId, Name = request.Name, PaymentTerms = 30, OrganisationTypeId = this.OrganisationType, Currency = request.Currency };
+            _context.Organisations.Add(org);
+            _ = await _context.SaveChangesAsync();
+
+            return new OkObjectResult(org.Adapt<DirectoryResource>());
+        }
+
+        [HttpPut]
+        [SwaggerResponse("200", typeof(DirectoryResource), Description = "Updated result")]
+        [Route("{id}")]
+        public async Task<IActionResult> Update([FromBody]UpdateCompanyRequest request, string id)
+        {
+            Organisation org = await GetOrganisation(id);
+            org = request.Adapt(org);
+            _ = await _context.SaveChangesAsync();
+            return new OkObjectResult(org.Adapt<DirectoryResource>());
+        }
+
+        [HttpPatch]
+        [SwaggerResponse("200", typeof(DirectoryResource), Description = "Update result")]
+        [Route("{id}")]
+        public virtual async Task<IActionResult> Patch([FromBody] JsonPatchDocument<UpdateCompanyRequest> patchDoc, string id)
+        {
+            if (patchDoc != null)
+            {
+                Organisation org = await GetOrganisation(id);
+                UpdateCompanyRequest request = new UpdateCompanyRequest();
+                request = org.Adapt(request);
+                patchDoc.ApplyTo(request, ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                org = request.Adapt(org);
+                _ = await _context.SaveChangesAsync();
+
+                return new ObjectResult(org.Adapt<DirectoryResource>());
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string id)
+        {
+            Organisation org = await GetOrganisation(id);
+            if (org == null)
+            {
+                return new NotFoundResult();
+            }
+            org.IsActive = false;
+            _ = await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpGet]
+        [SwaggerResponse("200", typeof(NoteResponse), Description = "Updated result")]
+        [Route("{id:guid}/notes")]
+        public async Task<IActionResult> GetNotes(string id)
+        {
+            Organisation org = await GetOrganisationWithNotes(id);
+            if (org == null || org.Notes == null || !org.Notes.Any())
+            {
+                return new OkObjectResult(new NoteResponse());
+            }
+            try
+            {
+                NoteResponse response = org.Notes[0].Adapt<NoteResponse>();
+                return new OkObjectResult(response);
+            }
+            catch (Exception e)
+            {
+
+                throw(e);
+            }
+
+        }
+
+        [HttpPut]
+        [SwaggerResponse("200", typeof(NoteResponse), Description = "Updated result")]
+        [Route("{id:guid}/notes")]
+        public async Task<IActionResult> UpdateNotes([FromBody]AddUpdateNoteRequest request, string id)
+        {
+            Organisation org = await GetOrganisationWithNotes(id);
+            if (org == null)
+            {
+                return new NotFoundResult();
+            }
+            if (!org.Notes.Any())
+            {
+                org.Notes.Add(new OrganisationNote());
+            }
+            OrganisationNote note = org.Notes.FirstOrDefault();
+            note.Note = request.Note;
+            _ = await _context.SaveChangesAsync();
+
+            return new OkObjectResult(note.Adapt<NoteResponse>());
+        }
+
+        [HttpGet]
+        [SwaggerResponse("200", typeof(ListResource<AddressResource>), Description = "Updated result")]
+        [Route("{id:guid}/address")]
+        public async Task<IActionResult> GetDirectoryAddresses(string id, [FromQuery] PagedResultParameters @params, string search = null)
+        {
+            Organisation org = await GetOrganisationWithAddress(id);
+            if (org == null)
+            {
+                return new NotFoundResult();
+            }
+            IQueryable<AddressResource> query = org.Addresses.Where(q=>q.IsActive).Adapt<List<AddressResource>>().AsQueryable();
+            if (search != null && search.Length > 1)
+            {
+                query = query.Where(q => EF.Functions.Like(q.Name, $"%{search}%") || EF.Functions.Like(q.AddressLine1, $"%{search}%") || EF.Functions.Like(q.City, $"%{search}%"));
+                IQueryable<SortedAddressResource> addresses = query.Adapt<List<SortedAddressResource>>().AsQueryable();
+
+                return new OkObjectResult(new ListResource<AddressResource>(addresses.OrderBy(x => x.Position(search)).ThenBy(x => x.Name).ToPagedList(@params.PageNumber, @params.PageSize)));
+            }
+            return new OkObjectResult(new ListResource<AddressResource>(query.ToPagedList(@params.PageNumber, @params.PageSize)));
+        }
+
+        [HttpGet]
+        [SwaggerResponse("200", typeof(AddressResource), Description = "Updated result")]
+        [Route("{id:guid}/address/{addressid:guid}")]
+        public async Task<IActionResult> GetDirectoryAddressById(string id, string addressid)
+        {
+            Organisation org = await GetOrganisationWithAddress(id);
+            if (org == null || org.Addresses == null || !org.Addresses.Any(q => q.Id == new Guid(addressid)))
+            {
+                return new NotFoundResult();
+            }
+            return new OkObjectResult(org.Addresses.Single(q => q.Id == new Guid(addressid)).Adapt<AddressResource>());
+        }
+
+        [HttpPost]
+        [SwaggerResponse("200", typeof(AddressResource), Description = "Created result")]
+        [Route("{id:guid}/address")]
+        public async Task<IActionResult> CreateAddress([FromBody]CreateAddressRequest request, string id)
+        {
+            Organisation org = await GetOrganisationWithAddress(id);
+            if (org == null)
+            {
+                return new NotFoundResult();
+            }
+            Address add = request.Adapt<Address>();
+            add.Id = new Guid();
+
+            org.Addresses.Add(add);
+
+            _ = await _context.SaveChangesAsync();
+            return new OkObjectResult(add.Adapt<AddressResource>());
+        }
+
+        [HttpPut]
+        [SwaggerResponse("200", typeof(AddressResource), Description = "Updated result")]
+        [Route("{id:guid}/address/{addressid:guid}")]
+        public async Task<IActionResult> UpdateAddress([FromBody]UpdateAddressRequest request, string id, string addressid)
+        {
+            Address add = await _context.Addresses.SingleOrDefaultAsync(q => q.Id == new Guid(addressid) && q.OrganisationId == new Guid(id) && q.Organisation.ParentId == this.OrganisationId);
+            if (add == null)
+            {
+                Partnership partnership = null;
+                if (this.OrganisationType == OrganisationTypeEnum.SHIPPER) partnership = await _context.Partnerships.FirstOrDefaultAsync(x => x.ProviderId == new Guid(id) && x.ClientId == this.OrganisationId);
+                else if (this.OrganisationType == OrganisationTypeEnum.BUYER) partnership = await _context.Partnerships.FirstOrDefaultAsync(x => x.ClientId == new Guid(id) && x.ProviderId == this.OrganisationId);
+                if (partnership != null)
+                {
+                    add = await _context.Addresses.SingleOrDefaultAsync(q => q.Id == new Guid(addressid) && q.OrganisationId == new Guid(id));
+                }
+            }
+
+            add.AddressLine1 = request.AddressLine1;
+            add.AddressLine2 = request.AddressLine2;
+            add.AddressLine3 = request.AddressLine3;
+            add.AddressLine4 = request.AddressLine4;
+            add.City = request.City;
+            add.CountryCode = request.CountryCode;
+            add.Province = request.Province;
+            add.County = request.County;
+            add.Name = request.Name;
+            add.PostalCode = request.PostalCode;
+
+            _ = await _context.SaveChangesAsync();
+
+            add = await _context.Addresses.Include(i=>i.Country).SingleOrDefaultAsync(q => q.Id == new Guid(addressid));
+            return new OkObjectResult(add.Adapt<AddressResource>());
+        }
+
+        [HttpPatch]
+        [SwaggerResponse("200", typeof(AddressResource), Description = "Updated result")]
+        [Route("{id:guid}/address/{addressid:guid}")]
+        public async Task<IActionResult> UpdateAddress([FromBody] JsonPatchDocument<UpdateAddressRequest> patchDoc, string id, string addressid)
+        {
+
+            if (patchDoc != null)
+            {
+                Organisation org = await GetOrganisationWithAddress(id);
+                if (org == null || org.Addresses == null || !org.Addresses.Any(q => q.Id == new Guid(addressid)))
+                {
+                    return new NotFoundResult();
+                }
+                Address add = org.Addresses.Single(q => q.Id == new Guid(addressid));
+                UpdateAddressRequest request = new UpdateAddressRequest();
+                request = org.Adapt(request);
+                patchDoc.ApplyTo(request, ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                add = request.Adapt(add);
+                _ = await _context.SaveChangesAsync();
+
+                return new ObjectResult(add.Adapt<AddressResource>());
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
+
+        [HttpDelete]
+        [Route("{id:guid}/address/{addressid:guid}")]
+        public async Task<IActionResult> DeleteAddress(string id, string addressid)
+        {
+            Organisation org = await GetOrganisationWithAddress(id);
+            if (org == null || org.Addresses == null || !org.Addresses.Any(q => q.Id == new Guid(addressid)))
+            {
+                return new NotFoundResult();
+            }
+            Address add = org.Addresses.Single(q => q.Id == new Guid(addressid));
+            add.IsActive = false;
+            _ = await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+
+        [HttpGet]
+        [SwaggerResponse("200", typeof(ListResource<ContactResource>), Description = "Updated result")]
+        [Route("{id:guid}/Contact")]
+        public async Task<IActionResult> GetDirectoryContacts(string id, [FromQuery] PagedResultParameters @params, string search = null, string locationid = null)
+        {
+            Organisation org = await GetOrganisationWithContacts(id);
+            if (org == null)
+            {
+                List<ContactResource> notfound = new List<ContactResource>();
+                return new OkObjectResult(new ListResource<ContactResource>(notfound.AsQueryable().ToPagedList(@params.PageNumber, @params.PageSize)));
+            }
+            IQueryable<ContactResource> query = org.Contacts.Where(q=>q.IsActive).Adapt<List<ContactResource>>().AsQueryable();
+            if (search != null && search.Length > 1)
+            {
+                query = query.Where(q => q.FullName.Contains(search, StringComparison.InvariantCultureIgnoreCase));
+            }
+            if (locationid != null && locationid.Length > 1)
+            {
+                query = query.Where(q => q.LocationId == new Guid(locationid));
+            }
+            IPagedList<ContactResource> contacts = query.ToPagedList(@params.PageNumber, @params.PageSize);
+            foreach (ContactResource c in contacts)
+            {
+                if (c.LocationId.HasValue)
+                {
+                    Address a = await _context.Addresses.SingleOrDefaultAsync(q => q.Id == c.LocationId);
+                    if (a != null && a.Name!= null) c.LocationName = a.Name;
+                }
+            }
+            return new OkObjectResult(new ListResource<ContactResource>(contacts));
+        }
+
+        [HttpGet]
+        [SwaggerResponse("200", typeof(ContactResource), Description = "Updated result")]
+        [Route("{id:guid}/Contact/{Contactid:guid}")]
+        public async Task<IActionResult> GetDirectoryContactById(string id, string contactid)
+        {
+            Organisation org = await GetOrganisationWithContacts(id);
+            if (org == null || org.Contacts == null || !org.Contacts.Any(q => q.Id == new Guid(contactid)))
+            {
+                return new NotFoundResult();
+            }
+            return new OkObjectResult(org.Contacts.Single(q => q.Id == new Guid(contactid)).Adapt<DirectoryResource>());
+        }
+
+        [HttpPost]
+        [SwaggerResponse("200", typeof(ContactResource), Description = "Created result")]
+        [Route("{id:guid}/Contact")]
+        public async Task<IActionResult> CreateContact([FromBody]CreateContactRequest request, string id)
+        {
+            Organisation org = await GetOrganisation(id);
+            if (org == null)
+            {
+                return new NotFoundResult();
+            }
+            OrganisationContact add = request.Adapt<OrganisationContact>();
+            if (request.Email != null && request.Email.Email != null)
+            {
+                add.Email = new List<OrganisationContactEmailAddress>();
+                OrganisationContactEmailAddress email = request.Email.Adapt<OrganisationContactEmailAddress>();
+                add.Email.Add(email);
+            }
+            if (request.Phone != null && request.Phone.Number != null)
+            {
+                add.Phone = new List<OrganisationContactPhone>();
+                OrganisationContactPhone ph = request.Phone.Adapt<OrganisationContactPhone>();
+                add.Phone.Add(ph);
+            }
+            add.Id = new Guid();
+            org.Contacts.Add(add);
+
+            _ = await _context.SaveChangesAsync();
+            return new OkObjectResult(add.Adapt<ContactResource>());
+        }
+
+        [HttpPut]
+        [SwaggerResponse("200", typeof(ContactResource), Description = "Updated result")]
+        [Route("{id:guid}/Contact/{contactid:guid}")]
+        public async Task<IActionResult> UpdateContact([FromBody]UpdateContactRequest request, string id, string contactid)
+        {
+            Organisation org = await GetOrganisationWithContacts(id);
+            if (org == null || org.Contacts == null || !org.Contacts.Any(q => q.Id == new Guid(contactid)))
+            {
+                return new NotFoundResult();
+            }
+            OrganisationContact add = org.Contacts.FirstOrDefault(q => q.Id == new Guid(contactid));
+            add.FullName = request.FullName;
+
+            var updatedEmail = new OrganisationContactEmailAddress
+            {
+                Email = request.Email.Email,
+                IsDefault = request.Email.IsDefault
+            };
+            add.Email =  new List<OrganisationContactEmailAddress> { updatedEmail };
+
+            var updatedPhone = new OrganisationContactPhone
+            {
+                Number = request.Phone.Number,
+                AreaCode = request.Phone.AreaCode,
+                CountryCode = request.Phone.CountryCode,
+                IsDefault = request.Phone.IsDefault
+            };
+            add.Phone = new List<OrganisationContactPhone> { updatedPhone };
+
+            add.Department = request.Department;
+            add.LocationId = request.LocationId;
+            
+            _ = await _context.SaveChangesAsync();
+
+            return new OkObjectResult(add.Adapt<ContactResource>());
+        }
+
+        [HttpPatch]
+        [SwaggerResponse("200", typeof(ContactResource), Description = "Updated result")]
+        [Route("{id:guid}/Contact/{Contactid:guid}")]
+        public async Task<IActionResult> UpdateContact([FromBody] JsonPatchDocument<UpdateContactRequest> patchDoc, string id, string contactid)
+        {
+
+            if (patchDoc != null)
+            {
+                Organisation org = await GetOrganisationWithContacts(id);
+                if (org == null || org.Contacts == null || !org.Contacts.Any(q => q.Id == new Guid(contactid)))
+                {
+                    return new NotFoundResult();
+                }
+                Contact add = org.Contacts.Single(q => q.Id == new Guid(contactid));
+                UpdateContactRequest request = new UpdateContactRequest();
+                request = org.Adapt(request);
+                patchDoc.ApplyTo(request, ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                add = request.Adapt(add);
+                _ = await _context.SaveChangesAsync();
+
+                return new ObjectResult(add.Adapt<ContactResource>());
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
+        }
+
+        [HttpDelete]
+        [Route("{id:guid}/Contact/{Contactid:guid}")]
+        public async Task<IActionResult> DeleteContact(string id, string contactid)
+        {
+            Organisation org = await GetOrganisationWithContacts(id);
+            if (org == null || org.Contacts == null || !org.Contacts.Any(q => q.Id == new Guid(contactid)))
+            {
+                return new NotFoundResult();
+            }
+            Contact contact = org.Contacts.Single(q => q.Id == new Guid(contactid));
+            contact.IsActive = false;
+            _ = await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        private async Task<Organisation> GetOrganisation(string id)
+        {
+            Organisation org = await _context.Organisations.SingleOrDefaultAsync(q => q.ParentId == this.OrganisationId && q.Id == new Guid(id));
+            if (org == null)
+            {
+                return null;
+            }
+            return org;
+        }
+
+        private async Task<Organisation> GetOrganisationWithNotes(string id)
+        {
+            Organisation org = await _context.Organisations.Include(i => i.Notes).SingleOrDefaultAsync(q => q.ParentId == this.OrganisationId && q.Id == new Guid(id));
+            if (org == null)
+            {
+                return null;
+            }
+            return org;
+        }
+
+        private async Task<Organisation> GetOrganisationWithAddress(string id)
+        {
+            Organisation org = await _context.Organisations.Include(i => i.Addresses).ThenInclude(address => address.Country).SingleOrDefaultAsync(q => q.ParentId == this.OrganisationId && q.Id == new Guid(id));
+            if (org == null)
+            {
+                return null;
+            }
+            return org;
+        }
+
+        private async Task<Organisation> GetOrganisationWithContacts(string id)
+        {
+            Organisation org = await _context.Organisations.Include(i => i.Contacts).ThenInclude(contact => contact.Email).SingleOrDefaultAsync(q => q.ParentId == this.OrganisationId && q.Id == new Guid(id));
+            if (org == null)
+            {
+                return null;
+            }
+            return org;
+        }
+
+    }
+}

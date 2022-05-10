@@ -1,0 +1,446 @@
+{
+  "x-generator": "NSwag v13.1.6.0 (NJsonSchema v10.0.28.0 (Newtonsoft.Json v11.0.0.0))",
+  "swagger": "2.0",
+  "info": {
+    "title": "FunctionApp PartnerDashboard",
+    "version": "1.0.0"
+  },
+  "host": "#{apihostprefix}#.api.importwise.co",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/Billing": {
+      "post": {
+        "tags": [
+          "PartnerDashboardFunctions"
+        ],
+        "operationId": "PartnerDashboardFunctions_Billing",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/BillingsRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          200: {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BillingResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Bookings": {
+      "post": {
+        "tags": [
+          "PartnerDashboardFunctions"
+        ],
+        "operationId": "PartnerDashboardFunctions_Bookings",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/BookingsRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          200: {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BookingsResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Companies": {
+      "post": {
+        "tags": [
+          "PartnerDashboardFunctions"
+        ],
+        "operationId": "PartnerDashboardFunctions_Companies",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CompaniesRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          200: {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CompaniesResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/KPI": {
+      "post": {
+        "tags": [
+          "PartnerDashboardFunctions"
+        ],
+        "operationId": "PartnerDashboardFunctions_KPI",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/KPIRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          200: {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/KPIResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "BillingResponse": {
+      "type": "object",
+      "required": [
+        "billingStatus",
+        "tax",
+        "totalPrice"
+      ],
+      "properties": {
+        "amount": {
+          "type": "string"
+        },
+        "billingStatus": {
+          "$ref": "#/definitions/BillingStatus"
+        },
+        "dateDue": {
+          "type": "string"
+        },
+        "dateIssued": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "importName": {
+          "type": "string"
+        },
+        "importType": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "tax": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "totalPrice": {
+          "type": "number",
+          "format": "decimal"
+        }
+      }
+    },
+    "BillingStatus": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Pending",
+        "Due",
+        "Paid"
+      ],
+      "enum": [
+        1,
+        2,
+        3
+      ]
+    },
+    "BillingsRequest": {
+      "type": "object",
+      "properties": {
+        "partnerId": {
+          "type": "string"
+        }
+      }
+    },
+    "BookingsResponse": {
+      "type": "object",
+      "required": [
+        "importStatus"
+      ],
+      "properties": {
+        "companyName": {
+          "type": "string"
+        },
+        "eta": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "importName": {
+          "type": "string"
+        },
+        "importStatus": {
+          "$ref": "#/definitions/ImportStatus"
+        }
+      }
+    },
+    "ImportStatus": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Created",
+        "PreBooking",
+        "Booked",
+        "Collected",
+        "Loaded",
+        "Shipping",
+        "Customs",
+        "RoadHaulage",
+        "Delivered",
+        "Rejected"
+      ],
+      "enum": [
+        "Created",
+        "PreBooking",
+        "Booked",
+        "Collected",
+        "Loaded",
+        "Shipping",
+        "Customs",
+        "RoadHaulage",
+        "Delivered",
+        "Rejected"
+      ]
+    },
+    "BookingsRequest": {
+      "type": "object",
+      "properties": {
+        "partnerId": {
+          "type": "string"
+        }
+      }
+    },
+    "CompaniesResponse": {
+      "type": "object",
+      "required": [
+        "paymentTerms"
+      ],
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "companyName": {
+          "type": "string"
+        },
+        "contactEmail": {
+          "type": "string"
+        },
+        "contactName": {
+          "type": "string"
+        },
+        "dateRegistered": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "paymentTerms": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "Address": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfAddress"
+        },
+        {
+          "type": "object",
+          "required": [
+            "isDefault"
+          ],
+          "properties": {
+            "addressLine1": {
+              "type": "string"
+            },
+            "addressLine2": {
+              "type": "string"
+            },
+            "addressLine3": {
+              "type": "string"
+            },
+            "addressLine4": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "county": {
+              "type": "string"
+            },
+            "isDefault": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            },
+            "postalCode": {
+              "type": "string"
+            },
+            "province": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "CosmosItemOfAddress": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    },
+    "CompaniesRequest": {
+      "type": "object",
+      "properties": {
+        "partnerId": {
+          "type": "string"
+        }
+      }
+    },
+    "KPIResponse": {
+      "type": "object",
+      "required": [
+        "bookings",
+        "companies",
+        "importsRequiringAction",
+        "invoicesDue",
+        "revenue"
+      ],
+      "properties": {
+        "bookings": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "companies": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "importsRequiringAction": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "invoicesDue": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "revenue": {
+          "type": "number",
+          "format": "decimal"
+        }
+      }
+    },
+    "KPIRequest": {
+      "type": "object",
+      "required": [
+        "bookingsPeriod",
+        "companiesPeriod",
+        "revenuePeriod"
+      ],
+      "properties": {
+        "bookingsPeriod": {
+          "$ref": "#/definitions/KPIPeriod"
+        },
+        "companiesPeriod": {
+          "$ref": "#/definitions/KPIPeriod"
+        },
+        "partnerId": {
+          "type": "string"
+        },
+        "revenuePeriod": {
+          "$ref": "#/definitions/KPIPeriod"
+        }
+      }
+    },
+    "KPIPeriod": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Today",
+        "ThisWeek",
+        "ThisMonth",
+        "ThisYear",
+        "AllTime"
+      ],
+      "enum": [
+        "Today",
+        "ThisWeek",
+        "ThisMonth",
+        "ThisYear",
+        "AllTime"
+      ]
+    }
+  }
+}

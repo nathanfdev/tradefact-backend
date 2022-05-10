@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "FunctionApp.Partners": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --pause-on-error --port 5004"
+    },
+    "FunctionApp.Partners.SSL": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --pause-on-error --port 5004  --useHttps --cert \"Infrastructure\\localhostdev.pfx\" --password \"password\""
+    }
+  }
+}

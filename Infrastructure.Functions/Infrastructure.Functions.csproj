@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	  <TargetFramework>netcoreapp3.1</TargetFramework>
+	  <AzureFunctionsVersion>v3</AzureFunctionsVersion>
+	  <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AzureFunctionsV2.HttpExtensions" Version="1.3.1" />
+    <PackageReference Include="FluentValidation" Version="9.5.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.17.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.DurableTask" Version="2.4.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.14" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.11" />
+    <PackageReference Include="NodaTime" Version="3.0.5" />
+    <PackageReference Include="NSwag.SwaggerGeneration.AzureFunctionsV2" Version="1.1.3" />
+    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\Infrastructure.Data\Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\Infrastructure.Services\Infrastructure.Services.csproj" />
+    <ProjectReference Include="..\Integration.ChargeBee\Integration.ChargeBee.csproj" />
+    <ProjectReference Include="..\Integration.EventService\Integration.TradefactActivityService.csproj" />
+    <ProjectReference Include="..\Integration.Segment\Integration.Segment.csproj" />
+    <ProjectReference Include="..\Tradefact.Data\Tradefact.Data.csproj" />
+    <ProjectReference Include="..\Tradefact.Services\Tradefact.Services.csproj" />
+  </ItemGroup>
+</Project>

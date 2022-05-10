@@ -1,0 +1,9 @@
+﻿ALTER TABLE [PurchaseOrderItems] ADD [IsBulkUpload] bit NOT NULL DEFAULT CAST(0 AS bit);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210721085540_AddBulkUploadFlagInPOItem', N'3.1.4');
+
+GO
+

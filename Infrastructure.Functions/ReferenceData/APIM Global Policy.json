@@ -1,0 +1,53 @@
+APIM Global Policy for CORS,
+    JWT Verification
+
+
+    Check aud for tokens
+
+
+    Reference:
+      https: //briancaos.wordpress.com/2018/04/05/azure-api-management-configure-cors-in-the-policy/
+    <policies>
+    <inbound>
+    <cors>
+    <allowed-origins>
+    <origin>*</origin>
+    </allowed-origins>
+    <allowed-methods>
+    <method>GET</method>
+    <method>POST</method>
+    <method>OPTIONS</method>
+    <method>DELETE</method>
+    <method>PUT</method>
+    <method>PATCH</method>
+    </allowed-methods>
+    <allowed-headers>
+    <header>Authorization</header>
+    </allowed-headers>
+    </cors>
+    <validate-jwt header-name="Authorization" failed-validation-httpcode="403" failed-validation-error-message=
+    "I&apos;m sorry Dave, I can&apos;t do that" require-expiration-time="false" require-signed-tokens="false">
+    <openid-config url=
+    "https://importwiseb2c.b2clogin.com/importwiseB2C.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1_signupandsignin"
+    />
+    <audiences>
+    <audience>48d3878d-78d3-4b73-afbb-a355efcb64ff</audience>
+    </audiences>
+    <issuers>
+    <issuer>https: //importwiseb2c.b2clogin.com/7ecf3b55-e9d2-444c-8ece-6e6b707764f9/v2.0/</issuer>
+    </issuers>
+    </validate-jwt>
+    </inbound>
+    <backend />
+    <outbound>
+    <set-header name="Access-Control-Allow-Origin" exists-action="override">
+    <value>@(context.Request.Headers.GetValueOrDefault
+      ("Origin",
+    ""))</value>
+        </set-header>
+        <set-header name="Access-Control-Allow-Credentials" exists-action="override">
+            <value>true</value>
+        </set-header>
+    </outbound>
+    <on-error />
+</policies>

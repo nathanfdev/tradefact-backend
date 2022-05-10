@@ -1,0 +1,87 @@
+﻿# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+  branches:
+    include:
+      - develop
+      - master
+  paths:
+    include:
+      - TradeFact.Api/*
+
+variables:
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: '59b87343-23a4-460f-b6f6-6d4eb93ca0f1'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+  # Working Directory
+  workingDirectory: '$(System.DefaultWorkingDirectory)/Tradefact.Api'
+
+  # Working Directory
+  projects: '**/Tradefact.Api.csproj'
+
+  buildConfiguration: 'Release'
+
+  appName: 'Tradefact.API'
+
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+  # - task: DotNetCoreCLI@2
+  #   displayName: 'Restore Tools'
+  #   inputs:
+  #    command: custom
+  #    custom: tool
+  #    arguments: 'restore'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore project dependencies'
+    inputs:
+      command: 'restore'
+      projects: $(projects)
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build the project - $(buildConfiguration)'
+    inputs:
+      command: 'build'
+      arguments: '--no-restore --configuration $(buildConfiguration)'
+      projects: $(projects)
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish the project - $(buildConfiguration)'
+    inputs:
+      command: 'publish'
+      projects: $(projects)
+      publishWebProjects: false
+      arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)  --no-restore'
+      zipAfterPublish: true
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
+
+  # - task: CmdLine@2
+  #   displayName: Create specs directory
+  #   inputs:
+  #    script: 'mkdir $(Build.ArtifactStagingDirectory)/specs'
+
+  # - task: DotNetCoreCLI@2
+  #   displayName: 'Generate OpenAPI spec document'
+  #   inputs:
+  #    command: custom
+  #    custom: swagger
+  #    arguments: 'tofile --output $(Build.ArtifactStagingDirectory)/specs/$(appName).v1.json $(Build.ArtifactStagingDirectory)/$(buildConfiguration)/$(appName).dll v1'
+
+  # - task: PublishPipelineArtifact@1
+  #   displayName: "Publish Artifact: OpenAPI specs"
+  #   inputs:
+  #    targetPath: '$(Build.ArtifactStagingDirectory)/specs'
+  #    artifactName: 'OpenAPI'

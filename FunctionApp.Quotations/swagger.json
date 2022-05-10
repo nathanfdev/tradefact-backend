@@ -1,0 +1,259 @@
+{
+  "x-generator": "NSwag v13.1.6.0 (NJsonSchema v10.0.28.0 (Newtonsoft.Json v11.0.0.0))",
+  "swagger": "2.0",
+  "info": {
+    "title": "FunctionApp Quotations",
+    "version": "1.0.0"
+  },
+  "host": "#{apihostprefix}#.api.importwise.co",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/GetQuotations": {
+      "post": {
+        "tags": [
+          "QuotationFunctions"
+        ],
+        "operationId": "QuotationFunctions_GetQuotations",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/QuotationRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          200: {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/QuotationResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "QuotationResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfQuotationResponse"
+        },
+        {
+          "type": "object",
+          "required": [
+            "totalCost",
+            "totalCostConverted",
+            "transitTime"
+          ],
+          "properties": {
+            "isoCurrency": {
+              "type": "string"
+            },
+            "currencyConverted": {
+              "type": "string"
+            },
+            "lineItems": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/LineItemModel"
+              }
+            },
+            "supplier": {
+              "type": "string"
+            },
+            "totalCost": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "totalCostConverted": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "transitTime": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "LineItemModel": {
+      "type": "object",
+      "required": [
+        "amount",
+        "quantity"
+      ],
+      "properties": {
+        "amount": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "description": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "CosmosItemOfQuotationResponse": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    },
+    "QuotationRequest": {
+      "type": "object",
+      "required": [
+        "incoType",
+        "loadType"
+      ],
+      "properties": {
+        "goodsReadyFromAndTo": {
+          "$ref": "#/definitions/DateTimeGoodsReady"
+        },
+        "incoType": {
+          "$ref": "#/definitions/IncoTypeEnum"
+        },
+        "insuranceValue": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "load": {
+          "$ref": "#/definitions/LoadModel"
+        },
+        "loadType": {
+          "$ref": "#/definitions/LoadTypeEnum"
+        },
+        "numberOfItems": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "placeOfDispatch": {
+          "type": "string"
+        },
+        "placeOfLoading": {
+          "type": "string"
+        },
+        "portOfDischarge": {
+          "type": "string"
+        },
+        "portOfLoading": {
+          "type": "string"
+        },
+        "targetCurrency": {
+          "type": "string"
+        }
+      }
+    },
+    "DateTimeGoodsReady": {
+      "type": "object",
+      "required": [
+        "from",
+        "offset",
+        "to"
+      ],
+      "properties": {
+        "from": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "timeZone": {
+          "type": "string"
+        },
+        "to": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "IncoTypeEnum": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "FOB",
+        "EXW"
+      ],
+      "enum": [
+        "1",
+        "2"
+      ]
+    },
+    "LoadModel": {
+      "type": "object",
+      "required": [
+        "fthQ45",
+        "fT20",
+        "fT40",
+        "fthhQ40"
+      ],
+      "properties": {
+        "fthQ45": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "fT20": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "fT40": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "fthhQ40": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "LoadTypeEnum": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "FCL",
+        "LCL"
+      ],
+      "enum": [
+        "1",
+        "2"
+      ]
+    }
+  }
+}

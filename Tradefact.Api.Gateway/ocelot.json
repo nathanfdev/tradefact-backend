@@ -1,0 +1,19 @@
+{
+    "ReRoutes": [
+        {
+            "DownstreamPathTemplate": "/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 5001
+                }
+            ],
+            "UpstreamPathTemplate": "/api/companies/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+        }
+    ],
+    "GlobalConfiguration": {
+        "RequestIdKey": "ot-traceid"
+    }
+}

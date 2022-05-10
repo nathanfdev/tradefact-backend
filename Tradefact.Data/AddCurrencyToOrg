@@ -1,0 +1,9 @@
+﻿ALTER TABLE [Organisations] ADD [Currency] nvarchar(max) NULL DEFAULT N'USD';
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210326094244_AddCurrencyToOrg', N'3.1.4');
+
+GO
+

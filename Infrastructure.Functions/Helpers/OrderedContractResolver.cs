@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
+namespace Infrastructure.Functions.Helpers
+{
+    public class OrderedContractResolver : CamelCasePropertyNamesContractResolver
+    {
+        protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization) => base.CreateProperties(type,
+                                                                                                                                             memberSerialization)
+            .OrderBy(p => p.PropertyName)
+            .ToList() ;
+    }
+}

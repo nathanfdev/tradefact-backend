@@ -1,0 +1,329 @@
+{
+  "x-generator": "NSwag v13.1.6.0 (NJsonSchema v10.0.28.0 (Newtonsoft.Json v11.0.0.0))",
+  "swagger": "2.0",
+  "info": {
+    "title": "FunctionApp Suppliers",
+    "version": "1.0.0"
+  },
+  "host": "#{apihostprefix}#.api.importwise.co",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/DeactivateSupplier": {
+      "post": {
+        "tags": [
+          "SupplierFunctions"
+        ],
+        "operationId": "SupplierFunctions_DeactivateSupplier",
+        "responses": {
+          200: {
+            "description": "OK result"
+          }
+        }
+      }
+    },
+    "/GetSupplier": {
+      "post": {
+        "tags": [
+          "SupplierFunctions"
+        ],
+        "operationId": "SupplierFunctions_GetSupplier",
+        "responses": {
+          200: {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Supplier"
+            }
+          }
+        }
+      }
+    },
+    "/ListSuppliers": {
+      "post": {
+        "tags": [
+          "SupplierFunctions"
+        ],
+        "operationId": "SupplierFunctions_ListSuppliers",
+        "responses": {
+          200: {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Supplier"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/SupplierCreate": {
+      "post": {
+        "tags": [
+          "SupplierFunctions"
+        ],
+        "operationId": "SupplierFunctions_SupplierCreate",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/SupplierCreateRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          200: {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Supplier"
+            }
+          }
+        }
+      }
+    },
+    "/UpdateSupplier": {
+      "post": {
+        "tags": [
+          "SupplierFunctions"
+        ],
+        "operationId": "SupplierFunctions_UpdateSupplier",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateSupplierRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          200: {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Supplier"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Supplier": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfSupplier"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "address": {
+              "$ref": "#/definitions/Address"
+            },
+            "contactEmail": {
+              "type": "string"
+            },
+            "contactName": {
+              "type": "string"
+            },
+            "contactTelephone": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "Address": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfAddress"
+        },
+        {
+          "type": "object",
+          "required": [
+            "isDefault"
+          ],
+          "properties": {
+            "addressLine1": {
+              "type": "string"
+            },
+            "addressLine2": {
+              "type": "string"
+            },
+            "addressLine3": {
+              "type": "string"
+            },
+            "addressLine4": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "county": {
+              "type": "string"
+            },
+            "isDefault": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            },
+            "postalCode": {
+              "type": "string"
+            },
+            "province": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "CosmosItemOfAddress": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    },
+    "CosmosItemOfSupplier": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    },
+    "SupplierCreateRequest": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "contactEmail": {
+          "type": "string"
+        },
+        "contactName": {
+          "type": "string"
+        },
+        "contactTelephone": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdateSupplierRequest": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfUpdateSupplierRequest"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "address": {
+              "$ref": "#/definitions/Address"
+            },
+            "contactEmail": {
+              "type": "string"
+            },
+            "contactName": {
+              "type": "string"
+            },
+            "contactTelephone": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "supplierId": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "CosmosItemOfUpdateSupplierRequest": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

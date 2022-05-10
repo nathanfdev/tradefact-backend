@@ -1,0 +1,128 @@
+﻿<TrustFrameworkPolicy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" PolicySchemaVersion="0.3.0.0" TenantId="tradefactidentity.onmicrosoft.com" PolicyId="B2C_1A_TrustFrameworkExtensions" PublicPolicyUri="http://tradefactidentity.onmicrosoft.com/B2C_1A_TrustFrameworkExtensions" TenantObjectId="643a4816-9ee9-436b-bf67-6e2a15d671c6">
+  <BasePolicy>
+    <TenantId>tradefactidentity.onmicrosoft.com</TenantId>
+    <PolicyId>B2C_1A_TrustFrameworkBase</PolicyId>
+  </BasePolicy>
+  <BuildingBlocks>
+    <ClaimsSchema>
+      <ClaimType Id="extension_TermsOfServiceConsented">
+        <DisplayName>Terms of Service Consented</DisplayName>
+        <DataType>string</DataType>
+        <DefaultPartnerClaimTypes>
+          <Protocol Name="OAuth2" PartnerClaimType="tos_consented" />
+          <Protocol Name="OpenIdConnect" PartnerClaimType="tos_consented" />
+          <Protocol Name="SAML2" PartnerClaimType="http://schemas.tradefact.com/identity/claims/tosconsented" />
+        </DefaultPartnerClaimTypes>
+        <UserInputType>CheckboxMultiSelect</UserInputType>
+      </ClaimType>
+      <ClaimType Id="extension_VerifiedEmail">
+        <DisplayName>Verified Email</DisplayName>
+        <DataType>string</DataType>
+        <DefaultPartnerClaimTypes>
+          <Protocol Name="OAuth2" PartnerClaimType="verified_email" />
+          <Protocol Name="OpenIdConnect" PartnerClaimType="verified_email" />
+          <Protocol Name="SAML2" PartnerClaimType="http://schemas.tradefact.com/identity/claims/verifiedemail" />
+        </DefaultPartnerClaimTypes>
+        <UserInputType>Readonly</UserInputType>
+      </ClaimType>
+    </ClaimsSchema>
+    <ClaimsTransformations>
+      <!-- The following claims transformation creates the mail address for a user. -->
+      <ClaimsTransformation Id="CreateEmailFromVerifiedEmail" TransformationMethod="FormatStringClaim">
+        <InputClaims>
+          <InputClaim ClaimTypeReferenceId="extension_VerifiedEmail" TransformationClaimType="inputClaim" />
+        </InputClaims>
+        <InputParameters>
+          <InputParameter Id="stringFormat" DataType="string" Value="{0}" />
+        </InputParameters>
+        <OutputClaims>
+          <OutputClaim ClaimTypeReferenceId="email" TransformationClaimType="outputClaim" />
+        </OutputClaims>
+      </ClaimsTransformation>
+    </ClaimsTransformations>
+    <ContentDefinitions>
+      <ContentDefinition Id="api.localaccount.signupsignin">
+        <LoadUri>https://storageaccountpocuct.z6.web.core.windows.net/signupsignin.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:selfasserted:1.1.0</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Local account change password page</Item>
+        </Metadata>
+      </ContentDefinition>
+      <ContentDefinition Id="api.localaccount.selfasserted">
+        <LoadUri>https://storageaccountpocuct.z6.web.core.windows.net/selfasserted.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:selfasserted:1.1.0</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Local account change password page</Item>
+        </Metadata>
+      </ContentDefinition>
+      <ContentDefinition Id="api.localaccount.welcome">
+        <LoadUri>https://storageaccountpocuct.z6.web.core.windows.net/selfasserted.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:selfasserted:1.1.0</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Local account change password page</Item>
+        </Metadata>
+        <LocalizedResourcesReferences MergeBehavior="Prepend">
+          <LocalizedResourcesReference Language="en" LocalizedResourcesReferenceId="api.localaccount.welcome.en" />
+        </LocalizedResourcesReferences>
+      </ContentDefinition>
+      <ContentDefinition Id="api.localaccountsignup">
+        <LoadUri>https://storageaccountpocuct.z6.web.core.windows.net/selfasserted.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:selfasserted:1.1.0</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Local account sign up page</Item>
+        </Metadata>
+      </ContentDefinition>
+      <ContentDefinition Id="api.selfasserted.consent">
+        <LoadUri>https://storageaccountpocuct.z6.web.core.windows.net/selfasserted_tos.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:selfasserted:1.1.0</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Consent</Item>
+        </Metadata>
+      </ContentDefinition>
+      <ContentDefinition Id="api.localaccount.unified">
+        <LoadUri>https://storageaccountpocuct.z6.web.core.windows.net/unified.html</LoadUri>
+        <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
+        <DataUri>urn:com:microsoft:aad:b2c:elements:selfasserted:1.1.0</DataUri>
+        <Metadata>
+          <Item Key="DisplayName">Local account change password page</Item>
+        </Metadata>
+      </ContentDefinition>
+    </ContentDefinitions>
+    <Localization Enabled="true">
+      <SupportedLanguages DefaultLanguage="en" MergeBehavior="ReplaceAll">
+        <SupportedLanguage>en</SupportedLanguage>
+      </SupportedLanguages>
+      <LocalizedResources Id="api.localaccount.welcome.en">
+        <LocalizedStrings>
+          <!-- <LocalizedString ElementType="UxElement" StringId="initial_intro_full">Welcome to Tradefact</LocalizedString> -->
+          <LocalizedString ElementType="UxElement" StringId="initial_intro">Welcome</LocalizedString>
+        </LocalizedStrings>
+      </LocalizedResources>
+    </Localization>
+  </BuildingBlocks>
+  <ClaimsProviders>
+    <ClaimsProvider>
+      <DisplayName>Local Account SignIn</DisplayName>
+      <TechnicalProfiles>
+        <TechnicalProfile Id="login-NonInteractive">
+          <Metadata>
+            <Item Key="client_id">3c7e5b49-2f8d-4b57-9bbb-9c812dd88df5</Item>
+            <Item Key="IdTokenAudience">02678d13-3bf8-44be-b4e5-32bd37954fd4</Item>
+          </Metadata>
+          <InputClaims>
+            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="ProxyIdentityExperienceFrameworkAppId" />
+            <InputClaim ClaimTypeReferenceId="resource_id" PartnerClaimType="resource" DefaultValue="IdentityExperienceFrameworkAppId" />
+          </InputClaims>
+        </TechnicalProfile>
+      </TechnicalProfiles>
+    </ClaimsProvider>
+  </ClaimsProviders>
+  <!--UserJourneys>
+	
+	</UserJourneys-->
+</TrustFrameworkPolicy>

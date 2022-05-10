@@ -1,0 +1,1799 @@
+﻿IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+
+GO
+
+ALTER TABLE [PurchaseOrders] ADD [RejectedReason] nvarchar(max) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201202100409_AddRejectedReason.sql', N'3.1.4');
+
+GO
+
+IF SCHEMA_ID(N'collab') IS NULL EXEC(N'CREATE SCHEMA [collab];');
+
+GO
+
+CREATE TABLE [AspNetRoles] (
+    [Id] nvarchar(450) NOT NULL,
+    [Name] nvarchar(256) NULL,
+    [NormalizedName] nvarchar(256) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [ContainerTypes] (
+    [Code] nvarchar(4) NOT NULL,
+    [Description] nvarchar(128) NULL,
+    [ISOTypeGroup] nvarchar(4) NULL,
+    [ISOTypeGroupDescription] nvarchar(128) NULL,
+    [Length] nvarchar(32) NULL,
+    [Height] nvarchar(32) NULL,
+    [Width] nvarchar(32) NULL,
+    [AdditionalInformation] nvarchar(512) NULL,
+    [Active] bit NOT NULL DEFAULT CAST(0 AS bit),
+    CONSTRAINT [PK_ContainerTypes] PRIMARY KEY ([Code])
+);
+
+GO
+
+CREATE TABLE [Countries] (
+    [Code2] nvarchar(4) NOT NULL,
+    [Name] nvarchar(256) NULL,
+    [Code3] nvarchar(8) NULL,
+    CONSTRAINT [PK_Countries] PRIMARY KEY ([Code2])
+);
+
+GO
+
+CREATE TABLE [Currency] (
+    [CurrencyId] int NOT NULL IDENTITY,
+    [CurrencyName] nvarchar(128) NULL,
+    [CurrencyCode] nvarchar(8) NULL,
+    [Description] nvarchar(128) NULL,
+    [Active] bit NOT NULL DEFAULT CAST(0 AS bit),
+    CONSTRAINT [PK_Currency] PRIMARY KEY ([CurrencyId])
+);
+
+GO
+
+CREATE TABLE [OrganisationRegistrations] (
+    [Id] uniqueidentifier NOT NULL,
+    [CompanyLegalName] nvarchar(250) NULL,
+    [Country] nvarchar(250) NULL,
+    [Address] nvarchar(250) NULL,
+    [City] nvarchar(250) NULL,
+    [WebAddress] nvarchar(250) NULL,
+    [BusinessId] nvarchar(250) NULL,
+    [BusinessRegDocumentUrl] nvarchar(max) NULL,
+    [BusinessRegDocumentName] nvarchar(max) NULL,
+    [CompanyBio] nvarchar(max) NULL,
+    [OrganisationId] uniqueidentifier NULL,
+    [RegistrationStatus] int NOT NULL,
+    CONSTRAINT [PK_OrganisationRegistrations] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [OrganisationType] (
+    [OrganisationTypeId] int NOT NULL,
+    [Name] nvarchar(32) NULL,
+    CONSTRAINT [PK_OrganisationType] PRIMARY KEY ([OrganisationTypeId])
+);
+
+GO
+
+CREATE TABLE [PartnershipTypes] (
+    [PartnershipTypeId] int NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [ProviderTypeId] int NOT NULL,
+    [ClientTypeId] int NOT NULL,
+    CONSTRAINT [PK_PartnershipTypes] PRIMARY KEY ([PartnershipTypeId])
+);
+
+GO
+
+CREATE TABLE [PurchaseType] (
+    [PurchaseTypeId] int NOT NULL IDENTITY,
+    [PurchaseTypeName] nvarchar(max) NULL,
+    [Description] nvarchar(max) NULL,
+    CONSTRAINT [PK_PurchaseType] PRIMARY KEY ([PurchaseTypeId])
+);
+
+GO
+
+CREATE TABLE [QueuedTask] (
+    [Id] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [Status] int NOT NULL,
+    [Description] nvarchar(256) NULL,
+    [Payload] nvarchar(max) NULL,
+    [Result] nvarchar(max) NULL,
+    CONSTRAINT [PK_QueuedTask] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [QuotationChargeType] (
+    [QuotationChargeTypeId] int NOT NULL,
+    [Name] nvarchar(32) NULL,
+    CONSTRAINT [PK_QuotationChargeType] PRIMARY KEY ([QuotationChargeTypeId])
+);
+
+GO
+
+CREATE TABLE [ShipmentType] (
+    [Id] int NOT NULL,
+    [Name] nvarchar(32) NULL,
+    CONSTRAINT [PK_ShipmentType] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [collab].[Rooms] (
+    [Id] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [IsOpen] bit NOT NULL,
+    [IsAlert] bit NOT NULL,
+    [UnreadCount] int NOT NULL,
+    [Name] nvarchar(250) NULL,
+    [Type] int NOT NULL,
+    CONSTRAINT [PK_Rooms] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [AspNetRoleClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [RoleId] nvarchar(450) NOT NULL,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [Locations] (
+    [LocCode] nvarchar(8) NOT NULL,
+    [Name] nvarchar(128) NULL,
+    [IATA] nvarchar(4) NULL,
+    [Position_Latitude] decimal(18, 4) NULL,
+    [Position_Longitude] decimal(18, 4) NULL,
+    [Port] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [Rail] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [Road] bit NOT NULL,
+    [Airport] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [CountryCode] nvarchar(4) NULL,
+    [IsGeneric] bit NOT NULL DEFAULT CAST(1 AS bit),
+    CONSTRAINT [PK_Locations] PRIMARY KEY ([LocCode]),
+    CONSTRAINT [FK_Locations_Countries_CountryCode] FOREIGN KEY ([CountryCode]) REFERENCES [Countries] ([Code2]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [OrganisationRegistrationUsers] (
+    [Id] uniqueidentifier NOT NULL,
+    [OrganisationRegistrationId] uniqueidentifier NOT NULL,
+    [Name] nvarchar(250) NULL,
+    [Email] nvarchar(250) NULL,
+    [Role] int NOT NULL,
+    [IsAdmin] bit NOT NULL,
+    CONSTRAINT [PK_OrganisationRegistrationUsers] PRIMARY KEY ([OrganisationRegistrationId], [Id]),
+    CONSTRAINT [FK_OrganisationRegistrationUsers_OrganisationRegistrations_OrganisationRegistrationId] FOREIGN KEY ([OrganisationRegistrationId]) REFERENCES [OrganisationRegistrations] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [Organisations] (
+    [Id] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [Name] nvarchar(250) NULL,
+    [ContactEmail] nvarchar(250) NULL,
+    [ContactName] nvarchar(250) NULL,
+    [ContactTelephone] nvarchar(50) NULL,
+    [PaymentTerms] int NOT NULL,
+    [TCs] nvarchar(max) NULL,
+    [ParentId] uniqueidentifier NULL,
+    [Bank_BankIdentifierCode] nvarchar(16) NULL,
+    [Bank_IBAN] nvarchar(32) NULL,
+    [Bank_SortCode] nvarchar(8) NULL,
+    [Bank_RoutingNo] nvarchar(16) NULL,
+    [Bank_AccountNo] nvarchar(32) NULL,
+    [Bank_IFSC] nvarchar(32) NULL,
+    [Bank_BSB] nvarchar(16) NULL,
+    [Bank_AccountName] nvarchar(32) NULL,
+    [TaxId] nvarchar(32) NULL,
+    [OrganisationTypeId] int NOT NULL,
+    [PlanInvitesAvailable] int NOT NULL,
+    [InvitesIssued] int NOT NULL,
+    [InvitesActioned] int NOT NULL,
+    CONSTRAINT [PK_Organisations] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Organisations_OrganisationType_OrganisationTypeId] FOREIGN KEY ([OrganisationTypeId]) REFERENCES [OrganisationType] ([OrganisationTypeId]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Organisations_Organisations_ParentId] FOREIGN KEY ([ParentId]) REFERENCES [Organisations] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [Carriers] (
+    [SCAC] nvarchar(4) NOT NULL,
+    [Name] nvarchar(128) NULL,
+    [Description] nvarchar(128) NULL,
+    [Company] nvarchar(128) NULL,
+    [CarrierGroup] nvarchar(128) NULL,
+    [Regions] nvarchar(128) NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [Tracking_Enabled] bit NULL DEFAULT CAST(0 AS bit),
+    [Tracking_OperatorValue] nvarchar(16) NULL,
+    [Tracking_BillOfLading] bit NULL DEFAULT CAST(0 AS bit),
+    [Tracking_Container] bit NULL DEFAULT CAST(0 AS bit),
+    [ShipmentTypeId] int NOT NULL,
+    CONSTRAINT [PK_Carriers] PRIMARY KEY ([SCAC]),
+    CONSTRAINT [FK_Carriers_ShipmentType_ShipmentTypeId] FOREIGN KEY ([ShipmentTypeId]) REFERENCES [ShipmentType] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [collab].[Messages] (
+    [Id] uniqueidentifier NOT NULL,
+    [RoomId] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [Comment] nvarchar(max) NULL,
+    [IsPinned] bit NOT NULL,
+    [PinnedAt] datetime2 NULL,
+    [PostedBy_Avatar] nvarchar(256) NULL,
+    [PostedBy_DisplayName] nvarchar(128) NULL,
+    [Type] nvarchar(8) NULL,
+    CONSTRAINT [PK_Messages] PRIMARY KEY ([RoomId], [Id]),
+    CONSTRAINT [FK_Messages_Rooms_RoomId] FOREIGN KEY ([RoomId]) REFERENCES [collab].[Rooms] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [Addresses] (
+    [Id] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [OrganisationId] uniqueidentifier NOT NULL,
+    [Type] int NOT NULL,
+    [Name] nvarchar(250) NULL,
+    [AddressLine1] nvarchar(250) NULL,
+    [AddressLine2] nvarchar(250) NULL,
+    [AddressLine3] nvarchar(250) NULL,
+    [AddressLine4] nvarchar(250) NULL,
+    [City] nvarchar(250) NULL,
+    [Province] nvarchar(250) NULL,
+    [County] nvarchar(250) NULL,
+    [IsDefault] bit NOT NULL,
+    [IsInvoiceAddress] bit NOT NULL,
+    [PostalCode] nvarchar(50) NULL,
+    [CountryCode] nvarchar(4) NULL,
+    CONSTRAINT [PK_Addresses] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Addresses_Countries_CountryCode] FOREIGN KEY ([CountryCode]) REFERENCES [Countries] ([Code2]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Addresses_Organisations_OrganisationId] FOREIGN KEY ([OrganisationId]) REFERENCES [Organisations] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [Contacts] (
+    [Id] uniqueidentifier NOT NULL,
+    [OrganisationId] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [Timestamp] varbinary(max) NULL,
+    [LastModifiedOn] datetimeoffset NOT NULL,
+    [CreationDate] datetimeoffset NOT NULL,
+    [FullName] nvarchar(250) NULL,
+    [FirstName] nvarchar(250) NULL,
+    [MiddleName] nvarchar(250) NULL,
+    [LastName] nvarchar(250) NULL,
+    [Title] nvarchar(250) NULL,
+    [Salutation] nvarchar(250) NULL,
+    [Department] nvarchar(250) NULL,
+    [IsDefault] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [LocationId] uniqueidentifier NOT NULL,
+    [Notes] nvarchar(250) NULL,
+    CONSTRAINT [PK_Contacts] PRIMARY KEY ([OrganisationId], [Id]),
+    CONSTRAINT [FK_Contacts_Organisations_OrganisationId] FOREIGN KEY ([OrganisationId]) REFERENCES [Organisations] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [Documents] (
+    [Id] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [BlobUrl] nvarchar(512) NULL,
+    [Name] nvarchar(128) NULL,
+    [Extension] nvarchar(8) NULL,
+    [Description] nvarchar(256) NULL,
+    [DateUploaded] datetime2 NOT NULL,
+    [CompanyId] uniqueidentifier NOT NULL,
+    [IsRichText] bit NOT NULL,
+    [RichTextData] nvarchar(max) NULL,
+    CONSTRAINT [PK_Documents] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Documents_Organisations_CompanyId] FOREIGN KEY ([CompanyId]) REFERENCES [Organisations] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [OrganisationNotes] (
+    [Id] uniqueidentifier NOT NULL,
+    [OrganisationId] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [Timestamp] varbinary(max) NULL,
+    [LastModifiedOn] datetimeoffset NOT NULL,
+    [CreationDate] datetimeoffset NOT NULL,
+    [Note] nvarchar(max) NULL,
+    [ParentId] uniqueidentifier NULL,
+    CONSTRAINT [PK_OrganisationNotes] PRIMARY KEY ([OrganisationId], [Id]),
+    CONSTRAINT [FK_OrganisationNotes_Organisations_OrganisationId] FOREIGN KEY ([OrganisationId]) REFERENCES [Organisations] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_OrganisationNotes_Organisations_ParentId] FOREIGN KEY ([ParentId]) REFERENCES [Organisations] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [Partnerships] (
+    [Id] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [ProviderId] uniqueidentifier NOT NULL,
+    [ClientId] uniqueidentifier NOT NULL,
+    [PartnershipTypeId] int NOT NULL,
+    CONSTRAINT [PK_Partnerships] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Partnerships_Organisations_ClientId] FOREIGN KEY ([ClientId]) REFERENCES [Organisations] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Partnerships_PartnershipTypes_PartnershipTypeId] FOREIGN KEY ([PartnershipTypeId]) REFERENCES [PartnershipTypes] ([PartnershipTypeId]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Partnerships_Organisations_ProviderId] FOREIGN KEY ([ProviderId]) REFERENCES [Organisations] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [FreightMovements] (
+    [Id] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [CompanyId] uniqueidentifier NOT NULL,
+    [Name] nvarchar(64) NULL,
+    [Reference] nvarchar(32) NULL,
+    [ShipmentType] int NOT NULL,
+    [IncoTerms] int NOT NULL,
+    [LoadType] int NOT NULL,
+    [TransactionType] int NOT NULL,
+    [PlaceOfLoadingId] uniqueidentifier NULL,
+    [PortOfLoadingId] nvarchar(8) NULL,
+    [PortOfDischargeId] nvarchar(8) NULL,
+    [PlaceOfDispatchId] uniqueidentifier NULL,
+    [GoodsReady] datetime2 NOT NULL,
+    [DeliveryDate] datetime2 NULL,
+    [NumberOfItems] int NULL,
+    [Hazard] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [InsuranceRequired] bit NULL,
+    [CustomsBrokerageRequired] bit NULL,
+    [InsuranceCurrency] nvarchar(8) NULL,
+    [InsuranceValue] decimal(18, 4) NULL,
+    [Tags] nvarchar(512) NULL,
+    [Notes] nvarchar(max) NULL,
+    [HSCodes] nvarchar(512) NULL,
+    [SupplierId] uniqueidentifier NULL,
+    [BuyerId] uniqueidentifier NULL,
+    CONSTRAINT [PK_FreightMovements] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_FreightMovements_Organisations_CompanyId] FOREIGN KEY ([CompanyId]) REFERENCES [Organisations] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_FreightMovements_Addresses_PlaceOfDispatchId] FOREIGN KEY ([PlaceOfDispatchId]) REFERENCES [Addresses] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_FreightMovements_Addresses_PlaceOfLoadingId] FOREIGN KEY ([PlaceOfLoadingId]) REFERENCES [Addresses] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_FreightMovements_Locations_PortOfDischargeId] FOREIGN KEY ([PortOfDischargeId]) REFERENCES [Locations] ([LocCode]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_FreightMovements_Locations_PortOfLoadingId] FOREIGN KEY ([PortOfLoadingId]) REFERENCES [Locations] ([LocCode]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [ContactEmails] (
+    [Id] uniqueidentifier NOT NULL,
+    [ContactId] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [Timestamp] varbinary(max) NULL,
+    [LastModifiedOn] datetimeoffset NOT NULL,
+    [CreationDate] datetimeoffset NOT NULL,
+    [OrganisationId] uniqueidentifier NOT NULL,
+    [Email] nvarchar(250) NULL,
+    [IsDefault] bit NOT NULL DEFAULT CAST(0 AS bit),
+    CONSTRAINT [PK_ContactEmails] PRIMARY KEY ([ContactId], [Id]),
+    CONSTRAINT [FK_ContactEmails_Contacts_OrganisationId_ContactId] FOREIGN KEY ([OrganisationId], [ContactId]) REFERENCES [Contacts] ([OrganisationId], [Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [ContactPhoneNumbers] (
+    [Id] uniqueidentifier NOT NULL,
+    [ContactId] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [Timestamp] varbinary(max) NULL,
+    [LastModifiedOn] datetimeoffset NOT NULL,
+    [CreationDate] datetimeoffset NOT NULL,
+    [OrganisationId] uniqueidentifier NOT NULL,
+    [CountryCode] nvarchar(8) NULL,
+    [Number] nvarchar(32) NULL,
+    [AreaCode] nvarchar(8) NULL,
+    [IsDefault] bit NOT NULL DEFAULT CAST(0 AS bit),
+    CONSTRAINT [PK_ContactPhoneNumbers] PRIMARY KEY ([ContactId], [Id]),
+    CONSTRAINT [FK_ContactPhoneNumbers_Contacts_OrganisationId_ContactId] FOREIGN KEY ([OrganisationId], [ContactId]) REFERENCES [Contacts] ([OrganisationId], [Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [AspNetUsers] (
+    [Id] nvarchar(450) NOT NULL,
+    [UserName] nvarchar(256) NULL,
+    [NormalizedUserName] nvarchar(256) NULL,
+    [Email] nvarchar(256) NULL,
+    [NormalizedEmail] nvarchar(256) NULL,
+    [EmailConfirmed] bit NOT NULL,
+    [PasswordHash] nvarchar(max) NULL,
+    [SecurityStamp] nvarchar(max) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    [PhoneNumber] nvarchar(max) NULL,
+    [PhoneNumberConfirmed] bit NOT NULL,
+    [TwoFactorEnabled] bit NOT NULL,
+    [LockoutEnd] datetimeoffset NULL,
+    [LockoutEnabled] bit NOT NULL,
+    [AccessFailedCount] int NOT NULL,
+    [ExternalProviderId] bigint NULL,
+    [FullName] nvarchar(128) NULL,
+    [GivenName] nvarchar(64) NULL,
+    [Surname] nvarchar(64) NULL,
+    [IsAdmin] bit NOT NULL,
+    [Status] nvarchar(max) NOT NULL,
+    [ProfileImageId] uniqueidentifier NULL,
+    [OrganisationId] uniqueidentifier NULL,
+    [LocationId] uniqueidentifier NULL,
+    [ExternalProverUUID] uniqueidentifier NULL,
+    [RegistrationDate] datetime2 NULL,
+    CONSTRAINT [PK_AspNetUsers] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetUsers_Addresses_LocationId] FOREIGN KEY ([LocationId]) REFERENCES [Addresses] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_AspNetUsers_Organisations_OrganisationId] FOREIGN KEY ([OrganisationId]) REFERENCES [Organisations] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_AspNetUsers_Documents_ProfileImageId] FOREIGN KEY ([ProfileImageId]) REFERENCES [Documents] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [Products] (
+    [Id] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [Description] nvarchar(250) NULL,
+    [Dimensions_Height] decimal(18, 4) NULL,
+    [Dimensions_Length] decimal(18, 4) NULL,
+    [Dimensions_Scale] nvarchar(16) NULL,
+    [Dimensions_Width] decimal(18, 4) NULL,
+    [Dimensions_Weight] decimal(18, 4) NULL,
+    [Dimensions_weightMeasurement] nvarchar(16) NULL,
+    [GoodsType] nvarchar(250) NULL,
+    [HsCode] nvarchar(250) NULL,
+    [Name] nvarchar(250) NULL,
+    [Nickname] nvarchar(250) NULL,
+    [Packing] nvarchar(50) NULL,
+    [UnitsPerPackage] int NOT NULL,
+    [SKU] nvarchar(50) NULL,
+    [HazardousContents] int NOT NULL,
+    [HazardClass] nvarchar(32) NULL,
+    [HazardDescription] nvarchar(50) NULL,
+    [HazardNotes] nvarchar(512) NULL,
+    [HazardDocumentId] uniqueidentifier NULL,
+    [Reference] nvarchar(256) NULL,
+    [LithiumBatteryPacking] nvarchar(8) NULL,
+    [MagneticFieldContained] bit NOT NULL,
+    [Rotatable] bit NOT NULL,
+    [Stackable] bit NOT NULL,
+    [CompanyId] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_Products] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Products_Organisations_CompanyId] FOREIGN KEY ([CompanyId]) REFERENCES [Organisations] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Products_Documents_HazardDocumentId] FOREIGN KEY ([HazardDocumentId]) REFERENCES [Documents] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [FreightMovementItems] (
+    [FreightMovementId] uniqueidentifier NOT NULL,
+    [Id] uniqueidentifier NOT NULL,
+    [ContainerTypeCode] nvarchar(4) NULL,
+    [CartonQty] int NOT NULL,
+    [HazardCode] nvarchar(4) NULL,
+    CONSTRAINT [PK_FreightMovementItems] PRIMARY KEY ([FreightMovementId], [Id]),
+    CONSTRAINT [FK_FreightMovementItems_ContainerTypes_ContainerTypeCode] FOREIGN KEY ([ContainerTypeCode]) REFERENCES [ContainerTypes] ([Code]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_FreightMovementItems_FreightMovements_FreightMovementId] FOREIGN KEY ([FreightMovementId]) REFERENCES [FreightMovements] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [QuotationRequests] (
+    [Id] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [PartnershipId] uniqueidentifier NOT NULL,
+    [FreightMovementId] uniqueidentifier NOT NULL,
+    [Submitted] datetime2 NOT NULL,
+    [Actioned] datetime2 NOT NULL,
+    [State] int NOT NULL,
+    CONSTRAINT [PK_QuotationRequests] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_QuotationRequests_FreightMovements_FreightMovementId] FOREIGN KEY ([FreightMovementId]) REFERENCES [FreightMovements] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_QuotationRequests_Partnerships_PartnershipId] FOREIGN KEY ([PartnershipId]) REFERENCES [Partnerships] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [AspNetUserClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] nvarchar(450) NOT NULL,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [AspNetUserInvitations] (
+    [Id] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [UserId] nvarchar(450) NULL,
+    [CompanyName] nvarchar(max) NULL,
+    [GivenName] nvarchar(max) NULL,
+    [EmailAddress] nvarchar(max) NULL,
+    [InviteType] int NOT NULL,
+    CONSTRAINT [PK_AspNetUserInvitations] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetUserInvitations_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [AspNetUserLogins] (
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [ProviderKey] nvarchar(450) NOT NULL,
+    [ProviderDisplayName] nvarchar(max) NULL,
+    [UserId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY ([LoginProvider], [ProviderKey]),
+    CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [AspNetUserRoles] (
+    [UserId] nvarchar(450) NOT NULL,
+    [RoleId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY ([UserId], [RoleId]),
+    CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [AspNetUserTokens] (
+    [UserId] nvarchar(450) NOT NULL,
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [Name] nvarchar(450) NOT NULL,
+    [Value] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider], [Name]),
+    CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [ProductDocuments] (
+    [ProductId] uniqueidentifier NOT NULL,
+    [DocumentId] uniqueidentifier NOT NULL,
+    [IsActive] bit NOT NULL DEFAULT CAST(1 AS bit),
+    CONSTRAINT [PK_ProductDocuments] PRIMARY KEY ([ProductId], [DocumentId]),
+    CONSTRAINT [FK_ProductDocuments_Documents_DocumentId] FOREIGN KEY ([DocumentId]) REFERENCES [Documents] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_ProductDocuments_Products_ProductId] FOREIGN KEY ([ProductId]) REFERENCES [Products] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [ProductVariants] (
+    [Id] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [ProductId] uniqueidentifier NOT NULL,
+    [Description] nvarchar(250) NULL,
+    [Dimensions_Height] decimal(18, 4) NULL,
+    [Dimensions_Length] decimal(18, 4) NULL,
+    [Dimensions_Scale] nvarchar(16) NULL,
+    [Dimensions_Width] decimal(18, 4) NULL,
+    [Dimensions_Weight] decimal(18, 4) NULL,
+    [Dimensions_weightMeasurement] nvarchar(16) NULL,
+    [GoodsType] nvarchar(250) NULL,
+    [HsCode] nvarchar(250) NULL,
+    [Name] nvarchar(250) NULL,
+    [Nickname] nvarchar(250) NULL,
+    [Packing] nvarchar(50) NULL,
+    [UnitsPerPackage] int NOT NULL,
+    [SKU] nvarchar(50) NULL,
+    [HazardousContents] int NOT NULL,
+    [HazardClass] nvarchar(32) NULL,
+    [HazardDescription] nvarchar(50) NULL,
+    [HazardNotes] nvarchar(512) NULL,
+    [HazardDocumentId] uniqueidentifier NULL,
+    [Reference] nvarchar(256) NULL,
+    [MagneticFieldContained] bit NOT NULL,
+    [SupplierId] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_ProductVariants] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ProductVariants_Documents_HazardDocumentId] FOREIGN KEY ([HazardDocumentId]) REFERENCES [Documents] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_ProductVariants_Products_ProductId] FOREIGN KEY ([ProductId]) REFERENCES [Products] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_ProductVariants_Organisations_SupplierId] FOREIGN KEY ([SupplierId]) REFERENCES [Organisations] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [Quotations] (
+    [Id] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [IssueDate] datetimeoffset NOT NULL,
+    [ExpiryDate] datetimeoffset NOT NULL,
+    [QuoteNumber] nvarchar(32) NULL,
+    [ContactName] nvarchar(128) NULL,
+    [ContactReference] nvarchar(128) NULL,
+    [Reference] nvarchar(128) NULL,
+    [TotalQuantity] int NOT NULL,
+    [CurrencyId] nvarchar(16) NULL,
+    [ExchangeRate] decimal(18, 4) NOT NULL,
+    [InverseExchangeRate] decimal(18, 4) NOT NULL,
+    [BaseCurrencyTotalDiscountAmount] decimal(18, 4) NOT NULL,
+    [Total_CurrencyId] nvarchar(12) NULL,
+    [Total_DiscountAmount] decimal(18, 4) NULL,
+    [Total_NetAmount] decimal(18, 4) NULL,
+    [Total_TaxAmount] decimal(18, 4) NULL,
+    [Total_TotalAmount] decimal(18, 4) NULL,
+    [BaseCurrency_CurrencyId] nvarchar(12) NULL,
+    [BaseCurrency_DiscountAmount] decimal(18, 4) NULL,
+    [BaseCurrency_NetAmount] decimal(18, 4) NULL,
+    [BaseCurrency_TaxAmount] decimal(18, 4) NULL,
+    [BaseCurrency_TotalAmount] decimal(18, 4) NULL,
+    [QuoteStatus] bit NOT NULL,
+    [Sent] bit NOT NULL,
+    [SentByEmail] bit NOT NULL,
+    [Booked] bit NOT NULL,
+    [ShipmentId] uniqueidentifier NOT NULL,
+    [PaymentTerms] nvarchar(max) NULL,
+    [TermsAndConditions] nvarchar(max) NULL,
+    [DetailedTermsAndConditions] nvarchar(max) NULL,
+    [Notes] nvarchar(max) NULL,
+    [FreightMovementId] uniqueidentifier NOT NULL,
+    [QuotationRequestId] uniqueidentifier NOT NULL,
+    [Routes] nvarchar(max) NULL,
+    CONSTRAINT [PK_Quotations] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Quotations_FreightMovements_FreightMovementId] FOREIGN KEY ([FreightMovementId]) REFERENCES [FreightMovements] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Quotations_QuotationRequests_QuotationRequestId] FOREIGN KEY ([QuotationRequestId]) REFERENCES [QuotationRequests] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [CargoItems] (
+    [FreightMovementId] uniqueidentifier NOT NULL,
+    [FreightMovementItemId] uniqueidentifier NOT NULL,
+    [ItemId] uniqueidentifier NOT NULL,
+    [ProductId] uniqueidentifier NOT NULL,
+    [ProductVariantId] uniqueidentifier NULL,
+    [IsProductVariant] bit NOT NULL,
+    [HsCode] nvarchar(32) NULL,
+    [SKU] nvarchar(64) NULL,
+    [ItemDescription] nvarchar(256) NULL,
+    [Qty] int NOT NULL,
+    [Width] decimal(18, 4) NOT NULL,
+    [Length] decimal(18, 4) NOT NULL,
+    [Height] decimal(18, 4) NOT NULL,
+    [UOL] nvarchar(16) NULL,
+    [CartonQty] int NOT NULL,
+    [Weight] decimal(18, 4) NOT NULL,
+    [UOW] nvarchar(16) NULL,
+    CONSTRAINT [PK_CargoItems] PRIMARY KEY ([FreightMovementId], [FreightMovementItemId], [ItemId]),
+    CONSTRAINT [FK_CargoItems_Products_ProductId] FOREIGN KEY ([ProductId]) REFERENCES [Products] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_CargoItems_ProductVariants_ProductVariantId] FOREIGN KEY ([ProductVariantId]) REFERENCES [ProductVariants] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_CargoItems_FreightMovementItems_FreightMovementId_FreightMovementItemId] FOREIGN KEY ([FreightMovementId], [FreightMovementItemId]) REFERENCES [FreightMovementItems] ([FreightMovementId], [Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [QuotationAvailableSchedules] (
+    [QuotationId] uniqueidentifier NOT NULL,
+    [Id] int NOT NULL IDENTITY,
+    [CarrierCode] int NOT NULL,
+    [CarrierName] int NOT NULL,
+    [TransitId] nvarchar(max) NULL,
+    [DepartureTime] datetimeoffset NOT NULL,
+    [ArrivalTime] datetimeoffset NOT NULL,
+    [SCAC] nvarchar(max) NULL,
+    [Route_Code] nvarchar(6) NULL,
+    [Route_Name] nvarchar(50) NULL,
+    [Vessel_IMO] nvarchar(6) NULL,
+    [Vessel_MMSI] nvarchar(max) NULL,
+    [Vessel_Name] nvarchar(50) NULL,
+    [POD_Code] nvarchar(6) NULL,
+    [POD_Name] nvarchar(50) NULL,
+    [POL_Code] nvarchar(6) NULL,
+    [POL_Name] nvarchar(50) NULL,
+    [ReferenceCode] nvarchar(max) NULL,
+    CONSTRAINT [PK_QuotationAvailableSchedules] PRIMARY KEY ([QuotationId], [Id]),
+    CONSTRAINT [FK_QuotationAvailableSchedules_Quotations_QuotationId] FOREIGN KEY ([QuotationId]) REFERENCES [Quotations] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [QuotationChargeItems] (
+    [QuotationId] uniqueidentifier NOT NULL,
+    [LineId] uniqueidentifier NOT NULL,
+    [Seq] int NOT NULL,
+    [ServiceId] nvarchar(32) NULL,
+    [Description] nvarchar(256) NULL,
+    [Quantity] int NOT NULL,
+    [UnitPrice] decimal(18, 4) NOT NULL,
+    [UnitPriceIncludesTax] bit NOT NULL,
+    [TaxRate] decimal(18, 4) NOT NULL,
+    [Margin] decimal(18, 4) NOT NULL,
+    [Total_CurrencyId] nvarchar(12) NULL,
+    [Total_DiscountAmount] decimal(18, 4) NULL,
+    [Total_NetAmount] decimal(18, 4) NULL,
+    [Total_TaxAmount] decimal(18, 4) NULL,
+    [Total_TotalAmount] decimal(18, 4) NULL,
+    [BaseCurrency_CurrencyId] nvarchar(12) NULL,
+    [BaseCurrency_DiscountAmount] decimal(18, 4) NULL,
+    [BaseCurrency_NetAmount] decimal(18, 4) NULL,
+    [BaseCurrency_TaxAmount] decimal(18, 4) NULL,
+    [BaseCurrency_TotalAmount] decimal(18, 4) NULL,
+    [QuotationChargeTypeId] int NOT NULL,
+    CONSTRAINT [PK_QuotationChargeItems] PRIMARY KEY ([QuotationId], [LineId]),
+    CONSTRAINT [FK_QuotationChargeItems_Quotations_QuotationId] FOREIGN KEY ([QuotationId]) REFERENCES [Quotations] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_QuotationChargeItems_Quotations_QuotationId1] FOREIGN KEY ([QuotationId]) REFERENCES [Quotations] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_QuotationChargeItems_Quotations_QuotationId2] FOREIGN KEY ([QuotationId]) REFERENCES [Quotations] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_QuotationChargeItems_Quotations_QuotationId3] FOREIGN KEY ([QuotationId]) REFERENCES [Quotations] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [Shipments] (
+    [Id] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [PartnershipId] uniqueidentifier NOT NULL,
+    [QuotationRequestId] uniqueidentifier NOT NULL,
+    [FreightMovementId] uniqueidentifier NOT NULL,
+    [ShipmentName] nvarchar(256) NULL,
+    [SCAC] nvarchar(32) NULL,
+    [BillofLadingNumber] nvarchar(36) NULL,
+    [IMO] nvarchar(32) NULL,
+    [VesselName] nvarchar(128) NULL,
+    [ShipmentType] int NOT NULL,
+    [IncoTerms] int NOT NULL,
+    [LoadType] int NOT NULL,
+    [Status] int NOT NULL,
+    [Stage] int NOT NULL,
+    [PlaceOfLoadingId] uniqueidentifier NULL,
+    [PortOfLoadingId] nvarchar(8) NULL,
+    [PortOfDischargeId] nvarchar(8) NULL,
+    [PlaceOfDispatchId] uniqueidentifier NULL,
+    [Latitude] decimal(18, 4) NOT NULL,
+    [Longitude] decimal(18, 4) NOT NULL,
+    [ETA] datetime2 NOT NULL,
+    [ETD] datetime2 NOT NULL,
+    [Tags] nvarchar(512) NULL,
+    [Notes] nvarchar(512) NULL,
+    [Booked] bit NOT NULL,
+    [BookedDate] datetime2 NOT NULL,
+    [Collected] bit NOT NULL,
+    [EstimatedCollectionDate] datetime2 NULL,
+    [CollectionDate] datetime2 NULL,
+    [InTransit] bit NOT NULL,
+    [InTransitDate] datetime2 NULL,
+    [EquipmentTrackAvailable] bit NOT NULL,
+    [ShipmentTrackAvailable] bit NOT NULL,
+    [TrackinformationAdded] bit NOT NULL,
+    [ArrivedPOD] bit NOT NULL,
+    [ArrivedPODDate] datetime2 NULL,
+    [DepartedPOL] bit NOT NULL,
+    [DepartedPOLDate] datetime2 NULL,
+    [InCustoms] bit NOT NULL,
+    [IssueAtCustoms] bit NOT NULL,
+    [IssueAtCustomsDate] datetime2 NULL,
+    [IssueAtCustomCleared] bit NOT NULL,
+    [CustomsClearence] bit NOT NULL,
+    [CustomsClearenceDate] datetime2 NULL,
+    [Delivered] bit NOT NULL,
+    [EstimatedDeliveryDate] datetime2 NULL,
+    [DeliveryDate] datetime2 NULL,
+    [IsRescheduled] bit NOT NULL,
+    [Rescheduled] int NOT NULL,
+    [LastRescheduleTime] datetime2 NULL,
+    [Route] nvarchar(max) NULL,
+    [OrganisationId] uniqueidentifier NULL,
+    [QuotationId] uniqueidentifier NULL,
+    CONSTRAINT [PK_Shipments] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Shipments_FreightMovements_FreightMovementId] FOREIGN KEY ([FreightMovementId]) REFERENCES [FreightMovements] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Shipments_Organisations_OrganisationId] FOREIGN KEY ([OrganisationId]) REFERENCES [Organisations] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Shipments_Partnerships_PartnershipId] FOREIGN KEY ([PartnershipId]) REFERENCES [Partnerships] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Shipments_Addresses_PlaceOfDispatchId] FOREIGN KEY ([PlaceOfDispatchId]) REFERENCES [Addresses] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Shipments_Addresses_PlaceOfLoadingId] FOREIGN KEY ([PlaceOfLoadingId]) REFERENCES [Addresses] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Shipments_Locations_PortOfDischargeId] FOREIGN KEY ([PortOfDischargeId]) REFERENCES [Locations] ([LocCode]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Shipments_Locations_PortOfLoadingId] FOREIGN KEY ([PortOfLoadingId]) REFERENCES [Locations] ([LocCode]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Shipments_Quotations_QuotationId] FOREIGN KEY ([QuotationId]) REFERENCES [Quotations] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Shipments_QuotationRequests_QuotationRequestId] FOREIGN KEY ([QuotationRequestId]) REFERENCES [QuotationRequests] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [EquipmentAllocations] (
+    [Id] uniqueidentifier NOT NULL,
+    [ShipmentId] uniqueidentifier NOT NULL,
+    [ETag] nvarchar(max) NULL,
+    [IsActive] bit NOT NULL,
+    [UpsertDate] datetime2 NOT NULL,
+    [Timestamp] varbinary(max) NULL,
+    [ContainerNo] nvarchar(max) NULL,
+    CONSTRAINT [PK_EquipmentAllocations] PRIMARY KEY ([ShipmentId], [Id]),
+    CONSTRAINT [FK_EquipmentAllocations_Shipments_ShipmentId] FOREIGN KEY ([ShipmentId]) REFERENCES [Shipments] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [PurchaseOrders] (
+    [Id] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [CompanyId] uniqueidentifier NOT NULL,
+    [SupplierId] uniqueidentifier NULL,
+    [PurchaseOrderNumber] nvarchar(64) NULL,
+    [Reference] nvarchar(32) NULL,
+    [PurchaseOrderDate] datetime2 NULL,
+    [GoodsReadyDate] datetime2 NULL,
+    [TargetDeliveryDate] datetime2 NULL,
+    [IncotermsVersion] nvarchar(max) NULL,
+    [Status] int NOT NULL,
+    [Stage] int NOT NULL,
+    [ShipmentType] int NOT NULL,
+    [IncoTerms] int NOT NULL,
+    [LoadType] int NOT NULL,
+    [TransactionType] int NOT NULL,
+    [PlaceOfLoadingId] uniqueidentifier NULL,
+    [PortOfLoadingId] nvarchar(8) NULL,
+    [PortOfDischargeId] nvarchar(8) NULL,
+    [PlaceOfDispatchId] uniqueidentifier NULL,
+    [Language] nvarchar(4) NULL,
+    [PurchasingGroup] nvarchar(8) NULL,
+    [CorrespncExternalReference] nvarchar(32) NULL,
+    [CorrespncInternalReference] nvarchar(32) NULL,
+    [Tags] nvarchar(512) NULL,
+    [Containers] nvarchar(512) NULL,
+    [CurrencyId] nvarchar(16) NULL,
+    [ExchangeRate] decimal(18, 4) NOT NULL,
+    [InverseExchangeRate] decimal(18, 4) NOT NULL,
+    [ValidForDays] int NOT NULL,
+    [DateOfIssue] datetime2 NULL,
+    [PaymentTerms] nvarchar(max) NULL,
+    [CustomsBrokerageRequired] bit NULL,
+    [NumberOfItems] int NULL,
+    [HSCodes] nvarchar(512) NULL,
+    [InsuranceRequired] bit NULL,
+    [InsuranceCurrency] nvarchar(8) NULL,
+    [InsuranceValue] decimal(18, 4) NULL,
+    [Notes] nvarchar(max) NULL,
+    [Signature] nvarchar(max) NULL,
+    [AdditionalInformation] nvarchar(max) NULL,
+    [TaxRate] decimal(18, 4) NOT NULL,
+    [TaxRateDescription] nvarchar(256) NULL,
+    [ItemsTotal_CurrencyId] nvarchar(12) NULL,
+    [ItemsTotal_DiscountAmount] decimal(18, 4) NULL,
+    [ItemsTotal_NetAmount] decimal(18, 4) NULL,
+    [ItemsTotal_TaxAmount] decimal(18, 4) NULL,
+    [ItemsTotal_TotalAmount] decimal(18, 4) NULL,
+    [ChargesTotal_CurrencyId] nvarchar(12) NULL,
+    [ChargesTotal_DiscountAmount] decimal(18, 4) NULL,
+    [ChargesTotal_NetAmount] decimal(18, 4) NULL,
+    [ChargesTotal_TaxAmount] decimal(18, 4) NULL,
+    [ChargesTotal_TotalAmount] decimal(18, 4) NULL,
+    [Total_CurrencyId] nvarchar(12) NULL,
+    [Total_DiscountAmount] decimal(18, 4) NULL,
+    [Total_NetAmount] decimal(18, 4) NULL,
+    [Total_TaxAmount] decimal(18, 4) NULL,
+    [Total_TotalAmount] decimal(18, 4) NULL,
+    [BaseCurrency_CurrencyId] nvarchar(12) NULL,
+    [BaseCurrency_DiscountAmount] decimal(18, 4) NULL,
+    [BaseCurrency_NetAmount] decimal(18, 4) NULL,
+    [BaseCurrency_TaxAmount] decimal(18, 4) NULL,
+    [BaseCurrency_TotalAmount] decimal(18, 4) NULL,
+    [Submitted] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [SubmittedDate] datetime2 NULL,
+    [Accepted] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [AcceptedDate] datetime2 NULL,
+    [InProduction] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [InProductionDate] datetime2 NULL,
+    [PreShipment] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [PreShipmentDate] datetime2 NULL,
+    [Shipping] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [ShippedDate] datetime2 NULL,
+    [Rejected] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [RejectedDate] datetime2 NULL,
+    [Cancelled] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [CancelledDate] datetime2 NULL,
+    [Completed] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [CompletedDate] datetime2 NULL,
+    [LogisticsNotes] nvarchar(max) NULL,
+    [AdditionalSupplierInformation] nvarchar(max) NULL,
+    [ShipmentId] uniqueidentifier NULL,
+    CONSTRAINT [PK_PurchaseOrders] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_PurchaseOrders_Addresses_PlaceOfDispatchId] FOREIGN KEY ([PlaceOfDispatchId]) REFERENCES [Addresses] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_PurchaseOrders_Addresses_PlaceOfLoadingId] FOREIGN KEY ([PlaceOfLoadingId]) REFERENCES [Addresses] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_PurchaseOrders_Locations_PortOfDischargeId] FOREIGN KEY ([PortOfDischargeId]) REFERENCES [Locations] ([LocCode]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_PurchaseOrders_Locations_PortOfLoadingId] FOREIGN KEY ([PortOfLoadingId]) REFERENCES [Locations] ([LocCode]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_PurchaseOrders_Shipments_ShipmentId] FOREIGN KEY ([ShipmentId]) REFERENCES [Shipments] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [ShipmentDocuments] (
+    [ShipmentId] uniqueidentifier NOT NULL,
+    [DocumentId] uniqueidentifier NOT NULL,
+    [IsActive] bit NOT NULL DEFAULT CAST(1 AS bit),
+    CONSTRAINT [PK_ShipmentDocuments] PRIMARY KEY ([ShipmentId], [DocumentId]),
+    CONSTRAINT [FK_ShipmentDocuments_Documents_DocumentId] FOREIGN KEY ([DocumentId]) REFERENCES [Documents] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_ShipmentDocuments_Shipments_ShipmentId] FOREIGN KEY ([ShipmentId]) REFERENCES [Shipments] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [PurchaseOrderAdditionalCharges] (
+    [Id] uniqueidentifier NOT NULL,
+    [PurchaseOrderId] uniqueidentifier NOT NULL,
+    [IsActive] bit NOT NULL,
+    [CreatedByUser] nvarchar(max) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(max) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [Timestamp] varbinary(max) NULL,
+    [LastModifiedOn] datetimeoffset NOT NULL,
+    [CreationDate] datetimeoffset NOT NULL,
+    [Description] nvarchar(256) NULL,
+    [Type] int NOT NULL,
+    [Quantity] int NOT NULL,
+    [Rate] decimal(18, 4) NOT NULL,
+    [Total_CurrencyId] nvarchar(12) NULL,
+    [Total_DiscountAmount] decimal(18, 4) NULL,
+    [Total_NetAmount] decimal(18, 4) NULL,
+    [Total_TaxAmount] decimal(18, 4) NULL,
+    [Total_TotalAmount] decimal(18, 4) NULL,
+    [BaseCurrencyTotal_CurrencyId] nvarchar(12) NULL,
+    [BaseCurrencyTotal_DiscountAmount] decimal(18, 4) NULL,
+    [BaseCurrencyTotal_NetAmount] decimal(18, 4) NULL,
+    [BaseCurrencyTotal_TaxAmount] decimal(18, 4) NULL,
+    [BaseCurrencyTotal_TotalAmount] decimal(18, 4) NULL,
+    CONSTRAINT [PK_PurchaseOrderAdditionalCharges] PRIMARY KEY ([PurchaseOrderId], [Id]),
+    CONSTRAINT [FK_PurchaseOrderAdditionalCharges_PurchaseOrders_PurchaseOrderId] FOREIGN KEY ([PurchaseOrderId]) REFERENCES [PurchaseOrders] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [PurchaseOrderAttachedProductDocuments] (
+    [PurchaseOrderId] uniqueidentifier NOT NULL,
+    [DocumentId] uniqueidentifier NOT NULL,
+    [PurchaseOrderProductId] uniqueidentifier NOT NULL,
+    [IsActive] bit NOT NULL DEFAULT CAST(1 AS bit),
+    CONSTRAINT [PK_PurchaseOrderAttachedProductDocuments] PRIMARY KEY ([PurchaseOrderId], [DocumentId]),
+    CONSTRAINT [FK_PurchaseOrderAttachedProductDocuments_PurchaseOrders_PurchaseOrderId] FOREIGN KEY ([PurchaseOrderId]) REFERENCES [PurchaseOrders] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_PurchaseOrderAttachedProductDocuments_ProductDocuments_PurchaseOrderProductId_DocumentId] FOREIGN KEY ([PurchaseOrderProductId], [DocumentId]) REFERENCES [ProductDocuments] ([ProductId], [DocumentId]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [PurchaseOrderDocuments] (
+    [PurchaseOrderId] uniqueidentifier NOT NULL,
+    [DocumentId] uniqueidentifier NOT NULL,
+    [IsActive] bit NOT NULL DEFAULT CAST(1 AS bit),
+    CONSTRAINT [PK_PurchaseOrderDocuments] PRIMARY KEY ([PurchaseOrderId], [DocumentId]),
+    CONSTRAINT [FK_PurchaseOrderDocuments_Documents_DocumentId] FOREIGN KEY ([DocumentId]) REFERENCES [Documents] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_PurchaseOrderDocuments_PurchaseOrders_PurchaseOrderId] FOREIGN KEY ([PurchaseOrderId]) REFERENCES [PurchaseOrders] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [PurchaseOrderEvents] (
+    [EventId] int NOT NULL IDENTITY,
+    [EventType] int NOT NULL,
+    [Description] nvarchar(256) NULL,
+    [ActionedBy] uniqueidentifier NOT NULL,
+    [ActionDate] datetime2 NOT NULL,
+    [PurchaseOrderId] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_PurchaseOrderEvents] PRIMARY KEY ([EventId]),
+    CONSTRAINT [FK_PurchaseOrderEvents_PurchaseOrders_PurchaseOrderId] FOREIGN KEY ([PurchaseOrderId]) REFERENCES [PurchaseOrders] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+CREATE TABLE [PurchaseOrderItems] (
+    [Id] uniqueidentifier NOT NULL,
+    [PurchaseOrderId] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [ProductId] uniqueidentifier NOT NULL,
+    [SKU] nvarchar(64) NULL,
+    [PurchaseOrderItemText] nvarchar(256) NULL,
+    [OrderQuantity] int NOT NULL,
+    [OrderQuantityUnit] nvarchar(32) NULL,
+    [OrderPriceUnit] decimal(18, 4) NOT NULL,
+    [NetPriceAmount] decimal(18, 4) NOT NULL,
+    [NetPriceQuantity] int NOT NULL,
+    [TaxCode] nvarchar(8) NULL,
+    [TaxDeterminationDate] nvarchar(max) NULL,
+    [TaxCountry] nvarchar(8) NULL,
+    [TaxJurisdiction] nvarchar(max) NULL,
+    [IsDeliveryComplete] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [IsFinallyInvoiced] bit NOT NULL DEFAULT CAST(0 AS bit),
+    [PurchaseOrderItemCategory] nvarchar(8) NULL,
+    [AccountAssignmentCategory] nvarchar(8) NULL,
+    [PurchaseContract] nvarchar(64) NULL,
+    [ItemNetWeight] decimal(18, 4) NOT NULL,
+    [ItemWeightUnit] nvarchar(8) NULL,
+    [ItemVolume] decimal(18, 4) NOT NULL,
+    [ItemVolumeUnit] nvarchar(8) NULL,
+    CONSTRAINT [PK_PurchaseOrderItems] PRIMARY KEY ([PurchaseOrderId], [Id]),
+    CONSTRAINT [FK_PurchaseOrderItems_PurchaseOrders_PurchaseOrderId] FOREIGN KEY ([PurchaseOrderId]) REFERENCES [PurchaseOrders] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [PurchaseOrderNotes] (
+    [Id] uniqueidentifier NOT NULL,
+    [PurchaseOrderId] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [TextObjectType] nvarchar(max) NULL,
+    [Language] nvarchar(4) NULL,
+    [PlainLongText] nvarchar(max) NULL,
+    CONSTRAINT [PK_PurchaseOrderNotes] PRIMARY KEY ([PurchaseOrderId], [Id]),
+    CONSTRAINT [FK_PurchaseOrderNotes_PurchaseOrders_PurchaseOrderId] FOREIGN KEY ([PurchaseOrderId]) REFERENCES [PurchaseOrders] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [PurchaseOrderItemNotes] (
+    [Id] uniqueidentifier NOT NULL,
+    [PurchaseOrderId] uniqueidentifier NOT NULL,
+    [PurchaseOrderItemId] uniqueidentifier NOT NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedByUser] nvarchar(128) NULL,
+    [CreationDateInternal] datetime2 NOT NULL,
+    [LastChangeUser] nvarchar(128) NULL,
+    [LastModifiedOnInternal] datetime2 NOT NULL,
+    [TextObjectType] nvarchar(max) NULL,
+    [Language] nvarchar(4) NULL,
+    [PlainLongText] nvarchar(max) NULL,
+    CONSTRAINT [PK_PurchaseOrderItemNotes] PRIMARY KEY ([PurchaseOrderId], [PurchaseOrderItemId], [Id]),
+    CONSTRAINT [FK_PurchaseOrderItemNotes_PurchaseOrderItems_PurchaseOrderId_Id] FOREIGN KEY ([PurchaseOrderId], [Id]) REFERENCES [PurchaseOrderItems] ([PurchaseOrderId], [Id]) ON DELETE NO ACTION
+);
+
+GO
+
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'OrganisationTypeId', N'Name') AND [object_id] = OBJECT_ID(N'[OrganisationType]'))
+    SET IDENTITY_INSERT [OrganisationType] ON;
+INSERT INTO [OrganisationType] ([OrganisationTypeId], [Name])
+VALUES (1, N'SHIPPER'),
+(2, N'SUPPLIER'),
+(3, N'BUYER');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'OrganisationTypeId', N'Name') AND [object_id] = OBJECT_ID(N'[OrganisationType]'))
+    SET IDENTITY_INSERT [OrganisationType] OFF;
+
+GO
+
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'QuotationChargeTypeId', N'Name') AND [object_id] = OBJECT_ID(N'[QuotationChargeType]'))
+    SET IDENTITY_INSERT [QuotationChargeType] ON;
+INSERT INTO [QuotationChargeType] ([QuotationChargeTypeId], [Name])
+VALUES (1, N'FREIGHT'),
+(2, N'ORIGIN'),
+(3, N'DESTINATION'),
+(4, N'ADDITIONAL');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'QuotationChargeTypeId', N'Name') AND [object_id] = OBJECT_ID(N'[QuotationChargeType]'))
+    SET IDENTITY_INSERT [QuotationChargeType] OFF;
+
+GO
+
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Name') AND [object_id] = OBJECT_ID(N'[ShipmentType]'))
+    SET IDENTITY_INSERT [ShipmentType] ON;
+INSERT INTO [ShipmentType] ([Id], [Name])
+VALUES (2, N'AIR'),
+(1, N'SEA');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Name') AND [object_id] = OBJECT_ID(N'[ShipmentType]'))
+    SET IDENTITY_INSERT [ShipmentType] OFF;
+
+GO
+
+CREATE INDEX [IX_Addresses_CountryCode] ON [Addresses] ([CountryCode]);
+
+GO
+
+CREATE INDEX [IX_Addresses_OrganisationId] ON [Addresses] ([OrganisationId]);
+
+GO
+
+CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId]);
+
+GO
+
+CREATE UNIQUE INDEX [RoleNameIndex] ON [AspNetRoles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
+
+GO
+
+CREATE INDEX [IX_AspNetUserClaims_UserId] ON [AspNetUserClaims] ([UserId]);
+
+GO
+
+CREATE INDEX [IX_AspNetUserInvitations_UserId] ON [AspNetUserInvitations] ([UserId]);
+
+GO
+
+CREATE INDEX [IX_AspNetUserLogins_UserId] ON [AspNetUserLogins] ([UserId]);
+
+GO
+
+CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [AspNetUserRoles] ([RoleId]);
+
+GO
+
+CREATE INDEX [IX_AspNetUsers_LocationId] ON [AspNetUsers] ([LocationId]);
+
+GO
+
+CREATE INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail]);
+
+GO
+
+CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
+
+GO
+
+CREATE INDEX [IX_AspNetUsers_OrganisationId] ON [AspNetUsers] ([OrganisationId]);
+
+GO
+
+CREATE INDEX [IX_AspNetUsers_ProfileImageId] ON [AspNetUsers] ([ProfileImageId]);
+
+GO
+
+CREATE INDEX [IX_CargoItems_ProductId] ON [CargoItems] ([ProductId]);
+
+GO
+
+CREATE INDEX [IX_CargoItems_ProductVariantId] ON [CargoItems] ([ProductVariantId]);
+
+GO
+
+CREATE INDEX [IX_Carriers_ShipmentTypeId] ON [Carriers] ([ShipmentTypeId]);
+
+GO
+
+CREATE INDEX [IX_ContactEmails_OrganisationId_ContactId] ON [ContactEmails] ([OrganisationId], [ContactId]);
+
+GO
+
+CREATE INDEX [IX_ContactPhoneNumbers_OrganisationId_ContactId] ON [ContactPhoneNumbers] ([OrganisationId], [ContactId]);
+
+GO
+
+CREATE INDEX [IX_Documents_CompanyId] ON [Documents] ([CompanyId]);
+
+GO
+
+CREATE INDEX [IX_FreightMovementItems_ContainerTypeCode] ON [FreightMovementItems] ([ContainerTypeCode]);
+
+GO
+
+CREATE INDEX [IX_FreightMovements_CompanyId] ON [FreightMovements] ([CompanyId]);
+
+GO
+
+CREATE INDEX [IX_FreightMovements_PlaceOfDispatchId] ON [FreightMovements] ([PlaceOfDispatchId]);
+
+GO
+
+CREATE INDEX [IX_FreightMovements_PlaceOfLoadingId] ON [FreightMovements] ([PlaceOfLoadingId]);
+
+GO
+
+CREATE INDEX [IX_FreightMovements_PortOfDischargeId] ON [FreightMovements] ([PortOfDischargeId]);
+
+GO
+
+CREATE INDEX [IX_FreightMovements_PortOfLoadingId] ON [FreightMovements] ([PortOfLoadingId]);
+
+GO
+
+CREATE INDEX [IX_Locations_CountryCode] ON [Locations] ([CountryCode]);
+
+GO
+
+CREATE INDEX [IX_OrganisationNotes_ParentId] ON [OrganisationNotes] ([ParentId]);
+
+GO
+
+CREATE INDEX [IX_Organisations_OrganisationTypeId] ON [Organisations] ([OrganisationTypeId]);
+
+GO
+
+CREATE INDEX [IX_Organisations_ParentId] ON [Organisations] ([ParentId]);
+
+GO
+
+CREATE INDEX [IX_Partnerships_ClientId] ON [Partnerships] ([ClientId]);
+
+GO
+
+CREATE INDEX [IX_Partnerships_PartnershipTypeId] ON [Partnerships] ([PartnershipTypeId]);
+
+GO
+
+CREATE INDEX [IX_Partnerships_ProviderId] ON [Partnerships] ([ProviderId]);
+
+GO
+
+CREATE INDEX [IX_ProductDocuments_DocumentId] ON [ProductDocuments] ([DocumentId]);
+
+GO
+
+CREATE INDEX [IX_Products_CompanyId] ON [Products] ([CompanyId]);
+
+GO
+
+CREATE INDEX [IX_Products_HazardDocumentId] ON [Products] ([HazardDocumentId]);
+
+GO
+
+CREATE INDEX [IX_ProductVariants_HazardDocumentId] ON [ProductVariants] ([HazardDocumentId]);
+
+GO
+
+CREATE INDEX [IX_ProductVariants_ProductId] ON [ProductVariants] ([ProductId]);
+
+GO
+
+CREATE INDEX [IX_ProductVariants_SupplierId] ON [ProductVariants] ([SupplierId]);
+
+GO
+
+CREATE INDEX [IX_PurchaseOrderAttachedProductDocuments_PurchaseOrderProductId_DocumentId] ON [PurchaseOrderAttachedProductDocuments] ([PurchaseOrderProductId], [DocumentId]);
+
+GO
+
+CREATE INDEX [IX_PurchaseOrderDocuments_DocumentId] ON [PurchaseOrderDocuments] ([DocumentId]);
+
+GO
+
+CREATE INDEX [IX_PurchaseOrderEvents_PurchaseOrderId] ON [PurchaseOrderEvents] ([PurchaseOrderId]);
+
+GO
+
+CREATE INDEX [IX_PurchaseOrderItemNotes_PurchaseOrderId_Id] ON [PurchaseOrderItemNotes] ([PurchaseOrderId], [Id]);
+
+GO
+
+CREATE INDEX [IX_PurchaseOrders_PlaceOfDispatchId] ON [PurchaseOrders] ([PlaceOfDispatchId]);
+
+GO
+
+CREATE INDEX [IX_PurchaseOrders_PlaceOfLoadingId] ON [PurchaseOrders] ([PlaceOfLoadingId]);
+
+GO
+
+CREATE INDEX [IX_PurchaseOrders_PortOfDischargeId] ON [PurchaseOrders] ([PortOfDischargeId]);
+
+GO
+
+CREATE INDEX [IX_PurchaseOrders_PortOfLoadingId] ON [PurchaseOrders] ([PortOfLoadingId]);
+
+GO
+
+CREATE INDEX [IX_PurchaseOrders_ShipmentId] ON [PurchaseOrders] ([ShipmentId]);
+
+GO
+
+CREATE INDEX [IX_QuotationRequests_FreightMovementId] ON [QuotationRequests] ([FreightMovementId]);
+
+GO
+
+CREATE INDEX [IX_QuotationRequests_PartnershipId] ON [QuotationRequests] ([PartnershipId]);
+
+GO
+
+CREATE INDEX [IX_Quotations_FreightMovementId] ON [Quotations] ([FreightMovementId]);
+
+GO
+
+CREATE UNIQUE INDEX [IX_Quotations_QuotationRequestId] ON [Quotations] ([QuotationRequestId]);
+
+GO
+
+CREATE INDEX [IX_ShipmentDocuments_DocumentId] ON [ShipmentDocuments] ([DocumentId]);
+
+GO
+
+CREATE INDEX [IX_Shipments_FreightMovementId] ON [Shipments] ([FreightMovementId]);
+
+GO
+
+CREATE INDEX [IX_Shipments_OrganisationId] ON [Shipments] ([OrganisationId]);
+
+GO
+
+CREATE INDEX [IX_Shipments_PlaceOfDispatchId] ON [Shipments] ([PlaceOfDispatchId]);
+
+GO
+
+CREATE INDEX [IX_Shipments_PlaceOfLoadingId] ON [Shipments] ([PlaceOfLoadingId]);
+
+GO
+
+CREATE INDEX [IX_Shipments_PortOfDischargeId] ON [Shipments] ([PortOfDischargeId]);
+
+GO
+
+CREATE INDEX [IX_Shipments_PortOfLoadingId] ON [Shipments] ([PortOfLoadingId]);
+
+GO
+
+CREATE INDEX [IX_Shipments_QuotationId] ON [Shipments] ([QuotationId]);
+
+GO
+
+CREATE INDEX [IX_Shipments_QuotationRequestId] ON [Shipments] ([QuotationRequestId]);
+
+GO
+
+CREATE INDEX [IX_Shipments_PartnershipId_Id] ON [Shipments] ([PartnershipId], [Id]);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201207112017_POReleaseDec2020', N'3.1.4');
+
+GO
+
+ALTER TABLE [PurchaseOrders] ADD [OrderRejected] bit NOT NULL DEFAULT CAST(0 AS bit);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201210094542_AddOrderRejectedField', N'3.1.4');
+
+GO
+
+ALTER TABLE [Quotations] DROP CONSTRAINT [FK_Quotations_QuotationRequests_QuotationRequestId];
+
+GO
+
+DROP INDEX [IX_Quotations_QuotationRequestId] ON [Quotations];
+
+GO
+
+ALTER TABLE [Quotations] ADD [Revision] int NOT NULL DEFAULT 0;
+
+GO
+
+CREATE INDEX [IX_Quotations_QuotationRequestId_Id] ON [Quotations] ([QuotationRequestId], [Id]);
+
+GO
+
+ALTER TABLE [Quotations] ADD CONSTRAINT [FK_Quotations_QuotationRequests_QuotationRequestId] FOREIGN KEY ([QuotationRequestId]) REFERENCES [QuotationRequests] ([Id]) ON DELETE NO ACTION;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201216225541_QuotationRevisions', N'3.1.4');
+
+GO
+
+ALTER TABLE [ProductDocuments] DROP CONSTRAINT [FK_ProductDocuments_Products_ProductId];
+
+GO
+
+DECLARE @var0 sysname;
+SELECT @var0 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[CargoItems]') AND [c].[name] = N'Discriminator');
+IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [CargoItems] DROP CONSTRAINT [' + @var0 + '];');
+ALTER TABLE [CargoItems] DROP COLUMN [Discriminator];
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201220113310_ProductVariantDocumentRemoveFK', N'3.1.4');
+
+GO
+
+ALTER TABLE [FreightMovements] ADD [ConsignmentQuantity] int NOT NULL DEFAULT 0;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20201224153925_AddConsignmentData', N'3.1.4');
+
+GO
+
+ALTER TABLE [FreightMovements] ADD [PurchaseOrderId] uniqueidentifier NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210107110643_AddPoIdToFreightMovementForCsv', N'3.1.4');
+
+GO
+
+DECLARE @var1 sysname;
+SELECT @var1 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[CargoItems]') AND [c].[name] = N'Discriminator');
+IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [CargoItems] DROP CONSTRAINT [' + @var1 + '];');
+ALTER TABLE [CargoItems] DROP COLUMN [Discriminator];
+
+GO
+
+ALTER TABLE [Quotations] ADD [Margin] decimal(18, 4) NOT NULL DEFAULT 0.0;
+
+GO
+
+ALTER TABLE [Quotations] ADD [PaymentTermsDays] int NOT NULL DEFAULT 0;
+
+GO
+
+ALTER TABLE [Quotations] ADD [TaxRate] decimal(18, 4) NOT NULL DEFAULT 0.0;
+
+GO
+
+ALTER TABLE [Quotations] ADD [ValidForDays] int NOT NULL DEFAULT 0;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210108165941_QuotationAdditionalFields', N'3.1.4');
+
+GO
+
+ALTER TABLE [CargoItems] ADD [ProductDescriptionOverride] bit NOT NULL DEFAULT CAST(0 AS bit);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210112120226_AddProductDescriptionOverrideFlag', N'3.1.4');
+
+GO
+
+DECLARE @var2 sysname;
+SELECT @var2 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[PurchaseOrderAdditionalCharges]') AND [c].[name] = N'Description');
+IF @var2 IS NOT NULL EXEC(N'ALTER TABLE [PurchaseOrderAdditionalCharges] DROP CONSTRAINT [' + @var2 + '];');
+ALTER TABLE [PurchaseOrderAdditionalCharges] ALTER COLUMN [Description] nvarchar(512) NULL;
+
+GO
+
+DECLARE @var3 sysname;
+SELECT @var3 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[ProductVariants]') AND [c].[name] = N'Description');
+IF @var3 IS NOT NULL EXEC(N'ALTER TABLE [ProductVariants] DROP CONSTRAINT [' + @var3 + '];');
+ALTER TABLE [ProductVariants] ALTER COLUMN [Description] nvarchar(512) NULL;
+
+GO
+
+DECLARE @var4 sysname;
+SELECT @var4 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Products]') AND [c].[name] = N'Description');
+IF @var4 IS NOT NULL EXEC(N'ALTER TABLE [Products] DROP CONSTRAINT [' + @var4 + '];');
+ALTER TABLE [Products] ALTER COLUMN [Description] nvarchar(512) NULL;
+
+GO
+
+DECLARE @var5 sysname;
+SELECT @var5 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[CargoItems]') AND [c].[name] = N'ItemDescription');
+IF @var5 IS NOT NULL EXEC(N'ALTER TABLE [CargoItems] DROP CONSTRAINT [' + @var5 + '];');
+ALTER TABLE [CargoItems] ALTER COLUMN [ItemDescription] nvarchar(512) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210113113822_IncreaseDescriptionSize', N'3.1.4');
+
+GO
+
+DECLARE @var6 sysname;
+SELECT @var6 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[CargoItems]') AND [c].[name] = N'Discriminator');
+IF @var6 IS NOT NULL EXEC(N'ALTER TABLE [CargoItems] DROP CONSTRAINT [' + @var6 + '];');
+ALTER TABLE [CargoItems] DROP COLUMN [Discriminator];
+
+GO
+
+CREATE TABLE [Airlines] (
+    [IATA2LetterCcode] nvarchar(2) NOT NULL,
+    [AWBPrefix] nvarchar(3) NOT NULL,
+    [Name] nvarchar(256) NULL,
+    [Active] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [Tracking_Enabled] bit NULL DEFAULT CAST(0 AS bit),
+    [Tracking_Provider] nvarchar(32) NULL,
+    CONSTRAINT [PK_Airlines] PRIMARY KEY ([AWBPrefix], [IATA2LetterCcode])
+);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210114230638_AWBTrackingAddedAirlines', N'3.1.4');
+
+GO
+
+DECLARE @var7 sysname;
+SELECT @var7 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[FreightMovements]') AND [c].[name] = N'SupplierId');
+IF @var7 IS NOT NULL EXEC(N'ALTER TABLE [FreightMovements] DROP CONSTRAINT [' + @var7 + '];');
+ALTER TABLE [FreightMovements] ALTER COLUMN [SupplierId] uniqueidentifier NULL;
+
+GO
+
+DECLARE @var8 sysname;
+SELECT @var8 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[FreightMovements]') AND [c].[name] = N'HSCodes');
+IF @var8 IS NOT NULL EXEC(N'ALTER TABLE [FreightMovements] DROP CONSTRAINT [' + @var8 + '];');
+ALTER TABLE [FreightMovements] ALTER COLUMN [HSCodes] nvarchar(max) NULL;
+
+GO
+
+DECLARE @var9 sysname;
+SELECT @var9 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[FreightMovements]') AND [c].[name] = N'BuyerId');
+IF @var9 IS NOT NULL EXEC(N'ALTER TABLE [FreightMovements] DROP CONSTRAINT [' + @var9 + '];');
+ALTER TABLE [FreightMovements] ALTER COLUMN [BuyerId] uniqueidentifier NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210118112256_IncreasedSizeOfHsCodes', N'3.1.4');
+
+GO
+
+DECLARE @var10 sysname;
+SELECT @var10 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[CargoItems]') AND [c].[name] = N'Discriminator');
+IF @var10 IS NOT NULL EXEC(N'ALTER TABLE [CargoItems] DROP CONSTRAINT [' + @var10 + '];');
+ALTER TABLE [CargoItems] DROP COLUMN [Discriminator];
+
+GO
+
+CREATE TABLE [ShipmentEvents] (
+    [ShipmentId] uniqueidentifier NOT NULL,
+    [EquipmentItemId] nvarchar(32) NOT NULL,
+    [EventId] uniqueidentifier NOT NULL,
+    [TrackingNumber] nvarchar(32) NULL,
+    [TimeOfEvent] datetime2 NOT NULL,
+    [Voyage] nvarchar(16) NULL,
+    [Activity] nvarchar(16) NULL,
+    [Information] nvarchar(16) NULL,
+    CONSTRAINT [PK_ShipmentEvents] PRIMARY KEY ([ShipmentId], [EquipmentItemId], [EventId]),
+    CONSTRAINT [FK_ShipmentEvents_Shipments_ShipmentId] FOREIGN KEY ([ShipmentId]) REFERENCES [Shipments] ([Id]) ON DELETE CASCADE
+);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210209121613_ShipmentEventTracking', N'3.1.4');
+
+GO
+
+DECLARE @var11 sysname;
+SELECT @var11 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[CargoItems]') AND [c].[name] = N'Discriminator');
+IF @var11 IS NOT NULL EXEC(N'ALTER TABLE [CargoItems] DROP CONSTRAINT [' + @var11 + '];');
+ALTER TABLE [CargoItems] DROP COLUMN [Discriminator];
+
+GO
+
+DECLARE @var12 sysname;
+SELECT @var12 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[ShipmentEvents]') AND [c].[name] = N'Information');
+IF @var12 IS NOT NULL EXEC(N'ALTER TABLE [ShipmentEvents] DROP CONSTRAINT [' + @var12 + '];');
+ALTER TABLE [ShipmentEvents] ALTER COLUMN [Information] nvarchar(256) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210212001154_ShipmentEventTrackingA', N'3.1.4');
+
+GO
+
+DECLARE @var13 sysname;
+SELECT @var13 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[CargoItems]') AND [c].[name] = N'Discriminator');
+IF @var13 IS NOT NULL EXEC(N'ALTER TABLE [CargoItems] DROP CONSTRAINT [' + @var13 + '];');
+ALTER TABLE [CargoItems] DROP COLUMN [Discriminator];
+
+GO
+
+ALTER TABLE [ShipmentEvents] ADD [LocationOfEvent] nvarchar(256) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210212003829_ShipmentEventTrackingAddedLocation', N'3.1.4');
+
+GO
+
+DECLARE @var14 sysname;
+SELECT @var14 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[CargoItems]') AND [c].[name] = N'Discriminator');
+IF @var14 IS NOT NULL EXEC(N'ALTER TABLE [CargoItems] DROP CONSTRAINT [' + @var14 + '];');
+ALTER TABLE [CargoItems] DROP COLUMN [Discriminator];
+
+GO
+
+DECLARE @var15 sysname;
+SELECT @var15 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[ShipmentEvents]') AND [c].[name] = N'Voyage');
+IF @var15 IS NOT NULL EXEC(N'ALTER TABLE [ShipmentEvents] DROP CONSTRAINT [' + @var15 + '];');
+ALTER TABLE [ShipmentEvents] ALTER COLUMN [Voyage] nvarchar(256) NULL;
+
+GO
+
+DECLARE @var16 sysname;
+SELECT @var16 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[ShipmentEvents]') AND [c].[name] = N'Activity');
+IF @var16 IS NOT NULL EXEC(N'ALTER TABLE [ShipmentEvents] DROP CONSTRAINT [' + @var16 + '];');
+ALTER TABLE [ShipmentEvents] ALTER COLUMN [Activity] nvarchar(64) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210215084941_ShipmentEventTrackingExtendedVoyage', N'3.1.4');
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210303131438_InventoryChangesMarch2d', N'3.1.4');
+
+GO
+
+ALTER TABLE [ProductSuppliers] ADD [Currency] nvarchar(max) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210304104109_AddCurrencyToProductSupplier', N'3.1.4');
+
+GO
+
+ALTER TABLE [ProductSuppliers] ADD [OrderQuantityMinimum] int NOT NULL DEFAULT 0;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210308153428_AddOrderQuantityMinimumToProductSupplier', N'3.1.4');
+
+GO
+
+DECLARE @var17 sysname;
+SELECT @var17 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Products]') AND [c].[name] = N'OrderQuantityMinimum');
+IF @var17 IS NOT NULL EXEC(N'ALTER TABLE [Products] DROP CONSTRAINT [' + @var17 + '];');
+ALTER TABLE [Products] DROP COLUMN [OrderQuantityMinimum];
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210316125801_RemoveUnusedOrderQuantityField', N'3.1.4');
+
+GO
+

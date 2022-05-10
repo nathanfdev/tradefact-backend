@@ -1,0 +1,534 @@
+{
+  "x-generator": "NSwag v13.1.6.0 (NJsonSchema v10.0.28.0 (Newtonsoft.Json v11.0.0.0))",
+  "swagger": "2.0",
+  "info": {
+    "title": "FunctionApp Partners",
+    "version": "1.0.0"
+  },
+  "host": "#{apihostprefix}#.api.tradefact.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/CreateOrUpdateAddress": {
+      "post": {
+        "tags": [
+          "PartnerFunctions"
+        ],
+        "operationId": "PartnerFunctions_CreateOrUpdateAddress",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateOrUpdateAddressRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Partner"
+            }
+          }
+        }
+      }
+    },
+    "/CreatePartner": {
+      "post": {
+        "tags": [
+          "PartnerFunctions"
+        ],
+        "operationId": "PartnerFunctions_CreatePartner",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreatePartnerRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "Created result",
+            "schema": {
+              "$ref": "#/definitions/Partner"
+            }
+          }
+        }
+      }
+    },
+    "/DeactivatePartner": {
+      "post": {
+        "tags": [
+          "PartnerFunctions"
+        ],
+        "operationId": "PartnerFunctions_DeactivatePartner",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/DeactivatePartnerRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK result"
+          }
+        }
+      }
+    },
+    "/GetPartner": {
+      "post": {
+        "tags": [
+          "PartnerFunctions"
+        ],
+        "operationId": "PartnerFunctions_GetPartner",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/GetPartnerRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Partner"
+            }
+          }
+        }
+      }
+    },
+    "/ListPartners": {
+      "post": {
+        "tags": [
+          "PartnerFunctions"
+        ],
+        "operationId": "PartnerFunctions_ListPartners",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ListPartnersRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Partner"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ReactivatePartner": {
+      "post": {
+        "tags": [
+          "PartnerFunctions"
+        ],
+        "operationId": "PartnerFunctions_ReactivatePartner",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ReactivatePartnerRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Partner"
+            }
+          }
+        }
+      }
+    },
+    "/UpdatePartner": {
+      "post": {
+        "tags": [
+          "PartnerFunctions"
+        ],
+        "operationId": "PartnerFunctions_UpdatePartner",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdatePartnerRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Partner"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Partner": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfPartner"
+        },
+        {
+          "type": "object",
+          "required": [
+            "customsFee",
+            "documentsFee",
+            "taxRate"
+          ],
+          "properties": {
+            "accountNumber": {
+              "type": "string"
+            },
+            "address": {
+              "$ref": "#/definitions/Address"
+            },
+            "bankName": {
+              "type": "string"
+            },
+            "contactEmail": {
+              "type": "string"
+            },
+            "contactName": {
+              "type": "string"
+            },
+            "contactTelephone": {
+              "type": "string"
+            },
+            "currency": {
+              "type": "string"
+            },
+            "customsFee": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "documentsFee": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "name": {
+              "type": "string"
+            },
+            "partnerCode": {
+              "type": "string"
+            },
+            "sortCode": {
+              "type": "string"
+            },
+            "swiftCode": {
+              "type": "string"
+            },
+            "taxRate": {
+              "type": "number",
+              "format": "decimal"
+            },
+            "tosDocumentId": {
+              "type": "string"
+            },
+            "website": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "Address": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfAddress"
+        },
+        {
+          "type": "object",
+          "required": [
+            "isDefault"
+          ],
+          "properties": {
+            "addressLine1": {
+              "type": "string"
+            },
+            "addressLine2": {
+              "type": "string"
+            },
+            "addressLine3": {
+              "type": "string"
+            },
+            "addressLine4": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "county": {
+              "type": "string"
+            },
+            "isDefault": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            },
+            "postalCode": {
+              "type": "string"
+            },
+            "province": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "CosmosItemOfAddress": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    },
+    "CosmosItemOfPartner": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    },
+    "CreateOrUpdateAddressRequest": {
+      "type": "object",
+      "required": [
+        "addressLine1",
+        "city",
+        "country",
+        "isDefault",
+        "name",
+        "partnerId"
+      ],
+      "properties": {
+        "addressLine1": {
+          "type": "string"
+        },
+        "addressLine2": {
+          "type": "string"
+        },
+        "addressLine3": {
+          "type": "string"
+        },
+        "addressLine4": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "isDefault": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
+        },
+        "partnerId": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "province": {
+          "type": "string"
+        }
+      }
+    },
+    "CreatePartnerRequest": {
+      "type": "object",
+      "required": [
+        "isoCurrency",
+        "name"
+      ],
+      "properties": {
+        "isoCurrency": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "DeactivatePartnerRequest": {
+      "type": "object",
+      "required": [
+        "partnerId"
+      ],
+      "properties": {
+        "partnerId": {
+          "type": "string"
+        }
+      }
+    },
+    "GetPartnerRequest": {
+      "type": "object",
+      "required": [
+        "partnerId"
+      ],
+      "properties": {
+        "partnerId": {
+          "type": "string"
+        }
+      }
+    },
+    "ListPartnersRequest": {
+      "type": "object",
+      "required": [
+        "isActive"
+      ],
+      "properties": {
+        "isActive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ReactivatePartnerRequest": {
+      "type": "object",
+      "required": [
+        "partnerId"
+      ],
+      "properties": {
+        "partnerId": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdatePartnerRequest": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfUpdatePartnerRequest"
+        },
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "partnerId"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "partnerId": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "CosmosItemOfUpdatePartnerRequest": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

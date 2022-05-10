@@ -1,0 +1,163 @@
+{
+    "x-generator": "NSwag v13.2.2.0 (NJsonSchema v10.1.4.0 (Newtonsoft.Json v12.0.0.0))",
+    "swagger": "2.0",
+    "info": {
+        "title": "FunctionApp Email",
+        "version": "1.0.0"
+    },
+    "host": "#{apihostprefix}#.api.tradefact.com",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/swagger/json": {
+            "get": {
+                "tags": [
+                    "Swagger"
+                ],
+                "operationId": "Swagger_Swagger",
+                "responses": {
+                    "200": {
+                        "x-nullable": true,
+                        "description": "",
+                        "schema": {
+                            "type": "file"
+                        }
+                    }
+                }
+            }
+        },
+        "/CreateProduct": {
+            "post": {
+                "tags": [
+                    "ProductCatalagFunctions"
+                ],
+                "operationId": "ProductCatalagFunctions_CreateProduct",
+                "parameters": [{
+                    "name": "Body",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/definitions/CreateProductRequest"
+                    },
+                    "x-nullable": true
+                }],
+                "responses": {
+                    "200": {
+                        "x-nullable": false,
+                        "description": "Created result",
+                        "schema": {
+                            "$ref": "#/definitions/ProductResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/GetProducts": {
+            "get": {
+                "tags": [
+                    "ProductCatalagFunctions"
+                ],
+                "operationId": "ProductCatalagFunctions_GetProducts",
+                "responses": {
+                    "200": {
+                        "x-nullable": false,
+                        "description": "Created result",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/ProductResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/Post": {
+            "post": {
+                "tags": [
+                    "ProductCatalagFunctions"
+                ],
+                "operationId": "ProductCatalagFunctions_Post",
+                "responses": {
+                    "200": {
+                        "x-nullable": true,
+                        "description": "",
+                        "schema": {
+                            "type": "file"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ProductResponse": {
+            "type": "object",
+            "properties": {
+                "sku": {
+                    "type": "string"
+                }
+            }
+        },
+        "CreateProductRequest": {
+            "allOf": [{
+                    "$ref": "#/definitions/ResourceOfCreateProductRequest"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "isoCurrency": {
+                            "type": "string"
+                        },
+                        "key": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "sku": {
+                            "type": "string"
+                        }
+                    }
+                }
+            ]
+        },
+        "ResourceOfCreateProductRequest": {
+            "type": "object",
+            "required": [
+                "createdAt",
+                "lastModifiedAt",
+                "version"
+            ],
+            "properties": {
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "lastModifiedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "lastModifiedBy": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        }
+    }
+}

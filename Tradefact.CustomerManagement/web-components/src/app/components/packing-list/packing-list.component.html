@@ -1,0 +1,241 @@
+<div class="container flex justify-between py-4 px-4">
+    <div class="w-1/2 p-4 border border-gray-400 rounded-md">
+        <div class="border-b border-gray-300 p-1">
+            <svg (click)="addPallet()" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <h3 class="text-1xl font-semibold">
+                Box / Pallet Information
+            </h3>
+        </div>
+        <div class="p-1">
+            <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg border-none">
+                <thead>
+                    <tr class="flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0 text-gray-800 tracking-wide text-xs font-bold">
+                        <th class="p-1 text-left w-3/12 align-baseline">Pallet/Box</th>
+                        <th class="p-1 text-right w-2/12">Width ({{model.dimensions}})</th>
+                        <th class="p-1 text-right w-2/12">Height ({{model.dimensions}})</th>
+                        <th class="p-1 text-right w-2/12">Depth ({{model.dimensions}})</th>
+                        <th class="p-1 text-right w-2/12">Weight ({{model.weight}})</th>
+                        <th class="p-1 text-right w-1/12">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody class="flex-1 xs:flex-none text-xs md:text-sm overflow-y-scroll w-full">
+                    <tr *ngFor="let item of palletList$ | async; let i = index" [attr.data-index]="i" class="flex flex-col flex-no wrap sm:table-row">
+                        <td class="p-1 text-left truncate">
+                            {{item.label}}
+                        </td>
+                        <td class="p-1 text-right truncate">{{item.width}}</td>
+                        <td class="p-1 text-right truncate">{{item.height}}</td>
+                        <td class="p-1 text-right truncate">{{item.depth}}</td>
+                        <td class="p-1 text-right truncate">{{item.weight}}</td>
+                        <td>
+                            <svg (click)="editPallet(item, i)" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <style>
+                                    .disabled {
+                                        pointer-events: none;
+                                    }
+                                </style>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                              </svg>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="w-1/2 ml-5 p-4 border border-gray-400 rounded-md">
+        <div class="rounded-md w-full flex flex-row">
+            <div class="w-1/4">
+                <label class="block text-sm font-medium text-gray-700">Shipment</label><br />
+                <select [(ngModel)]="model.shippingmethod">
+                    <option value="Air">Air</option>
+                    <option value="Sea">Sea</option>
+                    <option value="Road">Road</option>
+                    <option value="Rail">Rail</option>
+                </select>
+            </div>
+            <div class="w-1/4">
+                <label class="block text-sm font-medium text-gray-700">Dimensions</label><br />
+                <select [(ngModel)]="model.dimensions">
+                    <option value="mm">MM</option>
+                    <option value="inches">Inch</option>
+                </select>
+            </div>
+            <div class="w-1/4">
+                <label class="block text-sm font-medium text-gray-700">Weight</label><br />
+                <select [(ngModel)]="model.weight">
+                    <option value="kgs">Kgs</option>
+                    <option value="lbs">lbs</option>
+                </select>
+            </div>
+            <div class="w-1/4">
+                <!-- <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field> -->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- <ul>
+    <li *ngFor="let item of shipmentItemList$ | async; let i = index">{{item.sku}}}</li>
+</ul> -->
+
+<div class="container flex justify-between py-4 px-4">
+    <div class="w-full p-4 border border-gray-400 rounded-md">
+
+        <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden border-none my-5">
+            <thead>
+                <tr class="flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0 text-gray-800 tracking-wide text-xs font-bold">
+                    <th class="p-1 text-left w-2/12 align-baseline">SKU</th>
+                    <th class="p-1 text-left w-4/12 align-baseline">Description</th>
+                    <th class="p-1 text-right w-1/12 align-baseline">Expected<br />Qty</th>
+                    <th class="p-1 text-right w-1/12 align-baseline">Pallet#</th>
+                    <th class="p-1 text-right w-1/12 align-baseline">Carton<br />Qty</th>
+                    <th class="p-1 text-right w-1/12 align-baseline">Carton<br />LxWxHx</th>
+                    <th class="p-1 text-right w-1/12 align-baseline">Carton<br />Weight</th>
+                    <th class="p-1 text-right w-1/12">Packed Qty</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let item of shipmentItemList; let i = index" [attr.data-index]="i" class="flex-1 xs:flex-none text-xs md:text-sm">
+                <tr class="flex flex-col flex-no wrap sm:table-row mb-6 sm:mb-4 ">
+                    <td class="p-1 truncate" style="min-height:35px;">
+                        {{item.sku}}
+                    </td>
+                    <td class="p-1 truncate" style="min-height:35px;">{{item.desc}}</td>
+                    <td class="md:text-right p-1 truncate" style="min-height:35px;">{{item.qty}}</td>
+                    <td class="md:text-right p-1 truncate" style="min-height:35px;">
+                        <select [(ngModel)]="item.pallet">
+                            <option *ngFor="let pallet of palletList$ | async;" [value]="pallet.label">
+                                {{pallet.label}}
+                            </option> 
+                        </select>
+                    </td>
+                    <td class="md:text-right p-1 truncate" style="min-height:35px;">
+                        <input [(ngModel)]="item.cartonQty" class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="number" name="AssignedSKUQuantities{{i}}.cartonQty"
+                            id="assignedsky_{{i}}.cartonQty" />
+                    </td>
+                    <td class="md:text-right p-1 truncate" style="min-height:35px;">
+                        <input [(ngModel)]="item.cartonDimensions" class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="number" name="AssignedSKUQuantities{{i}}.cartonDimensions"
+                            id="assignedsky_{{i}}.cartonDimensions" />
+                    </td>
+                    <td class="md:text-right p-1 truncate" style="min-height:35px;">
+                        <input [(ngModel)]="item.cartonWeight" class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="number" name="AssignedSKUQuantities{{i}}.cartonWeight"
+                            id="assignedsky_{{i}}.cartonWeight" />
+                    </td>
+                    <td class="md:text-right p-1 truncate" style="min-height:35px;">
+                        <input [(ngModel)]="item.unitsPacked" class="appearance-none block w-full text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="number" name="AssignedSKUQuantities{{i}}.Quantity"
+                            id="assignedsky_{{i}}.Quantity" />
+                    </td>
+                </tr>
+                <tr><i *ngFor="let orderNo of item.purchaseOrders">{{orderNo}}</i></tr>
+            </tbody>
+        </table>
+        <button (click)="handleSave($event)" class="btn btn-primary">SAVE</button>
+    </div>
+</div>
+
+
+
+<div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+    <div class="relative w-auto my-6 mx-auto max-w-6xl">
+        <!--content-->
+        <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+            <!--header-->
+            <div class="flex items-start justify-between p-2 border-b border-solid border-blueGray-200 rounded-t">
+                <h3 class="text-1xl font-semibold">
+                    Box / Pallet Information
+                </h3>
+                <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleModal()">
+            <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+              ×
+            </span>
+          </button>
+            </div>
+            <!--body-->
+            <div class="relative p-6 flex-auto">
+                <div class="p-2">
+                    <div class="mt-2">
+                        <div class="flex flex-col md:flex-row pb-4 mb-4">
+                            <div class="flex-1">
+                                <div class="flex flex-col md:flex-row">
+                                    <!-- <select class="mx-2 flex-1 h-10 mt-2 form-select w-full">
+                                        <option value="US">US</option>
+                                        <option value="Italy">Italy</option>
+                                        <option value="Spain">Spain</option>
+                                        <option value="China">China</option>
+                                    </select> -->
+                                    <div class="w-full flex-1 mx-2">
+                                        <label for="pallet-label" class="block text-sm font-medium text-gray-700">
+                                            Label / Barcode
+                                          </label>
+                                        <div class="my-2 p-1 bg-white flex border border-gray-200 rounded">
+                                            <input [(ngModel)]="activePallet.label" type="text" name="pallet-label" id="pallet-label" autocomplete="email" class="p-1 px-2 appearance-none outline-none w-full text-gray-800">
+                                        </div>
+                                    </div>
+                                    <div class="w-full flex-1 mx-2">
+                                        <label for="pallet-width" class="block text-sm font-medium text-gray-700">
+                                            Width ({{model.dimensions}})
+                                          </label>
+                                        <div class="my-2 p-1 bg-white flex border border-gray-200 rounded">
+                                            <input [(ngModel)]="activePallet.width" type="text" name="pallet-width" id="pallet-width" autocomplete="email" class="p-1 px-2 appearance-none outline-none w-full text-gray-800">
+                                        </div>
+                                    </div>
+                                    <div class="w-full flex-1 mx-2">
+                                        <label for="pallet-height" class="block text-sm font-medium text-gray-700">
+                                            Height ({{model.dimensions}})
+                                          </label>
+                                        <div class="my-2 p-1 bg-white flex border border-gray-200 rounded">
+                                            <input [(ngModel)]="activePallet.height" type="text" name="pallet-height" id="pallet-height" autocomplete="email" class="p-1 px-2 appearance-none outline-none w-full text-gray-800">
+                                        </div>
+                                    </div>
+                                    <div class="w-full flex-1 mx-2">
+                                        <label for="pallet-depth" class="block text-sm font-medium text-gray-700">
+                                            Depth ({{model.dimensions}})
+                                          </label>
+                                        <div class="my-2 p-1 bg-white flex border border-gray-200 rounded">
+                                            <input [(ngModel)]="activePallet.depth" type="text" name="pallet-depth" id="pallet-depth" autocomplete="email" class="p-1 px-2 appearance-none outline-none w-full text-gray-800">
+                                        </div>
+                                    </div>
+                                    <div class="w-full flex-1 mx-2">
+                                        <label for="pallet-weight" class="block text-sm font-medium text-gray-700">
+                                            Weight
+                                          </label>
+                                        <div class="my-2 p-1 bg-white flex border border-gray-200 rounded">
+                                            <input [(ngModel)]="activePallet.weight" type="text" name="pallet-weight" id="pallet-weight" autocomplete="email" class="p-1 px-2 appearance-none outline-none w-full text-gray-800">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col md:flex-row">
+                                    <div class="w-full flex-1 mx-2">
+                                        <label for="pallet-notes" class="block text-sm font-medium text-gray-700">
+                                            Notes
+                                          </label>
+                                        <div class="my-2 p-1 bg-white flex border border-gray-200 rounded">
+                                            <textarea id="about" name="about" rows="3" class="shadow-sm   mt-1 block w-full sm:text-sm border border-none rounded-md" placeholder="Notes"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--footer-->
+            <div class="flex items-center justify-end p-2 border-t border-solid border-blueGray-200 rounded-b">
+                <button class="w-40 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-2 border border-blue-500 hover:border-transparent rounded" (click)="toggleModal()">
+                    Cancel
+                  </button>
+                <button class="w-40 m-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-1 px-2 border border-blue-700 rounded" (click)="savePallet()">
+                    {{modalAction === 'add' ? 'Add' : 'Update'}}
+                  </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>

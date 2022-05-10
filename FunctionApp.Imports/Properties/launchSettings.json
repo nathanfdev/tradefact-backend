@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "FunctionApp.Imports": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --pause-on-error --port 5002"
+    },
+    "FunctionApp.Imports.SSL": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --pause-on-error --port 5002  --useHttps --cert \"Infrastructure\\localhostdev.pfx\" --password \"password\""
+    }
+  }
+}

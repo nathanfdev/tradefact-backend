@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Quarterly business review";
+}
+@model ShowQbrReportModel
+
+<div>
+    <h1 class="display-4">@ViewData["Title"]</h1>
+    <h3>@Model.CompanyName</h3>
+    <p>Contact: @Model.ContactName @Model.ContactEmail @Model.ContactTelephone</p>
+
+    <h4>From @Model.FromDate.ToString("dd/MM/yyyy") to @Model.ToDate.ToString("dd/MM/yyyy")</h4>
+
+    @if (Model.OrganisationType == "PARTNER")
+    {
+        <div>
+            Number of bookings: @Model.NumBookings
+        </div>
+        <div>
+            Average transit time: @Model.AvgTransitTimeDays
+        </div>
+        <div>
+            Average time to quote: @Model.AvgTimeToQuoteDays
+        </div>
+        <div>
+            Quote conversion rate: @Model.QuoteConversionRate
+        </div>
+        <div>
+            Average profit margin: @Model.AvgFreightForwarderProfitMargin
+        </div>
+        <div>
+            Number of invitations sent: @Model.NumInvitationsSent
+        </div>
+        <div>
+            Number of invitations accepted: @Model.NumInvitationsAccepted
+        </div>
+
+    }
+    else
+    {
+        <div>
+            Number of purchase orders: @Model.NumPurchaseOrders with @Model.NumActiveSuppliers suppliers
+        </div>
+        <div>
+            Number of different SKUs ordered: @Model.NumDifferentSKUsOrdered
+        </div>
+        <div>
+            Number of bookings: @Model.NumBookings with @Model.NumActiveLogistics logistics partners
+        </div>
+        <div>
+            Average time to quote: @Model.AvgTimeToQuoteDays
+        </div>
+        <div>
+            Average time from order to shipment: @Model.AvgTimeToShipDays
+        </div>
+        <div>
+            Average transit time: @Model.AvgTransitTimeDays
+        </div>
+        <div>
+            Average time from order to delivery: @Model.AvgPurchaseOrderToDeliveryDays
+        </div>
+        <div>
+            Number of invitations sent: @Model.NumInvitationsSent
+        </div>
+        <div>
+            Number of invitations accepted: @Model.NumInvitationsAccepted
+        </div>
+    }
+</div>

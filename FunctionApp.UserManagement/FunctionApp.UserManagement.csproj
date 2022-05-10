@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AzureFunctionsVersion>v3</AzureFunctionsVersion>
+    <_FunctionsSkipCleanOutput>true</_FunctionsSkipCleanOutput>
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\Infrastructure.Functions\KeepWarm.cs" Link="KeepWarm.cs" />
+    <Compile Include="..\Infrastructure.Functions\Swagger.cs" Link="Infrastructure\Swagger.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Identity" Version="1.3.0" />
+    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.1.0" />
+    <PackageReference Include="Azure.Security.KeyVault.Certificates" Version="4.1.0" />
+    <PackageReference Include="chargebee" Version="2.8.9" />
+    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="4.2.1" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.11" />
+    <PackageReference Include="Microsoft.IdentityModel.Logging" Version="6.8.0" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.11" />
+    <PackageReference Include="NSwag.Annotations" Version="13.2.2" />
+    <PackageReference Include="NSwag.Core" Version="13.2.2" />
+    <PackageReference Include="NSwag.SwaggerGeneration.AzureFunctionsV2" Version="1.1.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\Infrastructure.Functions\Infrastructure.Functions.csproj" />
+    <ProjectReference Include="..\Tradefact.Data\Tradefact.Data.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="host.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="local.settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+</Project>

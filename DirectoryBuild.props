@@ -1,0 +1,15 @@
+<Project>
+ 
+  <PropertyGroup>
+    <Version>1.2.3</Version>
+    <Authors>John Doe</Authors>
+  </PropertyGroup>
+ 
+  <PropertyGroup Condition="'$(Language)' == 'C#'">
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <Features>strict</Features>
+  </PropertyGroup>
+ 
+</Project>

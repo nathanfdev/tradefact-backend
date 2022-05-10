@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = Integration.CargoSmart
+build_property.ProjectDir = /Users/nathanforster/Documents/development/trade-flare/TradeFact.Backend/Integration.Scheduling.CargoSmart/

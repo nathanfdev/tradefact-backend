@@ -1,0 +1,310 @@
+﻿@page
+@addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
+@model Tradefact.Portal.Pages.POViewerModel
+@{
+}
+
+<div class="min-h-screen bg-white" style="min-height: 600px">
+    <div class="border-t-8 border-gray-700 h-2">
+
+    </div>
+
+    <div class="container flex justify-between py-4 px-4">
+        <div>
+            <h2 class="text-2xl font-bold mb-6 pb-2 tracking-wider uppercase">ORDER</h2>
+        </div>
+
+        <div>
+            @if (Model.ShowActions)
+            {
+                <form method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="ActivePurchaseOrderId" value="@Model.ActivePurchaseOrderId" />
+
+                    <div class="relative inline-block text-gray-700">
+                        <select class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline" placeholder="Regular input" asp-for="SelectedAction" asp-items="Model.ActionsAvailable"></select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                        </div>
+                    </div>
+                    <div class="relative inline-block">
+                        <input value="Set Order Status" class="btn-blue-fill" type="submit">
+                    </div>
+                </form>
+             }
+        </div>
+    </div>
+    
+    <div class="container mx-auto py-6 px-4">
+
+        <div class="flex flex-wrap justify-between mb-8">
+            <div class="w-full md:w-1/3 mb-8 md:mb-0">
+                <div class="mb-2 md:mb-1 md:flex items-center">
+                    <label class="w-36 text-gray-800 block font-bold text-sm uppercase tracking-wide">Order #</label>
+                    <span class="mr-4 inline-block hidden md:block">:</span>
+                    <div class="flex-1">
+                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded md:w-48 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" value="@Model.PO.PurchaseOrderNumber">
+                    </div>
+                </div>
+
+                <div class="mb-2 md:mb-1 md:flex items-center">
+                    <label class="w-36 text-gray-800 block font-bold text-sm uppercase tracking-wide">Order Date</label>
+                    <span class="mr-4 inline-block hidden md:block">:</span>
+                    <div class="flex-1">
+                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded md:w-48 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" value="@Model.PO.PurchaseOrderDate.GetValueOrDefault().ToString("dd MMMM yyyy")" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="mb-2 md:mb-1 md:flex items-center">
+                    <label class="w-36 text-gray-800 block font-bold text-sm uppercase tracking-wide">Goods Ready</label>
+                    <span class="mr-4 inline-block hidden md:block">:</span>
+                    <div class="flex-1">
+                        <input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded md:w-48 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" value="@Model.PO.PurchaseOrderDate.GetValueOrDefault().ToString("dd MMMM yyyy")" readonly="">
+                    </div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3">
+                <div class="flex justify-between mb-3">
+                    <div class="text-gray-800 md:text-right flex-1">Total (@Model.PO.BaseCurrency.CurrencyId)</div>
+                    <div class="text-right w-40">
+                        <div class="text-gray-800 font-medium">@Model.PO.BaseCurrency.NetAmount.ToString("N")</div>
+                    </div>
+                </div>
+                <div class="flex justify-between mb-4">
+                    <div class="text-sm text-gray-600 md:text-right flex-1">Tax (@Model.PO.BaseCurrency.CurrencyId)</div>
+                    <div class="text-right w-40">
+                        <div class="text-sm text-gray-600">@Model.PO.BaseCurrency.TaxAmount.ToString("N")</div>
+                    </div>
+                </div>
+
+                <div class="py-2 border-t border-b">
+                    <div class="flex justify-between">
+                        <div class="text-xl text-gray-600 md:text-right flex-1">Amount (@Model.PO.BaseCurrency.CurrencyId)</div>
+                        <div class="text-right w-40">
+                            <div class="text-xl text-gray-800 font-bold">@Model.PO.BaseCurrency.TotalAmount.ToString("N")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap justify-between mb-8">
+            <div class="w-full md:w-1/3 mb-2 md:mb-0">
+                <label class="text-gray-800 block mb-1 font-bold text-sm uppercase tracking-wide">Supplier:</label>
+                <input class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" value="@Model.PO.Supplier.Name" readonly="readonly">
+                <input class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" value="" readonly="readonly">
+                <input class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" value="" readonly="readonly">
+                <input class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" value="" readonly="readonly">
+                <input class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" value="" readonly="readonly">
+            </div>
+            <div class="w-full md:w-1/3">
+                <label class="text-gray-800 block mb-1 font-bold text-sm uppercase tracking-wide">Deliver To:<span>&nbsp;&nbsp;@Model.PO.Client</span></label>
+                <input class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" value="@Model.PO.PlaceOfDispatch.Name" readonly="readonly">
+                <input class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" value="@Model.PO.PlaceOfDispatch.AddressLine1" readonly="readonly">
+                <input class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" value="@Model.PO.PlaceOfDispatch.AddressLine2" readonly="readonly">
+                <input class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" value="@Model.PO.PlaceOfDispatch.PostalCode" readonly="readonly">
+                <input class="mb-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" id="inline-full-name" type="text" value="@Model.PO.PlaceOfDispatch.Country.Name" readonly="readonly">
+            </div>
+        </div>
+
+        <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden border-none my-5">
+            <thead>
+                <tr class="flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0 text-gray-800 uppercase tracking-wide text-xs font-bold">
+                    <th class="p-1 text-left w-4/12 align-baseline">SKU</th>
+                    <th class="p-1 text-left w-5/12 align-baseline">Description</th>
+                    <th class="p-1 text-right w-1/12 align-baseline">Units</th>
+                    <th class="p-1 text-right w-1/12">
+                        Unit Price<br /><span class="font-medium text-xs text-gray-500">(@Model.PO.BaseCurrency.CurrencyId)</span>
+                    </th>
+                    <th class="p-1 text-right w-1/12">
+                        Amount<br/><span class="font-medium text-xs text-gray-500">(@Model.PO.BaseCurrency.CurrencyId)</span>
+                    </th>
+                </tr>
+                @foreach (var item in Model.PO.PurchaseOrderItems.Take(Model.PO.PurchaseOrderItems.Count-1))
+                {
+            <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 text-gray-800 uppercase" style="min-height:35px;">
+                <th class="p-1 text-left text-xs w-3/12">SKU</th>
+                <th class="p-1 text-left text-xs w-4/12">Description</th>
+                <th class="p-1 text-left text-xs w-1/12">Units</th>
+                <th class="p-1 text-left text-xs w-2/12">
+                        Price
+                        <span class="font-medium text-xs text-gray-500">(@Model.PO.BaseCurrency.CurrencyId)</span>
+                </th>
+                <th class="p-3 text-left  text-xs w-2/12">
+                        Amount
+                        <span class="font-medium text-xs text-gray-500">(@Model.PO.BaseCurrency.CurrencyId)</span>
+                </th>
+            </tr>
+                }
+            </thead>
+            <tbody class="flex-1 xs:flex-none text-xs md:text-sm">
+                @foreach (var item in Model.PO.PurchaseOrderItems)
+                {
+                <tr class="flex flex-col flex-no wrap sm:table-row mb-6 sm:mb-4 ">
+                    <td class="p-1 truncate" style="min-height:35px;">@item.Product.SKU.ToUpper()</td>
+                    <td class="p-1 truncate" style="min-height:35px;">@item.Product.Name.ToUpper()</td>
+                    <td class="md:text-right p-1 truncate" style="min-height:35px;">@item.OrderQuantity</td>
+                    <td class="md:text-right p-1 truncate" style="min-height:35px;" x-text="numberFormat(invoice.total")>@Convert.ToDecimal(item.OrderPriceUnit).ToString("F")</td>
+                    <td class="md:text-right p-1 truncate" style="min-height:35px;">@item.NetPriceAmount.ToString("F")</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+        @*<div class="flex -mx-1 border-b py-2 items-start">
+            <div class="w-52 px-1">
+                <p class="text-gray-800 uppercase tracking-wide text-sm font-bold">SKU</p>
+            </div>
+
+            <div class="flex-1 px-1">
+                <p class=" invisible md:visible text-gray-800 uppercase tracking-wide text-sm font-bold">Description</p>
+            </div>
+
+            <div class="px-1 w-20 sm\:w-40 text-right">
+                <p class="text-gray-800 uppercase tracking-wide text-sm font-bold">Units</p>
+            </div>
+
+            <div class="px-1 w-32 sm\:w-40 text-right">
+                <p class="leading-none">
+                    <span class="block uppercase tracking-wide text-sm font-bold text-gray-800">Unit Price</span>
+                    <span class="font-medium text-xs text-gray-500">(@Model.PO.BaseCurrency.CurrencyId)</span>
+                </p>
+            </div>
+
+            <div class="px-1 w-32 sm\:w-40 text-right">
+                <p class="leading-none">
+                    <span class="block uppercase tracking-wide text-sm font-bold text-gray-800">Amount</span>
+                    <span class="font-medium text-xs text-gray-500">(@Model.PO.BaseCurrency.CurrencyId)</span>
+                </p>
+            </div>
+        </div>*@
+
+        @*@foreach (var item in Model.PO.PurchaseOrderItems)
+        {
+            <div class="flex flex-col md:py-2 border-b">
+                <div class="flex">
+                    <div class="w-52 px-1">
+                        <p class="text-gray-800" x-text="invoice.name">@item.Product.SKU.ToUpper()</p>
+                    </div>
+
+                    <div class="flex-1 px-1 invisible md:visible">
+                        <p class="text-gray-800" x-text="invoice.name">@item.Product.Name.ToUpper()</p>
+                    </div>
+
+                    <div class="px-1 w-20 sm\:w-40 text-right">
+                        <p class="text-gray-800" x-text="invoice.qty">@item.OrderQuantity</p>
+                    </div>
+
+                    <div class="px-1 w-32 sm\:w-40 text-right">
+                        <p class="text-gray-800" x-text="numberFormat(invoice.rate)">@Convert.ToDecimal(item.OrderPriceUnit).ToString("F")</p>
+                    </div>
+
+                    <div class="px-1 w-32 sm\:w-40 text-right">
+                        <p class="text-gray-800" x-text="numberFormat(invoice.total)">@item.NetPriceAmount.ToString("F")</p>
+                    </div>
+                </div>
+                <div class="flex text-sm">
+                    <p class="px-1 text-gray-800 italic visible md:invisible" x-text="invoice.name">@item.Product.Name.ToUpper()</p>
+                </div>
+
+            </div>
+        }
+
+        @foreach (var item in Model.PO.PurchaseOrderAdditionalChargeItems.Where(q => q.Type == Core.Enums.ChargeItemTypeEnum.VALUE))
+        {
+            <div class="flex -mx-1 py-2 border-b">
+                <div class="flex-1 px-1">
+                    <p class="text-gray-800" x-text="invoice.name">@item.Description.ToUpper()</p>
+                </div>
+
+                <div class="px-1 w-32 text-right">
+                    <p class="text-gray-800" x-text="numberFormat(invoice.total)">@item.Rate.ToString("N")</p>
+                </div>
+            </div>
+        }
+
+        @foreach (var item in Model.PO.PurchaseOrderAdditionalChargeItems.Where(q => q.Type == Core.Enums.ChargeItemTypeEnum.TAX))
+        {
+            <div class="flex -mx-1 py-2 border-b">
+                <div class="flex-1 px-1">
+                    <p class="text-gray-800" x-text="invoice.name">@item.Description.ToUpper()</p>
+                </div>
+
+
+                <div class="px-1 w-32 text-right">
+                    <p class="text-gray-800" x-text="numberFormat(invoice.total)">@item.Rate.ToString("F")%</p>
+                </div>
+            </div>
+        }*@
+
+        <div class="flex flex-wrap-reverse md:flex-wrap  justify-between mt-8">
+            <div class="w-full md:w-1/3 mt-6 mb-8 md:mb-0">
+                <div class="px-1 align-baseline">
+                    <p class="text-gray-800" x-text="invoice.name">Powered By</p>
+                </div>
+
+                <div class="px-1 w-48 text-right  align-baseline">
+                    <img class="object-contain md:object-scale-down" src="https://app.tradefact.com/images/logo.png" />
+                </div>
+            </div>
+            <div class="w-full md:w-1/3">
+                <div class="flex justify-between mb-3">
+                    <div class="text-gray-800 md:text-right flex-1">Total (@Model.PO.BaseCurrency.CurrencyId)</div>
+                    <div class="text-right w-40">
+                        <div class="text-gray-800 font-medium">@Model.PO.BaseCurrency.NetAmount.ToString("N")</div>
+                    </div>
+                </div>
+                <div class="flex justify-between mb-4">
+                    <div class="text-sm text-gray-600 md:text-right flex-1">Tax (@Model.PO.BaseCurrency.CurrencyId)</div>
+                    <div class="text-right w-40">
+                        <div class="text-sm text-gray-600">@Model.PO.BaseCurrency.TaxAmount.ToString("N")</div>
+                    </div>
+                </div>
+
+                <div class="py-2 border-t border-b">
+                    <div class="flex justify-between">
+                        <div class="text-xl text-gray-600 md:text-right flex-1">Amount (@Model.PO.BaseCurrency.CurrencyId)</div>
+                        <div class="text-right w-40">
+                            <div class="text-xl text-gray-800 font-bold">@Model.PO.BaseCurrency.TotalAmount.ToString("N")</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="py-2 ml-auto mt-5 w-full sm:w-2/4 lg:w-1/4">
+            <div class="flex justify-between mb-3">
+                <div class="text-gray-800 text-right flex-1">Total (@Model.PO.BaseCurrency.CurrencyId)</div>
+                <div class="text-right w-40">
+                    <div class="text-gray-800 font-medium">@Model.PO.BaseCurrency.NetAmount.ToString("N")</div>
+                </div>
+            </div>
+            <div class="flex justify-between mb-4">
+                <div class="text-sm text-gray-600 text-right flex-1">Tax (@Model.PO.BaseCurrency.CurrencyId)</div>
+                <div class="text-right w-40">
+                    <div class="text-sm text-gray-600">@Model.PO.BaseCurrency.TaxAmount.ToString("N")</div>
+                </div>
+            </div>
+
+            <div class="py-2 border-t border-b">
+                <div class="flex justify-between">
+                    <div class="text-xl text-gray-600 text-right flex-1">Amount (@Model.PO.BaseCurrency.CurrencyId)</div>
+                    <div class="text-right w-40">
+                        <div class="text-xl text-gray-800 font-bold">@Model.PO.BaseCurrency.TotalAmount.ToString("N")</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex -mt-16">
+            <div class="w-2/4">
+                <div class="px-1  align-baseline">
+                    <p class="text-gray-800" x-text="invoice.name">Powered By</p>
+                </div>
+
+                <div class="px-1 w-48 text-right  align-baseline">
+                    <img class="object-contain md:object-scale-down" src="https://app.tradefact.com/images/logo.png" />
+                </div>
+            </div>
+        </div>*@
+    </div>
+    </div>

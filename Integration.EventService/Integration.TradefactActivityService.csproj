@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\Tradefact.Application\Tradefact.Application.csproj" />
+    <ProjectReference Include="..\Tradefact.Data\Tradefact.Data.csproj" />
+  </ItemGroup>
+
+</Project>

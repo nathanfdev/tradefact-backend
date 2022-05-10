@@ -1,0 +1,84 @@
+﻿# .NET Core Function App to Windows on Azure
+# Build a .NET Core function app and deploy it to Azure as a Windows function App.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/en-us/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+  branches:
+    include:
+    - develop
+    - master
+  paths:
+    include:
+    - FunctionApp.Companies/*
+
+variables:
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: '59b87343-23a4-460f-b6f6-6d4eb93ca0f1'
+
+  # Function app name
+  functionAppName: 'dev-tf-companies'
+
+  # Agent VM image name
+  vmImageName: 'vs2017-win2016'
+
+  # Working Directory
+  workingDirectory: '$(System.DefaultWorkingDirectory)/FunctionApp.Companies'
+
+stages:
+- stage: Build
+  displayName: Build stage
+
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: NuGetToolInstaller@1
+      displayName: 'Use NuGet 5.0.0'
+      inputs:
+        versionSpec: 5.0.0
+        checkLatest: true
+
+    - task: NuGetAuthenticate@0
+      displayName: 'NuGet Authenticate'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore packages'
+      inputs:
+        command: restore
+        projects: '**/*.csproj'
+        feedsToUse: config
+        nugetConfigPath: NuGet.Config
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build project'
+      inputs:
+        projects: 'FunctionApp.Companies/*.csproj'
+        arguments: '--output publish_output --configuration Release --no-restore'
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive files'
+      inputs:
+        rootFolderOrFile: 'publish_output/'
+        includeRootFolder: false
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
+
+    - task: replacetokens@3
+      inputs:
+        targetFiles: '**/swagger.json'
+        encoding: 'auto'
+        writeBOM: false
+        actionOnMissing: 'fail'
+        keepToken: false
+        tokenPrefix: '#{'
+        tokenSuffix: '}#'
+
+    - task: PublishPipelineArtifact@1
+      inputs:
+        path: $(System.DefaultWorkingDirectory)/FunctionApp.Companies/swagger.json
+        artifact: swagger.json
+              

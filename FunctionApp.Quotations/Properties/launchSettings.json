@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "FunctionApp.Quotations": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --pause-on-error --port 5005"
+    },
+    "FunctionApp.Quotations.SSL": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --pause-on-error --port 5005  --useHttps --cert \"Infrastructure\\localhostdev.pfx\" --password \"password\""
+    }
+  }
+}

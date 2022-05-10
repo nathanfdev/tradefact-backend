@@ -1,0 +1,69 @@
+﻿# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+  branches:
+    include:
+      - develop
+      - master
+      - feature/SqlDB
+  paths:
+    include:
+      - TradeFact.Api/*
+
+variables:
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: '59b87343-23a4-460f-b6f6-6d4eb93ca0f1'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+  # Working Directory
+  workingDirectory: '$(System.DefaultWorkingDirectory)/Tradefact.Api'
+
+  # Working Directory
+  projects: '**/Tradefact.Api.csproj'
+
+  buildConfiguration: 'Release'
+
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+  - task: UseDotNet@2
+    displayName: 'Use .NET SDK 3.1'
+    inputs:
+      packageType: 'sdk'
+      version: '3.1.x'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore project dependencies'
+    inputs:
+      command: 'restore'
+      projects: $(projects)
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build the project - $(buildConfiguration)'
+    inputs:
+      command: 'build'
+      arguments: '--no-restore --configuration $(buildConfiguration)'
+      projects: $(projects)
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish the project - $(buildConfiguration)'
+    inputs:
+      command: 'publish'
+      projects: $(projects)
+      publishWebProjects: false
+      arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)  --no-restore'
+      zipAfterPublish: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: TradeFact.Api'
+    condition: succeeded()
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'TradeFactApi'
+      publishLocation: 'Container'

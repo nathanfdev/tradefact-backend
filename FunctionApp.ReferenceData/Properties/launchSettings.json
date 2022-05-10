@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "FunctionApp.ReferenceData": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --pause-on-error --port 5006"
+    },
+    "FunctionApp.ReferenceData.SSL": {
+      "commandName": "Project",
+      "commandLineArgs": "host start --pause-on-error --port 5006  --useHttps --cert \"Infrastructure\\localhostdev.pfx\" --password \"password\""
+    }
+  }
+}

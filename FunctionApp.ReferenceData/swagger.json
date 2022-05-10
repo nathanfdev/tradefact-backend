@@ -1,0 +1,89 @@
+{
+  "x-generator": "NSwag v13.1.6.0 (NJsonSchema v10.0.28.0 (Newtonsoft.Json v11.0.0.0))",
+  "swagger": "2.0",
+  "info": {
+    "title": "FunctionApp ReferenceData",
+    "version": "1.0.0"
+  },
+  "host": "#{apihostprefix}#.api.importwise.co",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/currencies": {
+      "get": {
+        "tags": [
+          "ReferenceDataFunctions"
+        ],
+        "operationId": "ReferenceDataFunctions_CurrencyList",
+        "responses": {
+          200: {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CurrencyModel"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CurrencyModel": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfCurrencyModel"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "isoCurrency": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "CosmosItemOfCurrencyModel": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

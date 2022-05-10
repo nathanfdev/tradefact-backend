@@ -1,0 +1,1806 @@
+{
+  "x-generator": "NSwag v13.2.0.0 (NJsonSchema v10.1.2.0 (Newtonsoft.Json v11.0.0.0))",
+  "swagger": "2.0",
+  "info": {
+    "title": "FunctionApp Imports",
+    "version": "1.0.0"
+  },
+  "host": "#{apihostprefix}#.api.tradefact.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/AcceptBooking": {
+      "post": {
+        "tags": [
+          "ImportBookingFunctions"
+        ],
+        "operationId": "ImportBookingFunctions_AcceptBooking",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/AcceptBookingRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Import"
+            }
+          }
+        }
+      }
+    },
+    "/BookImport": {
+      "post": {
+        "tags": [
+          "ImportBookingFunctions"
+        ],
+        "operationId": "ImportBookingFunctions_BookImport",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/BookImportRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Import"
+            }
+          }
+        }
+      }
+    },
+    "/RejectBooking": {
+      "post": {
+        "tags": [
+          "ImportBookingFunctions"
+        ],
+        "operationId": "ImportBookingFunctions_RejectBooking",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RejectBookingRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Import"
+            }
+          }
+        }
+      }
+    },
+    "/AddDocument": {
+      "post": {
+        "tags": [
+          "ImportDocumentFunctions"
+        ],
+        "operationId": "ImportDocumentFunctions_AddDocument",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "type": "file",
+            "name": "file",
+            "in": "formData",
+            "description": "Document to be uploaded",
+            "collectionFormat": "multi",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "companyId",
+            "in": "formData",
+            "description": "companyId",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "importId",
+            "in": "formData",
+            "description": "importId",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "string",
+            "name": "ownedBy",
+            "in": "formData",
+            "description": "ownedBy",
+            "x-schema": {
+              "$ref": "#/definitions/OwnershipEnum"
+            },
+            "x-nullable": false,
+            "enum": [
+              "Unspecified",
+              "Partner",
+              "Company"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/ImportDocument"
+            }
+          }
+        }
+      }
+    },
+    "/DeleteDocument": {
+      "post": {
+        "tags": [
+          "ImportDocumentFunctions"
+        ],
+        "operationId": "ImportDocumentFunctions_DeleteDocument",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/DeleteDocumentRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK result"
+          }
+        }
+      }
+    },
+    "/DownloadDocument": {
+      "post": {
+        "tags": [
+          "ImportDocumentFunctions"
+        ],
+        "operationId": "ImportDocumentFunctions_DownloadDocument",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/DownloadDocumentRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/ListDocuments": {
+      "post": {
+        "tags": [
+          "ImportDocumentFunctions"
+        ],
+        "operationId": "ImportDocumentFunctions_ListDocuments",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ListDocumentsRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ImportDocument"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/AssignQuotation": {
+      "post": {
+        "tags": [
+          "ImportFunctions"
+        ],
+        "operationId": "ImportFunctions_AssignQuotation",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/AssignQuotationRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Import"
+            }
+          }
+        }
+      }
+    },
+    "/AssignSupplier": {
+      "post": {
+        "tags": [
+          "ImportFunctions"
+        ],
+        "operationId": "ImportFunctions_AssignSupplier",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/AssignSupplierRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Import"
+            }
+          }
+        }
+      }
+    },
+    "/CreateImport": {
+      "post": {
+        "tags": [
+          "ImportFunctions"
+        ],
+        "operationId": "ImportFunctions_CreateImport",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateImportRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Import"
+            }
+          }
+        }
+      }
+    },
+    "/DeactivateImport": {
+      "post": {
+        "tags": [
+          "ImportFunctions"
+        ],
+        "operationId": "ImportFunctions_DeactivateImport",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/DeactivateImportRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK result"
+          }
+        }
+      }
+    },
+    "/GetImport": {
+      "post": {
+        "tags": [
+          "ImportFunctions"
+        ],
+        "operationId": "ImportFunctions_GetImport",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/GetImportRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Import"
+            }
+          }
+        }
+      }
+    },
+    "/ListImports": {
+      "post": {
+        "tags": [
+          "ImportFunctions"
+        ],
+        "operationId": "ImportFunctions_ListImports",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ListImportsRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Import"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/UpdateImport": {
+      "post": {
+        "tags": [
+          "ImportFunctions"
+        ],
+        "operationId": "ImportFunctions_UpdateImport",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateImportRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Import"
+            }
+          }
+        }
+      }
+    },
+    "/AssignProduct": {
+      "post": {
+        "tags": [
+          "ImportProductFunctions"
+        ],
+        "operationId": "ImportProductFunctions_AssignProduct",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/AssignProductRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/ImportProduct"
+            }
+          }
+        }
+      }
+    },
+    "/ListProducts": {
+      "post": {
+        "tags": [
+          "ImportProductFunctions"
+        ],
+        "operationId": "ImportProductFunctions_ListProducts",
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ImportProduct"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/UnassignProduct": {
+      "post": {
+        "tags": [
+          "ImportProductFunctions"
+        ],
+        "operationId": "ImportProductFunctions_UnassignProduct",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UnsassignProductRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK result"
+          }
+        }
+      }
+    },
+    "/UpdateProductQuantity": {
+      "post": {
+        "tags": [
+          "ImportProductFunctions"
+        ],
+        "operationId": "ImportProductFunctions_UpdateProductQuantity",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateProductQuantityRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/ImportProduct"
+            }
+          }
+        }
+      }
+    },
+    "/AddConsignmentDetails": {
+      "post": {
+        "tags": [
+          "ImportProgressFunctions"
+        ],
+        "operationId": "ImportProgressFunctions_AddConsignmentDetails",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/AddConsignmentDetailsRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Import"
+            }
+          }
+        }
+      }
+    },
+    "/LoadedOnVessel": {
+      "post": {
+        "tags": [
+          "ImportProgressFunctions"
+        ],
+        "operationId": "ImportProgressFunctions_LoadedOnVessel",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/LoadedOnVesselRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "$ref": "#/definitions/Import"
+            }
+          }
+        }
+      }
+    },
+    "/SearchCompaniesBeta": {
+      "post": {
+        "tags": [
+          "ImportSearchFunctions"
+        ],
+        "operationId": "ImportSearchFunctions_SearchCompaniesBeta",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/SearchableImport"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SearchableImport"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Import": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfImport"
+        },
+        {
+          "type": "object",
+          "required": [
+            "invoicePaid",
+            "loadType",
+            "status"
+          ],
+          "properties": {
+            "collectedDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "company": {
+              "$ref": "#/definitions/Company"
+            },
+            "companyId": {
+              "type": "string"
+            },
+            "consignmentDetails": {
+              "$ref": "#/definitions/ImportConsignmentDetails"
+            },
+            "containerNumber": {
+              "type": "string"
+            },
+            "customsStatus": {
+              "type": "string"
+            },
+            "deliveredDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "eta": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "invoicePaid": {
+              "type": "boolean"
+            },
+            "latitude": {
+              "type": "string"
+            },
+            "loadType": {
+              "$ref": "#/definitions/LoadTypeEnum"
+            },
+            "longitude": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "partnerId": {
+              "type": "string"
+            },
+            "poNumber": {
+              "type": "string"
+            },
+            "purchaseOrders": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "quotation": {
+              "$ref": "#/definitions/ImportQuotation"
+            },
+            "shippingProviderId": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "status": {
+              "$ref": "#/definitions/ImportStatus"
+            },
+            "supplier": {
+              "$ref": "#/definitions/Supplier"
+            },
+            "supplierId": {
+              "type": "string"
+            },
+            "vesselName": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "Company": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfCompany"
+        },
+        {
+          "type": "object",
+          "required": [
+            "paymentTerms"
+          ],
+          "properties": {
+            "addresses": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Address"
+              }
+            },
+            "contactEmail": {
+              "type": "string"
+            },
+            "contactName": {
+              "type": "string"
+            },
+            "contactTelephone": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "partnerIds": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "paymentTerms": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "Address": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfAddress"
+        },
+        {
+          "type": "object",
+          "required": [
+            "isDefault"
+          ],
+          "properties": {
+            "addressLine1": {
+              "type": "string"
+            },
+            "addressLine2": {
+              "type": "string"
+            },
+            "addressLine3": {
+              "type": "string"
+            },
+            "addressLine4": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "county": {
+              "type": "string"
+            },
+            "isDefault": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            },
+            "postalCode": {
+              "type": "string"
+            },
+            "province": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "CosmosItemOfAddress": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    },
+    "CosmosItemOfCompany": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    },
+    "ImportConsignmentDetails": {
+      "type": "object",
+      "required": [
+        "containerRequirement",
+        "insurance"
+      ],
+      "properties": {
+        "containerRequirement": {
+          "$ref": "#/definitions/LoadEnum"
+        },
+        "dispatchMethod": {
+          "type": "string"
+        },
+        "insurance": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "portOfDischarge": {
+          "type": "string"
+        },
+        "portOfLoading": {
+          "type": "string"
+        },
+        "shipmentType": {
+          "type": "string"
+        }
+      }
+    },
+    "LoadEnum": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "ft20",
+        "ft40",
+        "ftHHQ40",
+        "ftHQ45",
+        "Car"
+      ],
+      "enum": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    },
+    "LoadTypeEnum": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "FCL",
+        "LCL"
+      ],
+      "enum": [
+        "1",
+        "2"
+      ]
+    },
+    "ImportQuotation": {
+      "type": "object",
+      "required": [
+        "dateDue",
+        "dateIssued",
+        "totalCost",
+        "totalCostConverted",
+        "transitTime"
+      ],
+      "properties": {
+        "currencyConverted": {
+          "type": "string"
+        },
+        "dateDue": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dateIssued": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "isoCurrency": {
+          "type": "string"
+        },
+        "lineItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LineItemModel"
+          }
+        },
+        "supplier": {
+          "type": "string"
+        },
+        "totalCost": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "totalCostConverted": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "transitTime": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "LineItemModel": {
+      "type": "object",
+      "required": [
+        "amount",
+        "quantity"
+      ],
+      "properties": {
+        "amount": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "description": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "ImportStatus": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Created",
+        "PreBooking",
+        "Booked",
+        "Collected",
+        "Loaded",
+        "Shipping",
+        "Customs",
+        "RoadHaulage",
+        "Delivered",
+        "Rejected"
+      ],
+      "enum": [
+        "Created",
+        "PreBooking",
+        "Booked",
+        "Collected",
+        "Loaded",
+        "Shipping",
+        "Customs",
+        "RoadHaulage",
+        "Delivered",
+        "Rejected"
+      ]
+    },
+    "Supplier": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfSupplier"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "address": {
+              "$ref": "#/definitions/Address"
+            },
+            "contactEmail": {
+              "type": "string"
+            },
+            "contactName": {
+              "type": "string"
+            },
+            "contactTelephone": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "CosmosItemOfSupplier": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    },
+    "CosmosItemOfImport": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    },
+    "AcceptBookingRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "importId"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "importId": {
+          "type": "string"
+        }
+      }
+    },
+    "BookImportRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "importId"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "importId": {
+          "type": "string"
+        },
+        "purchaseOrders": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "RejectBookingRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "importId"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "importId": {
+          "type": "string"
+        }
+      }
+    },
+    "ImportDocument": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfImportDocument"
+        },
+        {
+          "type": "object",
+          "required": [
+            "dateUploaded",
+            "ownedBy"
+          ],
+          "properties": {
+            "blobName": {
+              "type": "string"
+            },
+            "companyId": {
+              "type": "string"
+            },
+            "dateUploaded": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": {
+              "type": "string"
+            },
+            "extension": {
+              "type": "string"
+            },
+            "importId": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "ownedBy": {
+              "$ref": "#/definitions/OwnershipEnum"
+            }
+          }
+        }
+      ]
+    },
+    "OwnershipEnum": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "Unspecified",
+        "Partner",
+        "Company"
+      ],
+      "enum": [
+        "Unspecified",
+        "Partner",
+        "Company"
+      ]
+    },
+    "CosmosItemOfImportDocument": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    },
+    "DeleteDocumentRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "documentId"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "documentId": {
+          "type": "string"
+        }
+      }
+    },
+    "DownloadDocumentRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "documentId"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "documentId": {
+          "type": "string"
+        }
+      }
+    },
+    "ListDocumentsRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "importId",
+        "isActive",
+        "ownership"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "importId": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "ownership": {
+          "$ref": "#/definitions/OwnershipEnum"
+        }
+      }
+    },
+    "AssignQuotationRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "importId",
+        "incoType",
+        "isoCurrency",
+        "lineItems",
+        "loadType",
+        "placeOfDispatch",
+        "portOfLoading",
+        "totalCost",
+        "transitTime"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "goodsReadyFromAndTo": {
+          "$ref": "#/definitions/DateTimeGoodsReady"
+        },
+        "importId": {
+          "type": "string"
+        },
+        "incoType": {
+          "$ref": "#/definitions/IncoTypeEnum"
+        },
+        "insuranceValue": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "isoCurrency": {
+          "type": "string"
+        },
+        "lineItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LineItemModel"
+          }
+        },
+        "load": {
+          "$ref": "#/definitions/LoadModel"
+        },
+        "loadType": {
+          "$ref": "#/definitions/LoadTypeEnum"
+        },
+        "numberOfItems": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "placeOfDispatch": {
+          "type": "string"
+        },
+        "placeOfLoading": {
+          "type": "string"
+        },
+        "portOfDischarge": {
+          "type": "string"
+        },
+        "portOfLoading": {
+          "type": "string"
+        },
+        "supplier": {
+          "type": "string"
+        },
+        "targetCurrency": {
+          "type": "string"
+        },
+        "totalCost": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "transitTime": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "DateTimeGoodsReady": {
+      "type": "object",
+      "required": [
+        "from",
+        "offset",
+        "to"
+      ],
+      "properties": {
+        "from": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "timeZone": {
+          "type": "string"
+        },
+        "to": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "IncoTypeEnum": {
+      "type": "string",
+      "description": "",
+      "x-enumNames": [
+        "FOB",
+        "EXW"
+      ],
+      "enum": [
+        "1",
+        "2"
+      ]
+    },
+    "LoadModel": {
+      "type": "object",
+      "required": [
+        "fthQ45",
+        "fT20",
+        "fT40",
+        "fthhQ40"
+      ],
+      "properties": {
+        "fthQ45": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "fT20": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "fT40": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "fthhQ40": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "AssignSupplierRequest": {
+      "type": "object",
+      "required": [
+        "addressLine1",
+        "city",
+        "companyId",
+        "contactEmail",
+        "contactName",
+        "contactTelephone",
+        "country",
+        "importId",
+        "name",
+        "supplierId"
+      ],
+      "properties": {
+        "addressLine1": {
+          "type": "string"
+        },
+        "addressLine2": {
+          "type": "string"
+        },
+        "addressLine3": {
+          "type": "string"
+        },
+        "addressLine4": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "companyId": {
+          "type": "string"
+        },
+        "contactEmail": {
+          "type": "string"
+        },
+        "contactName": {
+          "type": "string"
+        },
+        "contactTelephone": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "importId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "province": {
+          "type": "string"
+        },
+        "supplierId": {
+          "type": "string"
+        }
+      }
+    },
+    "CreateImportRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "name",
+        "partnerId"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "partnerId": {
+          "type": "string"
+        }
+      }
+    },
+    "DeactivateImportRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "importId"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "importId": {
+          "type": "string"
+        }
+      }
+    },
+    "GetImportRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "importId"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "importId": {
+          "type": "string"
+        }
+      }
+    },
+    "ListImportsRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "isActive"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "UpdateImportRequest": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfUpdateImportRequest"
+        },
+        {
+          "type": "object",
+          "required": [
+            "companyId",
+            "importId",
+            "name"
+          ],
+          "properties": {
+            "companyId": {
+              "type": "string"
+            },
+            "importId": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "CosmosItemOfUpdateImportRequest": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    },
+    "ImportProduct": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CosmosItemOfImportProduct"
+        },
+        {
+          "type": "object",
+          "required": [
+            "quantity"
+          ],
+          "properties": {
+            "companyId": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "hsCode": {
+              "type": "string"
+            },
+            "importId": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "quantity": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "sku": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "CosmosItemOfImportProduct": {
+      "type": "object",
+      "x-abstract": true,
+      "required": [
+        "isActive",
+        "upsertDate"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "upsertDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "_eTag": {
+          "type": "string"
+        }
+      }
+    },
+    "AssignProductRequest": {
+      "type": "object",
+      "required": [
+        "name",
+        "quantity"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "hsCode": {
+          "type": "string"
+        },
+        "importId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "sku": {
+          "type": "string"
+        }
+      }
+    },
+    "UnsassignProductRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "productId"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "productId": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdateProductQuantityRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "productId",
+        "quantity"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "productId": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "AddConsignmentDetailsRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "containerRequirement",
+        "dispatchMethod",
+        "importId",
+        "insurance",
+        "portOfDischarge",
+        "portOfLoading",
+        "shipmentType"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "containerRequirement": {
+          "$ref": "#/definitions/LoadEnum"
+        },
+        "dispatchMethod": {
+          "type": "string"
+        },
+        "importId": {
+          "type": "string"
+        },
+        "insurance": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "portOfDischarge": {
+          "type": "string"
+        },
+        "portOfLoading": {
+          "type": "string"
+        },
+        "shipmentType": {
+          "type": "string"
+        }
+      }
+    },
+    "LoadedOnVesselRequest": {
+      "type": "object",
+      "required": [
+        "companyId",
+        "importId"
+      ],
+      "properties": {
+        "companyId": {
+          "type": "string"
+        },
+        "importId": {
+          "type": "string"
+        }
+      }
+    },
+    "SearchableImport": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "searchableAddress": {
+          "$ref": "#/definitions/SearchableAddress"
+        }
+      }
+    },
+    "SearchableAddress": {
+      "type": "object",
+      "properties": {
+        "addressLine1": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "province": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

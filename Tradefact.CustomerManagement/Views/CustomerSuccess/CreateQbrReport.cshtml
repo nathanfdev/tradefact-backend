@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Create QBR report";
+    ViewData["FromDate"] = DateTime.Today.AddMonths(-3).ToString("dd-MM-yyyy");
+    ViewData["ToDate"] = DateTime.Today.AddDays(-1).ToString("dd-MM-yyyy");
+}
+
+<div>
+    <link href="~/lib/jqueryui/jquery-ui.css" rel="stylesheet" />
+
+    <h1 class="display-4">@ViewData["Title"]</h1>
+    <p>Use this page to view QBR metrics.</p>
+
+    <form method="POST" action="ShowQbrReport">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label for="inputCompanyName">Company name</label>
+                <input type="text" class="form-control" id="inputCompanyName" placeholder="Start typing to search" />
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputFromDate">From date</label>
+                <input type="text" class="form-control" name="fromDate" id="inputFromDate" value="@ViewData["FromDate"]" />
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputToDate">To date</label>
+                <input type="text" class="form-control" name="toDate" id="inputToDate" value="@ViewData["ToDate"]" />
+            </div>
+            <input type="text" name="organisationId" id="inputOrganisationId" hidden />
+        </div>
+        <div class="row form-group col-md-2">
+            <input type="submit" value="Submit" class="submit" />
+        </div>
+    </form>
+</div>
+
+
+@section scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#inputFromDate").datepicker({ dateFormat: "dd-mm-yy" });
+            $("#inputToDate").datepicker({ dateFormat: "dd-mm-yy" });
+            $("#inputCompanyName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "@Url.Action("OrganisationSearch")",
+                        type: "GET",
+                        data: { search: request.term },
+                        success: function (data) {
+                            response($.map($.parseJSON(data), function (item) {
+                                return { label: item.organisationName, value: item.organisationId };
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    $("#inputOrganisationId").val(ui.item.value);             
+                    this.value = ui.item.label;
+                    return false;
+                }
+            });
+        });
+    </script>
+}
+

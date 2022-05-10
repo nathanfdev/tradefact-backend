@@ -1,0 +1,20 @@
+Postman bearer token configuration:
+
+Token name: Importwise
+
+Grant type: Implicit
+
+Callback URL: https://getpostman.com/postman
+
+Auth Url: https://importwiseb2c.b2clogin.com/7ecf3b55-e9d2-444c-8ece-6e6b707764f9/oauth2/v2.0/authorize?p=B2C_1_signupandsignin
+
+ClientID: 2a7cd864-c07d-4b4a-8307-a7a0424a40a8
+
+Scope: 
+
+openid https://importwiseB2C.onmicrosoft.com/dev-api/user_impersonation https://importwiseB2C.onmicrosoft.com/dev-api/read https://importwiseB2C.onmicrosoft.com/dev-api/write
+
+
+State: state
+
+Client authentication: Send as Basic Auth Header

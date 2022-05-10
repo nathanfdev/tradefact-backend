@@ -1,0 +1,84 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+  branches:
+    include:
+      - develop
+  paths:
+    include:
+      - TradeFact.CustomerManagement/*
+
+variables:
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: '59b87343-23a4-460f-b6f6-6d4eb93ca0f1'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+  # Working Directory
+  workingDirectory: '$(System.DefaultWorkingDirectory)/Tradefact.CustomerManagement'
+
+  # Working Directory!
+  projects: '**/Tradefact.Portal.csproj'
+
+  buildConfiguration: 'Release'
+
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+  - task: DotNetCoreCLI@2
+    displayName: 'Restore project dependencies'
+    inputs:
+      command: 'restore'
+      projects: $(projects)
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build the project - $(buildConfiguration)'
+    inputs:
+      command: 'build'
+      arguments: '--no-restore --configuration $(buildConfiguration)'
+      projects: $(projects)
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish the project - $(buildConfiguration)'
+    inputs:
+      command: 'publish'
+      projects: $(projects)
+      publishWebProjects: true
+      arguments: ' --configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --no-restore'
+      zipAfterPublish: true
+
+  - task: AzureAppServiceManage@0
+    displayName: 'Stop App Service'
+    inputs:
+      azureSubscription: importwiseAzureDevopsDeployment
+      Action: 'Stop Azure App Service'
+      WebAppName: 'dev-app-tradefact-portal'
+
+  - task: PublishBuildArtifacts@1
+    displayName: "Upload Artifacts"
+    inputs:
+       pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+       artifactName: 'tradefact-portal'
+
+  - task: AzureRmWebAppDeployment@4
+    displayName: 'Azure App Service Deploy: dev-app-tradefact-portal'
+    inputs:
+      azureSubscription: importwiseAzureDevopsDeployment
+      appType: webAppLinux
+      WebAppName: 'dev-app-tradefact-portal'
+      packageForLinux: '$(build.artifactstagingdirectory)/**/Tradefact.CustomerManagement.zip'
+
+  - task: AzureAppServiceManage@0
+    displayName: 'Start App Service'
+    inputs:
+      azureSubscription: importwiseAzureDevopsDeployment
+      Action: 'Start Azure App Service'
+      WebAppName: 'dev-app-tradefact-portal'
+
+
+        

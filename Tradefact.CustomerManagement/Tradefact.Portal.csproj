@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <UserSecretsId>aspnet-Tradefact.Portal-78C0F099-6DE2-40AD-BD44-9BC97FD134EF</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="web-components\**" />
+    <Content Remove="web-components\**" />
+    <EmbeddedResource Remove="web-components\**" />
+    <None Remove="web-components\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Shared\_Layout.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.13" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="1.7.0" />
+    <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tradefact.Application\Tradefact.Application.csproj" />
+    <ProjectReference Include="..\Tradefact.Data\Tradefact.Data.csproj" />
+    <ProjectReference Include="..\Tradefact.Services\Tradefact.Services.csproj" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<None Update="appsettings.azure_prd.json">
+			<DependentUpon>appsettings.json</DependentUpon>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="assets\css\fonts\Inter\" />
+	</ItemGroup>
+</Project>

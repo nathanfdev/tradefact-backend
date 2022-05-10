@@ -1,0 +1,196 @@
+{
+  "x-generator": "NSwag v13.0.4.0 (NJsonSchema v10.0.21.0 (Newtonsoft.Json v12.0.0.0))",
+  "swagger": "2.0",
+  "info": {
+    "title": "FunctionApp Search",
+    "version": "1.0.0"
+  },
+  "host": "#{apihostprefix}#.api.tradefact.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/SearchCompanies": {
+      "post": {
+        "tags": [
+          "SearchFunctions"
+        ],
+        "operationId": "SearchFunctions_SearchCompanies",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CompanySearchRequest"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          200: {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SearchableCompany"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/SearchImports": {
+      "post": {
+        "tags": [
+          "SearchFunctions"
+        ],
+        "operationId": "SearchFunctions_SearchImports",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/SearchableImport"
+            },
+            "x-nullable": true
+          }
+        ],
+        "responses": {
+          200: {
+            "x-nullable": false,
+            "description": "OK result",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SearchableImport"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "SearchableCompany": {
+      "type": "object",
+      "required": [
+        "paymentTerms"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "partnerIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "paymentTerms": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "CompanySearchRequest": {
+      "type": "object",
+      "required": [
+        "pageNumber",
+        "pageSize"
+      ],
+      "properties": {
+        "filter": {
+          "type": "string"
+        },
+        "orderBy": {
+          "type": "string"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageSize": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "searchTerm": {
+          "type": "string"
+        }
+      }
+    },
+    "SearchableImport": {
+      "type": "object",
+      "required": [
+        "invoicePaid"
+      ],
+      "properties": {
+        "addresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SearchableAddress"
+          }
+        },
+        "company": {
+          "$ref": "#/definitions/SearchableCompany"
+        },
+        "id": {
+          "type": "string"
+        },
+        "invoicePaid": {
+          "type": "boolean"
+        },
+        "isActive": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "SearchableAddress": {
+      "type": "object",
+      "properties": {
+        "addressLine1": {
+          "type": "string"
+        },
+        "addressLine2": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "province": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

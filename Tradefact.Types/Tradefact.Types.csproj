@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F6CA27C6-ABBA-4961-9866-B6E79F24980F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Tradefact.Types</RootNamespace>
+    <AssemblyName>Tradefact.Types</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Api\ModelGeneration.tst" />
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Api\assignshipmentbolrequest.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\Shipment\AssignShipmentBOLRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\cargoitem.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Core\Models\CargoItem.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\createfreightmovementrequest.managed %281%29.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\FreightMovement\Requests\CreateFreightMovementRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\createfreightmovementrequest.managed %283%29.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\User\Requests\CreateUserRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\createfreightmovementrequest.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\FreightMovement\Requests\CreateFreightMovementRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\createuserrequest.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\User\Requests\CreateUserRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\directoryresource.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\OrganisationResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\enumeration.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Core\Types\Enumeration.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\eventclassifier.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Core\Types\EventClassifier.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\fclitem.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Core\Models\FCLItem.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\freightmovementrequest.managed %283%29.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\User\Requests\UserRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\freightmovementrequest.managed %282%29.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\Quotation\QuotationRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\freightmovementrequest.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\FreightMovement\Requests\FreightMovementRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\freightmovementresource.managed %282%29.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\FreightMovement\Requests\FreightMovementRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\lclitem.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Core\Models\LCLItem.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\lclmodel.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Core\Models\LCLModel.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\lineitemmodel.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Core\Models\LineItemModel.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\organisationresource.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\Models\Organisation\OrganisationResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseorderactions.managed %281%29.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\PurchaseOrders\Queries\Model\PurchaseOrderActions.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseorderactions.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\PurchaseOrders\Queries\Model\PurchaseOrderResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseorderadditionalchargeitemresource.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\PurchaseOrders\Queries\PurchaseOrderAdditionalChargeItemResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseorderdto.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\PurchaseOrders\Queries\PurchaseOrderResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseorderitemdto.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\PurchaseOrders\Queries\PurchaseOrderResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseorderitemresource.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\PurchaseOrders\Queries\Model\PurchaseOrderItemResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseorderitemschedulelineresource.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\Schedules\Model\PurchaseOrderItemScheduleLineResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseorderproductdocumentresource.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\PurchaseOrders\Queries\Model\PurchaseOrderProductDocumentResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseorderresource.managed %281%29.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\PurchaseOrders\Queries\Model\PurchaseOrderResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseorderschedulelineresource.managed %281%29.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\Schedules\Model\PurchaseOrderScheduleLineResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseorderschedulelineresource.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\Schedules\Model\PurchaseOrderScheduleLineResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseorderschedulelineresourcedto.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\Schedules\Model\PurchaseOrderScheduleLineResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\schedulelineresource.managed %281%29.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\Schedules\Model\ScheduleLineResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseorderresource.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\PurchaseOrders\Queries\PurchaseOrderResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseordershipmentquotationrequest.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\PurchaseOrders\Queries\Model\PurchaseOrderShipmentQuotationRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseordertimeline.managed %281%29.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\PurchaseOrders\Queries\Model\PurchaseOrderTimeline.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\purchaseordertimeline.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\PurchaseOrders\Queries\PurchaseOrderResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\quotationcreaterequest.managed %281%29.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\Quotation\QuotationRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\quotationcreaterequest.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\FreightMovement\Requests\FreightMovementRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\routescheduleresult.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Core\Models\Scheduling\RouteScheduleResult.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\assignshipmenttagsrequest.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\Shipment\AssignShipmentTagsRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\schedulelineresource.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\Schedules\Model\PurchaseOrderResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\shipmentrequest.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\Shipment\ShipmentRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\shipmentresource.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\Models\Shipment\ShipmentResource.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\shipmenttransitinfo.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Application\Models\Shipment\ShipmentInfo.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\updatefreightmovementrequest.managed %282%29.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\User\Requests\UpdateUserRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\updatefreightmovementrequest.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\FreightMovement\Requests\UpdateFreightMovementRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\updateuserrequest.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\User\Requests\UpdateUserRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Api\userrequest.managed.ts">
+      <DependentUpon>ModelGeneration.tst</DependentUpon>
+      <CustomToolNamespace>..\Tradefact.Api\Model\User\Requests\UserRequest.cs</CustomToolNamespace>
+    </TypeScriptCompile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

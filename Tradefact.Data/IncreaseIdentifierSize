@@ -1,0 +1,95 @@
+﻿DECLARE @var19 sysname;
+SELECT @var19 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Products]') AND [c].[name] = N'Identifier_ePID');
+IF @var19 IS NOT NULL EXEC(N'ALTER TABLE [Products] DROP CONSTRAINT [' + @var19 + '];');
+ALTER TABLE [Products] ALTER COLUMN [Identifier_ePID] nvarchar(20) NULL;
+
+GO
+
+DECLARE @var20 sysname;
+SELECT @var20 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Products]') AND [c].[name] = N'Identifier_UPC');
+IF @var20 IS NOT NULL EXEC(N'ALTER TABLE [Products] DROP CONSTRAINT [' + @var20 + '];');
+ALTER TABLE [Products] ALTER COLUMN [Identifier_UPC] nvarchar(20) NULL;
+
+GO
+
+DECLARE @var21 sysname;
+SELECT @var21 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Products]') AND [c].[name] = N'Identifier_MPN');
+IF @var21 IS NOT NULL EXEC(N'ALTER TABLE [Products] DROP CONSTRAINT [' + @var21 + '];');
+ALTER TABLE [Products] ALTER COLUMN [Identifier_MPN] nvarchar(20) NULL;
+
+GO
+
+DECLARE @var22 sysname;
+SELECT @var22 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Products]') AND [c].[name] = N'Identifier_JAN');
+IF @var22 IS NOT NULL EXEC(N'ALTER TABLE [Products] DROP CONSTRAINT [' + @var22 + '];');
+ALTER TABLE [Products] ALTER COLUMN [Identifier_JAN] nvarchar(20) NULL;
+
+GO
+
+DECLARE @var23 sysname;
+SELECT @var23 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Products]') AND [c].[name] = N'Identifier_ISBN');
+IF @var23 IS NOT NULL EXEC(N'ALTER TABLE [Products] DROP CONSTRAINT [' + @var23 + '];');
+ALTER TABLE [Products] ALTER COLUMN [Identifier_ISBN] nvarchar(20) NULL;
+
+GO
+
+DECLARE @var24 sysname;
+SELECT @var24 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Products]') AND [c].[name] = N'Identifier_GTIN');
+IF @var24 IS NOT NULL EXEC(N'ALTER TABLE [Products] DROP CONSTRAINT [' + @var24 + '];');
+ALTER TABLE [Products] ALTER COLUMN [Identifier_GTIN] nvarchar(20) NULL;
+
+GO
+
+DECLARE @var25 sysname;
+SELECT @var25 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Products]') AND [c].[name] = N'Identifier_GPC');
+IF @var25 IS NOT NULL EXEC(N'ALTER TABLE [Products] DROP CONSTRAINT [' + @var25 + '];');
+ALTER TABLE [Products] ALTER COLUMN [Identifier_GPC] nvarchar(20) NULL;
+
+GO
+
+DECLARE @var26 sysname;
+SELECT @var26 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Products]') AND [c].[name] = N'Identifier_EAN');
+IF @var26 IS NOT NULL EXEC(N'ALTER TABLE [Products] DROP CONSTRAINT [' + @var26 + '];');
+ALTER TABLE [Products] ALTER COLUMN [Identifier_EAN] nvarchar(20) NULL;
+
+GO
+
+DECLARE @var27 sysname;
+SELECT @var27 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Products]') AND [c].[name] = N'Identifier_ASIN');
+IF @var27 IS NOT NULL EXEC(N'ALTER TABLE [Products] DROP CONSTRAINT [' + @var27 + '];');
+ALTER TABLE [Products] ALTER COLUMN [Identifier_ASIN] nvarchar(20) NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20210316141417_IncreaseIdentifierSize', N'3.1.4');
+
+GO
+

@@ -1,0 +1,366 @@
+{
+  "info": {
+    "_postman_id": "cda1f6f9-2091-4817-9586-dd1ba920b3ee",
+    "name": "Importwise API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "POST Partner",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Authorization",
+            "value":
+              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ilg1ZVhrNHh5b2pORnVtMWtsMll0djhkbE5QNC1jNTdkTzZRR1RWQndhTmsifQ.eyJpc3MiOiJodHRwczovL2ltcG9ydHdpc2ViMmMuYjJjbG9naW4uY29tLzdlY2YzYjU1LWU5ZDItNDQ0Yy04ZWNlLTZlNmI3MDc3NjRmOS92Mi4wLyIsImV4cCI6MTU3MDUzNTAyOCwibmJmIjoxNTcwNTMxNDI4LCJhdWQiOiI0OGQzODc4ZC03OGQzLTRiNzMtYWZiYi1hMzU1ZWZjYjY0ZmYiLCJvaWQiOiI2NDNjODJjOS1iYjk4LTRkNTAtYTViMy1mYmY5MjBhYTJjZGEiLCJzdWIiOiI2NDNjODJjOS1iYjk4LTRkNTAtYTViMy1mYmY5MjBhYTJjZGEiLCJjaXR5IjoiQmVsZmFzdCIsImNvdW50cnkiOiJVbml0ZWQgS2luZ2RvbSIsImdpdmVuX25hbWUiOiJNYXR0IiwiZmFtaWx5X25hbWUiOiJNY05hYmIiLCJlbWFpbHMiOlsibWF0dEBpbXBvcnR3aXNlLmNvIl0sInRmcCI6IkIyQ18xX3NpZ251cGFuZHNpZ25pbiIsIm5vbmNlIjoiMTExYmIxYTgtMGViOC00YmY0LTk2MDUtODgyZDgyZDdlYjdiIiwic2NwIjoicmVhZCB3cml0ZSB1c2VyX2ltcGVyc29uYXRpb24iLCJhenAiOiIxMTI4ZTRiMS04ZTlhLTQ5MWMtYTYwZC0xZTk1YWJiY2Q0Y2YiLCJ2ZXIiOiIxLjAiLCJpYXQiOjE1NzA1MzE0Mjh9.hpMONlRvEaItOoIEaCglgixv53teonpGz2k-1t37g8YWbO1bcbEFIP6JCK7tMKQiLYzcOo2tokqYwaCfDCuRBPwXGIB3bjNK_7cwtupYMApBbzcU3MXfwiI54Ar4BBvKyeZYbWA0VCCMnS0h_PUFQzS5n56xIu5qYHzZi6xYLkPq0_uyb4aVqINCFM8EvvIudsQavHT-Uuhtpdd9CTaQt64QK3-OH7xzKwasnqcsKBSNdEXyNZnHFzkWsXcPOkDkZK3gPWCJ1rRb02FKLzg-cCvl5NfK5PeV6luVOqk-oANtNaymm5ZbhJyeaHj42ycvmrzOVSspWfnA9Jg9NZdOuA",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw":
+            "{\n  \"accountNumber\": \"string\",\n  \"bankName\": \"string\",\n  \"currency\": \"string\",\n  \"customerEmail\": \"string\",\n  \"customerTelephone\": \"string\",\n  \"customsFee\": 0.0,\n  \"documentsFee\": 0.0,\n  \"name\": \"Matt Test Blah\",\n  \"sortCode\": \"string\",\n  \"swiftCode\": \"string\",\n  \"taxRate\": 0.0,\n  \"tosDocumentId\": \"string\",\n  \"website\": \"string\"\n}"
+        },
+        "url": {
+          "raw": "{{UrlPrefix}}/partner-api/partners",
+          "host": [
+            "{{UrlPrefix}}"
+          ],
+          "path": [
+            "partner-api",
+            "partners"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST Company",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "type": "text",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "type": "text",
+            "value":
+              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ilg1ZVhrNHh5b2pORnVtMWtsMll0djhkbE5QNC1jNTdkTzZRR1RWQndhTmsifQ.eyJpc3MiOiJodHRwczovL2ltcG9ydHdpc2ViMmMuYjJjbG9naW4uY29tLzdlY2YzYjU1LWU5ZDItNDQ0Yy04ZWNlLTZlNmI3MDc3NjRmOS92Mi4wLyIsImV4cCI6MTU3MDUzNTAyOCwibmJmIjoxNTcwNTMxNDI4LCJhdWQiOiI0OGQzODc4ZC03OGQzLTRiNzMtYWZiYi1hMzU1ZWZjYjY0ZmYiLCJvaWQiOiI2NDNjODJjOS1iYjk4LTRkNTAtYTViMy1mYmY5MjBhYTJjZGEiLCJzdWIiOiI2NDNjODJjOS1iYjk4LTRkNTAtYTViMy1mYmY5MjBhYTJjZGEiLCJjaXR5IjoiQmVsZmFzdCIsImNvdW50cnkiOiJVbml0ZWQgS2luZ2RvbSIsImdpdmVuX25hbWUiOiJNYXR0IiwiZmFtaWx5X25hbWUiOiJNY05hYmIiLCJlbWFpbHMiOlsibWF0dEBpbXBvcnR3aXNlLmNvIl0sInRmcCI6IkIyQ18xX3NpZ251cGFuZHNpZ25pbiIsIm5vbmNlIjoiMTExYmIxYTgtMGViOC00YmY0LTk2MDUtODgyZDgyZDdlYjdiIiwic2NwIjoicmVhZCB3cml0ZSB1c2VyX2ltcGVyc29uYXRpb24iLCJhenAiOiIxMTI4ZTRiMS04ZTlhLTQ5MWMtYTYwZC0xZTk1YWJiY2Q0Y2YiLCJ2ZXIiOiIxLjAiLCJpYXQiOjE1NzA1MzE0Mjh9.hpMONlRvEaItOoIEaCglgixv53teonpGz2k-1t37g8YWbO1bcbEFIP6JCK7tMKQiLYzcOo2tokqYwaCfDCuRBPwXGIB3bjNK_7cwtupYMApBbzcU3MXfwiI54Ar4BBvKyeZYbWA0VCCMnS0h_PUFQzS5n56xIu5qYHzZi6xYLkPq0_uyb4aVqINCFM8EvvIudsQavHT-Uuhtpdd9CTaQt64QK3-OH7xzKwasnqcsKBSNdEXyNZnHFzkWsXcPOkDkZK3gPWCJ1rRb02FKLzg-cCvl5NfK5PeV6luVOqk-oANtNaymm5ZbhJyeaHj42ycvmrzOVSspWfnA9Jg9NZdOuA"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Matt Test blah\"\n}"
+        },
+        "url": {
+          "raw": "{{UrlPrefix}}/company-api/companies",
+          "host": [
+            "{{UrlPrefix}}"
+          ],
+          "path": [
+            "company-api",
+            "companies"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST Import",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "type": "text",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "type": "text",
+            "value":
+              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ilg1ZVhrNHh5b2pORnVtMWtsMll0djhkbE5QNC1jNTdkTzZRR1RWQndhTmsifQ.eyJpc3MiOiJodHRwczovL2ltcG9ydHdpc2ViMmMuYjJjbG9naW4uY29tLzdlY2YzYjU1LWU5ZDItNDQ0Yy04ZWNlLTZlNmI3MDc3NjRmOS92Mi4wLyIsImV4cCI6MTU3MDUzNTAyOCwibmJmIjoxNTcwNTMxNDI4LCJhdWQiOiI0OGQzODc4ZC03OGQzLTRiNzMtYWZiYi1hMzU1ZWZjYjY0ZmYiLCJvaWQiOiI2NDNjODJjOS1iYjk4LTRkNTAtYTViMy1mYmY5MjBhYTJjZGEiLCJzdWIiOiI2NDNjODJjOS1iYjk4LTRkNTAtYTViMy1mYmY5MjBhYTJjZGEiLCJjaXR5IjoiQmVsZmFzdCIsImNvdW50cnkiOiJVbml0ZWQgS2luZ2RvbSIsImdpdmVuX25hbWUiOiJNYXR0IiwiZmFtaWx5X25hbWUiOiJNY05hYmIiLCJlbWFpbHMiOlsibWF0dEBpbXBvcnR3aXNlLmNvIl0sInRmcCI6IkIyQ18xX3NpZ251cGFuZHNpZ25pbiIsIm5vbmNlIjoiMTExYmIxYTgtMGViOC00YmY0LTk2MDUtODgyZDgyZDdlYjdiIiwic2NwIjoicmVhZCB3cml0ZSB1c2VyX2ltcGVyc29uYXRpb24iLCJhenAiOiIxMTI4ZTRiMS04ZTlhLTQ5MWMtYTYwZC0xZTk1YWJiY2Q0Y2YiLCJ2ZXIiOiIxLjAiLCJpYXQiOjE1NzA1MzE0Mjh9.hpMONlRvEaItOoIEaCglgixv53teonpGz2k-1t37g8YWbO1bcbEFIP6JCK7tMKQiLYzcOo2tokqYwaCfDCuRBPwXGIB3bjNK_7cwtupYMApBbzcU3MXfwiI54Ar4BBvKyeZYbWA0VCCMnS0h_PUFQzS5n56xIu5qYHzZi6xYLkPq0_uyb4aVqINCFM8EvvIudsQavHT-Uuhtpdd9CTaQt64QK3-OH7xzKwasnqcsKBSNdEXyNZnHFzkWsXcPOkDkZK3gPWCJ1rRb02FKLzg-cCvl5NfK5PeV6luVOqk-oANtNaymm5ZbhJyeaHj42ycvmrzOVSspWfnA9Jg9NZdOuA"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw":
+            "{\n  \"companyId\": \"a7b378b4-5eb5-4d55-b277-cbd64b8b4828\",\n  \"companyName\": \"Matt Test Blah\",\n  \"latitude\": \"0\",\n  \"longitude\": \"0\",\n  \"name\": \"Postman API 2\"\n}"
+        },
+        "url": {
+          "raw": "{{UrlPrefix}}/import-api/imports",
+          "host": [
+            "{{UrlPrefix}}"
+          ],
+          "path": [
+            "import-api",
+            "imports"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST Quotations",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "33eb9180-4ad6-4861-9667-8e38ba016065",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "type": "text",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "type": "text",
+            "value":
+              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ilg1ZVhrNHh5b2pORnVtMWtsMll0djhkbE5QNC1jNTdkTzZRR1RWQndhTmsifQ.eyJpc3MiOiJodHRwczovL2ltcG9ydHdpc2ViMmMuYjJjbG9naW4uY29tLzdlY2YzYjU1LWU5ZDItNDQ0Yy04ZWNlLTZlNmI3MDc3NjRmOS92Mi4wLyIsImV4cCI6MTU3MDUzNTAyOCwibmJmIjoxNTcwNTMxNDI4LCJhdWQiOiI0OGQzODc4ZC03OGQzLTRiNzMtYWZiYi1hMzU1ZWZjYjY0ZmYiLCJvaWQiOiI2NDNjODJjOS1iYjk4LTRkNTAtYTViMy1mYmY5MjBhYTJjZGEiLCJzdWIiOiI2NDNjODJjOS1iYjk4LTRkNTAtYTViMy1mYmY5MjBhYTJjZGEiLCJjaXR5IjoiQmVsZmFzdCIsImNvdW50cnkiOiJVbml0ZWQgS2luZ2RvbSIsImdpdmVuX25hbWUiOiJNYXR0IiwiZmFtaWx5X25hbWUiOiJNY05hYmIiLCJlbWFpbHMiOlsibWF0dEBpbXBvcnR3aXNlLmNvIl0sInRmcCI6IkIyQ18xX3NpZ251cGFuZHNpZ25pbiIsIm5vbmNlIjoiMTExYmIxYTgtMGViOC00YmY0LTk2MDUtODgyZDgyZDdlYjdiIiwic2NwIjoicmVhZCB3cml0ZSB1c2VyX2ltcGVyc29uYXRpb24iLCJhenAiOiIxMTI4ZTRiMS04ZTlhLTQ5MWMtYTYwZC0xZTk1YWJiY2Q0Y2YiLCJ2ZXIiOiIxLjAiLCJpYXQiOjE1NzA1MzE0Mjh9.hpMONlRvEaItOoIEaCglgixv53teonpGz2k-1t37g8YWbO1bcbEFIP6JCK7tMKQiLYzcOo2tokqYwaCfDCuRBPwXGIB3bjNK_7cwtupYMApBbzcU3MXfwiI54Ar4BBvKyeZYbWA0VCCMnS0h_PUFQzS5n56xIu5qYHzZi6xYLkPq0_uyb4aVqINCFM8EvvIudsQavHT-Uuhtpdd9CTaQt64QK3-OH7xzKwasnqcsKBSNdEXyNZnHFzkWsXcPOkDkZK3gPWCJ1rRb02FKLzg-cCvl5NfK5PeV6luVOqk-oANtNaymm5ZbhJyeaHj42ycvmrzOVSspWfnA9Jg9NZdOuA"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw":
+            "{\n    \"loadType\": \"FCL\",\n    \"incoType\": \"FOB\",\n    \"load\": {\n        \"20ft\": 1,\n        \"40ft\": 0,\n        \"40ftHQ\": 0,\n        \"45ftHQ\": 0\n    },\n    \"insuranceValue\": 0,\n    \"numberOfItems\": 0,\n    \"portOfLoading\": \"Dalian\",\n    \"portOfDischarge\": \"Belfast\",\n    \"placeOfDispatch\": \"\",\n    \"goodsReady\": {\n        \"from\": {\n            \"date\": \"10/10/2019\",\n            \"timezone\": \"+0100\"\n        },\n        \"to\": {\n            \"date\": \"24/10/2019\",\n            \"timezone\": \"+0100\"\n        }\n    },\n    \"targetCurrency\": \"USD\"\n}"
+        },
+        "url": {
+          "raw": "{{UrlPrefix}}/quotation-api/quotations",
+          "host": [
+            "{{UrlPrefix}}"
+          ],
+          "path": [
+            "quotation-api",
+            "quotations"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Currency List",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{UrlPrefix}}/reference-data-api/currencies",
+          "host": [
+            "{{UrlPrefix}}"
+          ],
+          "path": [
+            "reference-data-api",
+            "currencies"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Company Details",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "type": "text",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{UrlPrefix}}/company-api/companies/:companyId",
+          "host": [
+            "{{UrlPrefix}}"
+          ],
+          "path": [
+            "company-api",
+            "companies",
+            ":companyId"
+          ],
+          "variable": [
+            {
+              "key": "companyId",
+              "value": "a7b378b4-5eb5-4d55-b277-cbd64b8b4828",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Import Details",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "type": "text",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{UrlPrefix}}/import-api/imports/:importId/:companyId",
+          "host": [
+            "{{UrlPrefix}}"
+          ],
+          "path": [
+            "import-api",
+            "imports",
+            ":importId",
+            ":companyId"
+          ],
+          "variable": [
+            {
+              "key": "importId",
+              "value": "788b550f-6b1e-40cc-8b95-17f12205e7d0",
+              "type": "string"
+            },
+            {
+              "key": "companyId",
+              "value": "a7b378b4-5eb5-4d55-b277-cbd64b8b4828",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET Import List",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "type": "text",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{UrlPrefix}}/import-api/imports/:companyId",
+          "host": [
+            "{{UrlPrefix}}"
+          ],
+          "path": [
+            "import-api",
+            "imports",
+            ":companyId"
+          ],
+          "variable": [
+            {
+              "key": "companyId",
+              "value": "a7b378b4-5eb5-4d55-b277-cbd64b8b4828",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "accessToken",
+        "value":
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ilg1ZVhrNHh5b2pORnVtMWtsMll0djhkbE5QNC1jNTdkTzZRR1RWQndhTmsifQ.eyJpc3MiOiJodHRwczovL2ltcG9ydHdpc2ViMmMuYjJjbG9naW4uY29tLzdlY2YzYjU1LWU5ZDItNDQ0Yy04ZWNlLTZlNmI3MDc3NjRmOS92Mi4wLyIsImV4cCI6MTU3MTE2MzQ3MCwibmJmIjoxNTcxMTU5ODcwLCJhdWQiOiI0OGQzODc4ZC03OGQzLTRiNzMtYWZiYi1hMzU1ZWZjYjY0ZmYiLCJvaWQiOiJmNzZmY2Q2NS05NjA4LTQxYWMtOGJhMy04ZjY4YjllNzc3OGEiLCJzdWIiOiJmNzZmY2Q2NS05NjA4LTQxYWMtOGJhMy04ZjY4YjllNzc3OGEiLCJnaXZlbl9uYW1lIjoiRGF2aWQiLCJmYW1pbHlfbmFtZSI6Ik1jUXVpZ2dpbiIsImVtYWlscyI6WyJkYXZpZEBtY3F1aWdnaW4uY29tIl0sInRmcCI6IkIyQ18xX2IyYy1hcGltLWFwaSIsInNjcCI6InVzZXJfaW1wZXJzb25hdGlvbiIsImF6cCI6IjJhN2NkODY0LWMwN2QtNGI0YS04MzA3LWE3YTA0MjRhNDBhOCIsInZlciI6IjEuMCIsImlhdCI6MTU3MTE1OTg3MH0.Qhx05PYeSqGAWSoOVPNTWB7MmrtNovo7FuXNptL9pID_MrdSzWSmhKfAn5Rw0N0Ef2ZVN5EvBti2jUGoOuR06EwyJosU2kNTQbJxAXEEwt7UCKt_7FIBgy2bLaeX5ggs32lYKZcYU40ZNVpvktWl8_CtReHOX9iq7d1L7S5TdMrTCJBf3yp1naeuvxR47ol-6CHbC0ZuDWwhQ-pj--AmJNowdZxDz31LDDL0WTaSoZREfCEwQy7p7U5-2IAzpaHCigTTw9E37I9tt2pfmqGyVDqn1-zbI3pW4iBJgyq_37DVQ4FzUmvc7ZvbUgTEzudmreP_3-I6ww8UmrcDTckJRQ",
+        "type": "string"
+      },
+      {
+        "key": "tokenType",
+        "value": "Bearer",
+        "type": "string"
+      },
+      {
+        "key": "addTokenTo",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "66df3711-e61c-4c91-ba41-698ab52a3d20",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "4bb6cafe-629f-4dbe-97ab-52b48bb67438",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "protocolProfileBehavior": {}
+}
